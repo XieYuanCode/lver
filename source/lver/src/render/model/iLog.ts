@@ -7,15 +7,19 @@ export default interface ILog {
   /**
    * 日志名称
    */
-  name: string
+  name?: string
+  /**
+   * 文件名
+   */
+  filename: string
   /**
    * 日志id
    */
-  uuid: number
+  uuid: string
   /**
    * 日志文件路径
    */
-  file: string | null
+  file?: string
   /**
    * 日志md5码
    */
@@ -28,6 +32,10 @@ export default interface ILog {
    * 是否分析成功表示
    */
   analyseSuccessful: boolean
+  /**
+   * 绑定的规则
+   */
+  rule?: ILogRule
 
   /**
    * 根据特定的日志定义器分析日志
@@ -40,4 +48,30 @@ export default interface ILog {
    * @returns { Boolean } 是否分析成功
    */
   autoAnalyse: () => Boolean
+}
+
+export class Log implements ILog {
+  filename: string;
+  name?: string;
+  uuid: string;
+  file?: string;
+  hash: string;
+  recordDate: Date;
+  analyseSuccessful: boolean = false;
+  rule?: ILogRule;
+
+  constructor(filename: string, uuid: string, name?: string) {
+    this.filename = filename
+    this.uuid = uuid
+    this.name = name || filename
+    this.file = "todo"
+    this.hash = "todo"
+    this.recordDate = new Date()
+  }
+
+  public analyse(rule: ILogRule) { }
+
+  public autoAnalyse() {
+    return true
+  }
 }

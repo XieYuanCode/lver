@@ -27,7 +27,10 @@
     "start": "concurrently \"vite\" \"electron .\" "
   },
   "dependencies": {
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vue-i18n": "^9.2.0-beta.9",
+    "vue3-contextmenu": "^0.2.12",
+    "vuex": "^4.0.2"
   },
   "os": [
     "darwin",

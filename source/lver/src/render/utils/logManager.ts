@@ -32,9 +32,9 @@ class LogManager {
    * @param { string } name 日志名称
    */
   public getLogByName(name: string): ILog | null {
-    let targetLog = null;
+    let targetLog: ILog | null = null;
     this._logs.forEach(log => {
-      targetLog === (log.name === name) ? log : null
+      targetLog = (log.name === name) ? log : null
     })
     return targetLog
   }
@@ -44,9 +44,9 @@ class LogManager {
    * @param { number } uuid 日志uuid
    */
   public getLogByUuid(uuid: number): ILog | null {
-    let targetLog = null;
+    let targetLog: ILog | null = null;
     this._logs.forEach(log => {
-      targetLog === (log.uuid === uuid) ? log : null
+      targetLog = (log.uuid === uuid) ? log : null
     })
     return targetLog
   }
@@ -64,7 +64,7 @@ class LogManager {
       let startTime = startDate.getTime()
       let endTime = endDate.getTime()
 
-      if (startTime < log.recordDate.getTime() && startTime < endTime) { 
+      if (startTime < log.recordDate.getTime() && startTime < endTime) {
         targetLogs.add(log)
       }
     })
