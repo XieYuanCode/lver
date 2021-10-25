@@ -43,7 +43,7 @@ class LogManager {
    * 根据uuid获取日志示例
    * @param { number } uuid 日志uuid
    */
-  public getLogByUuid(uuid: number): ILog | null {
+  public getLogByUuid(uuid: string): ILog | null {
     let targetLog: ILog | null = null;
     this._logs.forEach(log => {
       targetLog = (log.uuid === uuid) ? log : null

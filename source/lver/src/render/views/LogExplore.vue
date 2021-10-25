@@ -1,8 +1,5 @@
 <template>
   <div class="LogExplore">
-    <context-menu name="log_list_context">
-      <context-menu-item @click="test">123</context-menu-item>
-    </context-menu>
     <span class="log-explore-title">{{$t("view.explore.log_explore.title")}}</span>
     <n-skeleton v-if="skeleton" text :repeat="3"></n-skeleton>
     <n-input
@@ -12,7 +9,6 @@
       class="log-search-input"
     />
     <n-tree
-      v-contextmenu="{ name: 'log_list_context' }"
       :pattern="pattern"
       v-if="!skeleton"
       block-line
@@ -272,10 +268,6 @@ const selectedLog = (node: string | number[]) => {
   color: rgb(119, 119, 119);
   margin-bottom: 20px;
 }
-.v-contextmenu-item {
-  padding: 5px 10px;
-}
-
 .log-search-input {
   margin: 10px;
 }

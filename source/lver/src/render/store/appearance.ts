@@ -1,8 +1,6 @@
 import { darkTheme } from "naive-ui"
 import i18n from "../locale";
 
-// 垃圾vue 修改这里的state的时候，为了支持ts，必须同步修改这里的接口同目录的type.ts，才能生效
-// 垃圾垃圾垃圾垃圾
 export interface IAppearanceState {
   theme: any,
   logSkeleton: boolean,
