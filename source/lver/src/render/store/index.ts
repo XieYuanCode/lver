@@ -1,5 +1,5 @@
 import { InjectionKey } from "vue"
-import { createStore, Store } from "vuex"
+import { createStore, useStore as baseUseStore, Store } from "vuex"
 import appearance from "./appearance"
 import { IState } from "./type"
 
@@ -11,7 +11,12 @@ const store = createStore<IState>({
   }
 })
 
+// 定义自己的 `useStore` 组合式函数
+export function useStore () {
+  return baseUseStore(key)
+}
+
 export {
   store,
-  key
+  key,
 }
