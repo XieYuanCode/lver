@@ -1,0 +1,80 @@
+Arguments: 
+  /Users/focustt/.nvm/versions/node/v14.15.3/bin/node /usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js
+
+PATH: 
+  /usr/local/opt/redis@4.0/bin:/Users/focustt/.rvm/gems/ruby-2.6.1/bin:/Users/focustt/.rvm/gems/ruby-2.6.1@global/bin:/Users/focustt/.rvm/rubies/ruby-2.6.1/bin:/Users/focustt/.nvm/versions/node/v14.15.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/focustt/Desktop/flutter/flutter/bin:/Users/focustt/.rvm/bin:/Users/focustt/Library/Android/sdk/tools:/Users/focustt/Library/Android/sdk/tools/bin:/Users/focustt/Library/Android/sdk/platform-tools:/Users/focustt/Library/Android/sdk/emulator
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  14.15.3
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: Client network socket disconnected before secure TLS connection was established
+      at connResetException (internal/errors.js:607:14)
+      at TLSSocket.onConnectEnd (_tls_wrap.js:1544:19)
+      at TLSSocket.emit (events.js:327:22)
+      at endReadableNT (internal/streams/readable.js:1327:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+
+npm manifest: 
+  {
+    "name": "lver",
+    "version": "0.0.1",
+    "description": "A highly customized log viewer",
+    "author": "xie Yuan <17010289943@163.com> (https://gitpress.io/@amber)",
+    "keywords": [
+      "electron",
+      "vue",
+      "log"
+    ],
+    "homepage": "https://github.com/XieYuanCode/lver",
+    "bugs": {
+      "url": "https://github.com/XieYuanCode/lver/issues",
+      "email": "17010289943@163.com"
+    },
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "github:XieYuanCode/lver"
+    },
+    "main": "src/main/main.js",
+    "scripts": {
+      "web:dev": "vite",
+      "web:build": "vue-tsc --noEmit && vite build",
+      "web:serve": "vite preview",
+      "electron:start": "electron .",
+      "start": "concurrently \"vite\" \"electron .\" "
+    },
+    "dependencies": {
+      "vue": "^3.2.13",
+      "vue-i18n": "^9.2.0-beta.9",
+      "vue3-contextmenu": "^0.2.12",
+      "vuex": "^4.0.2"
+    },
+    "os": [
+      "darwin",
+      "linux",
+      "win32"
+    ],
+    "devDependencies": {
+      "@vitejs/plugin-vue": "^1.9.0",
+      "concurrently": "^6.2.2",
+      "electron": "^15.0.0",
+      "naive-ui": "^2.19.3",
+      "typescript": "^4.4.3",
+      "vfonts": "^0.1.0",
+      "vite": "^2.5.10",
+      "vue-tsc": "^0.3.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
