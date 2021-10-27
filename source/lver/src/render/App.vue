@@ -51,14 +51,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
-import { darkTheme } from "naive-ui";
+import { computed } from "vue";
 import Explore from "./views/Explore.vue";
-import { useStore } from "vuex";
-import { key } from "./store";
-import { SelectBaseOption } from "naive-ui/lib/select/src/interface";
+import { useStore } from "./store";
 
-const store = useStore(key);
+const store = useStore();
 
 const theme = computed(() => store.state.appearance.theme);
 const language = computed(() => store.state.appearance.language);

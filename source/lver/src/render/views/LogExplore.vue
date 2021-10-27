@@ -28,12 +28,11 @@ import { computed, h, reactive, ref } from "vue";
 import { NIcon, useNotification } from "naive-ui";
 import FileIcon from "../components/icons/FileIcon.vue";
 import FolderIcon from "../components/icons/FolderIcon.vue";
-import { useStore } from "vuex";
-import { key } from "../store";
+import { useStore } from "../store";
 import logManager from "../utils/logManager";
 import { NButton } from "naive-ui";
 
-const store = useStore(key);
+const store = useStore();
 
 const fileIconComponent = () => h(NIcon, {}, [h(FileIcon)]);
 const folderIconComponent = () => h(NIcon, {}, [h(FolderIcon)]);

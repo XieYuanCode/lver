@@ -1,4 +1,11 @@
-const { app, BrowserWindow } = require("electron")
+const { app, BrowserWindow, ipcMain } = require("electron")
+const Store = require("electron-store")
+
+const store = new Store()
+
+ipcMain.on("setting_confirmed", (e, args) => { 
+  store.set("setting", args)
+})
 
 function creatWindow() {
   const win = new BrowserWindow({

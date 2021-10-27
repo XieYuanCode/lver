@@ -17,6 +17,11 @@ import {
   NDialogProvider,
   NConfigProvider,
   NNotificationProvider,
+  NCard,
+  NTabs,
+  NTabPane,
+  NUploadDragger,
+  NAvatar
 } from "naive-ui";
 
 const naive = create({
@@ -38,6 +43,11 @@ const naive = create({
     NDialogProvider,
     NConfigProvider,
     NNotificationProvider,
+    NCard,
+    NTabs,
+    NTabPane,
+    NUploadDragger,
+    NAvatar
   ],
 });
 

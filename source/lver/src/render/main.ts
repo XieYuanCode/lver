@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { naive } from './uiComponents'
+import { naive } from './component'
 
 import i18n from "./locale";
 

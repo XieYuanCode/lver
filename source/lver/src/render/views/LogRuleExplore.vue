@@ -9,9 +9,8 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useStore } from "vuex";
-import { key } from "../store";
-const store = useStore(key);
+import { useStore } from "../store";
+const store = useStore();
 
 const skeleton = computed(() => store.state.appearance.logRuleSkeleton);
 </script>
