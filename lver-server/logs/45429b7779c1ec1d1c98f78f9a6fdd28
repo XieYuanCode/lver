@@ -1,0 +1,328 @@
+[2021-10-08T15:20:47.303] [INFO] App - [initLogger]logSettingFilePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist/configs/log4js.config.json
+[2021-10-08T15:20:47.305] [INFO] Startup - [startup]
+[2021-10-08T15:20:47.305] [INFO] Startup - [initEnvironmentPath]
+[2021-10-08T15:20:47.305] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.appHome:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist
+[2021-10-08T15:20:47.305] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.exePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS
+[2021-10-08T15:20:47.305] [INFO] Startup - [initConfiguration]
+[2021-10-08T15:20:47.306] [INFO] Startup - [initConfiguration]appConfigPath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist/configs/app.config.json
+[2021-10-08T15:20:47.306] [INFO] Startup - [initIoc]
+[2021-10-08T15:20:47.306] [INFO] ConfigurationResolver - [resolve], 成功获取名为iocSettings的配置节点
+[2021-10-08T15:20:47.413] [INFO] Startup - [initIoc]iocSettings:{"injections":[{"interface":"IDeviceManager","implement":"LocalDeviceManager","package":"@aep/aep-device-wosa"},{"interface":"IEventHubClient","implement":"EventHubClient","package":"@aep/aep-framework"},{"interface":"/Start","implement":"StartServiceHandler","package":"@aep/aep-agent-handlers"},{"interface":"/Pause","implement":"PauseServiceHandler","package":"@aep/aep-agent-handlers"},{"interface":"/SystemClose","implement":"SystemShutdownHandler","package":"@aep/aep-agent-handlers"},{"interface":"/SystemRestart","implement":"SystemRestartHandler","package":"@aep/aep-agent-handlers"}]}
+[2021-10-08T15:20:47.413] [INFO] Startup - [checkLicence]
+[2021-10-08T15:20:47.415] [INFO] Startup - [loadPlugins]开始加载插件, 插件目录: /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/node_modules/@aep-plugins/
+[2021-10-08T15:20:47.416] [INFO] Startup - [loadPlugins]加载插件完成
+[2021-10-08T15:20:47.416] [INFO] Startup - [startStaticFileServer]isDev:false
+[2021-10-08T15:20:47.416] [INFO] Startup - [startStaticFileServer]开始启动静态文件服务...
+[2021-10-08T15:20:47.416] [INFO] ConfigurationResolver - [resolve], 成功获取名为staticFileServerSettings的配置节点
+[2021-10-08T15:20:47.416] [DEBUG] Startup - [startStaticFileServer]静态文件服务目录,fullPath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/workspace,port:53008
+[2021-10-08T15:20:47.417] [INFO] StaticFileServer - listening on port 53008
+[2021-10-08T15:20:47.417] [INFO] StaticFileServer - rootDir:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/workspace
+[2021-10-08T15:20:47.417] [INFO] Startup - [startStaticFileServer]启动静态文件服务完成。
+[2021-10-08T15:20:47.417] [INFO] Startup - [startAgentServer]
+[2021-10-08T15:20:47.417] [INFO] ConfigurationResolver - [resolve], 成功获取名为iocSettings的配置节点
+[2021-10-08T15:20:47.417] [INFO] App - [initApp]
+[2021-10-08T15:20:47.418] [INFO] ConfigurationResolver - [resolve], 成功获取名为windowSettings的配置节点
+[2021-10-08T15:20:47.480] [INFO] App - updateConfig {
+  isUpdate: false,
+  delwhiteFiles: [],
+  updateUrl: 'http://29.2.186.151:9086',
+  versionServiceUrl: 'http://29.2.186.151:9086',
+  consumerIP: 'http://29.2.186.151:9086',
+  equipment: 'CTM'
+}
+[2021-10-08T15:20:47.480] [INFO] App - localPathDir /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS
+[2021-10-08T15:20:47.480] [INFO] App - process.argv0 /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/aep
+[2021-10-08T15:20:47.480] [DEBUG] WindowsManager - [getDisplays]
+[2021-10-08T15:20:47.485] [DEBUG] WindowsManager - [getDisplays] [
+  {
+    id: 2,
+    bounds: { x: 0, y: 0, width: 2560, height: 1440 },
+    workArea: { x: 0, y: 25, width: 2560, height: 1335 },
+    accelerometerSupport: 'unknown',
+    monochrome: false,
+    colorDepth: 24,
+    colorSpace: '{primaries:BT709, transfer:BT709_APPLE, matrix:RGB, range:FULL}',
+    depthPerComponent: 8,
+    size: { width: 2560, height: 1440 },
+    displayFrequency: 59,
+    workAreaSize: { width: 2560, height: 1335 },
+    scaleFactor: 1,
+    rotation: 0,
+    internal: false,
+    touchSupport: 'unknown'
+  },
+  {
+    id: 1,
+    bounds: { x: -1280, y: 570, width: 1280, height: 800 },
+    workArea: { x: -1280, y: 595, width: 1280, height: 775 },
+    accelerometerSupport: 'unknown',
+    monochrome: false,
+    colorDepth: 30,
+    colorSpace: '{primaries:BT709, transfer:IEC61966_2_1_HDR, matrix:RGB, range:FULL}',
+    depthPerComponent: 10,
+    size: { width: 1280, height: 800 },
+    displayFrequency: 60,
+    workAreaSize: { width: 1280, height: 775 },
+    scaleFactor: 2,
+    rotation: 0,
+    internal: true,
+    touchSupport: 'unknown'
+  }
+]
+[2021-10-08T15:20:47.486] [DEBUG] WindowsManager - [showWindow]displayIndex:0,display:[object Object]
+[2021-10-08T15:20:47.523] [DEBUG] WindowsManager - [registerWindowsEventsForScheduleTask]
+[2021-10-08T15:20:47.523] [DEBUG] WindowsManager - [registerGlobalShortcut]
+[2021-10-08T15:20:47.523] [INFO] ConfigurationResolver - [resolve], 成功获取名为hotKeySettings的配置节点
+[2021-10-08T15:20:47.839] [DEBUG] WindowsManager - [showWindow]windowKey:mainWindow,windowsId:1
+[2021-10-08T15:20:48.134] [INFO] NativeInteropBridge - [execute-plugin]windowId:1, args:{"service":"EventHubInterop","action":"Initialize","callbackId":"EventHubInterop1777781891","args":"[]"}
+[2021-10-08T15:20:48.134] [INFO] EventHubInterop - 开始获取插件EventHubInterop
+[2021-10-08T15:20:48.136] [INFO] EventHubInterop - 开始执行插件方法，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:20:48.136] [INFO] EventHubInterop - 插件方法执行成功，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:20:57.828] [INFO] NativeInteropBridge - [execute-plugin]windowId:1, args:{"service":"EventHubInterop","action":"Initialize","callbackId":"EventHubInterop200591113","args":"[]"}
+[2021-10-08T15:20:57.828] [INFO] EventHubInterop - 开始获取插件EventHubInterop
+[2021-10-08T15:20:57.828] [INFO] EventHubInterop - 开始执行插件方法，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:20:57.828] [INFO] EventHubInterop - 插件方法执行成功，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:26:14.443] [INFO] App - [initLogger]logSettingFilePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist/configs/log4js.config.json
+[2021-10-08T15:26:14.444] [INFO] Startup - [startup]
+[2021-10-08T15:26:14.444] [INFO] Startup - [initEnvironmentPath]
+[2021-10-08T15:26:14.444] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.appHome:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist
+[2021-10-08T15:26:14.444] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.exePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS
+[2021-10-08T15:26:14.444] [INFO] Startup - [initConfiguration]
+[2021-10-08T15:26:14.445] [INFO] Startup - [initConfiguration]appConfigPath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist/configs/app.config.json
+[2021-10-08T15:26:14.445] [INFO] Startup - [initIoc]
+[2021-10-08T15:26:14.445] [INFO] ConfigurationResolver - [resolve], 成功获取名为iocSettings的配置节点
+[2021-10-08T15:26:14.542] [INFO] Startup - [initIoc]iocSettings:{"injections":[{"interface":"IDeviceManager","implement":"LocalDeviceManager","package":"@aep/aep-device-wosa"},{"interface":"IEventHubClient","implement":"EventHubClient","package":"@aep/aep-framework"},{"interface":"/Start","implement":"StartServiceHandler","package":"@aep/aep-agent-handlers"},{"interface":"/Pause","implement":"PauseServiceHandler","package":"@aep/aep-agent-handlers"},{"interface":"/SystemClose","implement":"SystemShutdownHandler","package":"@aep/aep-agent-handlers"},{"interface":"/SystemRestart","implement":"SystemRestartHandler","package":"@aep/aep-agent-handlers"}]}
+[2021-10-08T15:26:14.542] [INFO] Startup - [checkLicence]
+[2021-10-08T15:26:14.544] [INFO] Startup - [loadPlugins]开始加载插件, 插件目录: /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/node_modules/@aep-plugins/
+[2021-10-08T15:26:14.546] [INFO] Startup - [loadPlugins]加载插件完成
+[2021-10-08T15:26:14.546] [INFO] Startup - [startStaticFileServer]isDev:false
+[2021-10-08T15:26:14.546] [INFO] Startup - [startStaticFileServer]开始启动静态文件服务...
+[2021-10-08T15:26:14.546] [INFO] ConfigurationResolver - [resolve], 成功获取名为staticFileServerSettings的配置节点
+[2021-10-08T15:26:14.546] [DEBUG] Startup - [startStaticFileServer]静态文件服务目录,fullPath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/workspace,port:53008
+[2021-10-08T15:26:14.547] [INFO] StaticFileServer - listening on port 53008
+[2021-10-08T15:26:14.547] [INFO] StaticFileServer - rootDir:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/workspace
+[2021-10-08T15:26:14.547] [INFO] Startup - [startStaticFileServer]启动静态文件服务完成。
+[2021-10-08T15:26:14.547] [INFO] Startup - [startAgentServer]
+[2021-10-08T15:26:14.547] [INFO] ConfigurationResolver - [resolve], 成功获取名为iocSettings的配置节点
+[2021-10-08T15:26:14.548] [INFO] App - [initApp]
+[2021-10-08T15:26:14.548] [INFO] ConfigurationResolver - [resolve], 成功获取名为windowSettings的配置节点
+[2021-10-08T15:26:14.639] [INFO] App - updateConfig {
+  isUpdate: false,
+  delwhiteFiles: [],
+  updateUrl: 'http://29.2.186.151:9086',
+  versionServiceUrl: 'http://29.2.186.151:9086',
+  consumerIP: 'http://29.2.186.151:9086',
+  equipment: 'CTM'
+}
+[2021-10-08T15:26:14.639] [INFO] App - localPathDir /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS
+[2021-10-08T15:26:14.639] [INFO] App - process.argv0 /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/aep
+[2021-10-08T15:26:14.639] [DEBUG] WindowsManager - [getDisplays]
+[2021-10-08T15:26:14.646] [DEBUG] WindowsManager - [getDisplays] [
+  {
+    id: 2,
+    bounds: { x: 0, y: 0, width: 2560, height: 1440 },
+    workArea: { x: 0, y: 25, width: 2560, height: 1335 },
+    accelerometerSupport: 'unknown',
+    monochrome: false,
+    colorDepth: 24,
+    colorSpace: '{primaries:BT709, transfer:BT709_APPLE, matrix:RGB, range:FULL}',
+    depthPerComponent: 8,
+    size: { width: 2560, height: 1440 },
+    displayFrequency: 59,
+    workAreaSize: { width: 2560, height: 1335 },
+    scaleFactor: 1,
+    rotation: 0,
+    internal: false,
+    touchSupport: 'unknown'
+  },
+  {
+    id: 1,
+    bounds: { x: -1280, y: 570, width: 1280, height: 800 },
+    workArea: { x: -1280, y: 595, width: 1280, height: 775 },
+    accelerometerSupport: 'unknown',
+    monochrome: false,
+    colorDepth: 30,
+    colorSpace: '{primaries:BT709, transfer:IEC61966_2_1_HDR, matrix:RGB, range:FULL}',
+    depthPerComponent: 10,
+    size: { width: 1280, height: 800 },
+    displayFrequency: 60,
+    workAreaSize: { width: 1280, height: 775 },
+    scaleFactor: 2,
+    rotation: 0,
+    internal: true,
+    touchSupport: 'unknown'
+  }
+]
+[2021-10-08T15:26:14.647] [DEBUG] WindowsManager - [showWindow]displayIndex:0,display:[object Object]
+[2021-10-08T15:26:14.689] [DEBUG] WindowsManager - [registerWindowsEventsForScheduleTask]
+[2021-10-08T15:26:14.689] [DEBUG] WindowsManager - [registerGlobalShortcut]
+[2021-10-08T15:26:14.689] [INFO] ConfigurationResolver - [resolve], 成功获取名为hotKeySettings的配置节点
+[2021-10-08T15:26:14.987] [DEBUG] WindowsManager - [showWindow]windowKey:mainWindow,windowsId:1
+[2021-10-08T15:26:15.275] [INFO] NativeInteropBridge - [execute-plugin]windowId:1, args:{"service":"EventHubInterop","action":"Initialize","callbackId":"EventHubInterop1130598759","args":"[]"}
+[2021-10-08T15:26:15.276] [INFO] EventHubInterop - 开始获取插件EventHubInterop
+[2021-10-08T15:26:15.277] [INFO] EventHubInterop - 开始执行插件方法，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:26:15.277] [INFO] EventHubInterop - 插件方法执行成功，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:27:13.652] [INFO] App - [initLogger]logSettingFilePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist/configs/log4js.config.json
+[2021-10-08T15:27:13.653] [INFO] Startup - [startup]
+[2021-10-08T15:27:13.653] [INFO] Startup - [initEnvironmentPath]
+[2021-10-08T15:27:13.653] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.appHome:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist
+[2021-10-08T15:27:13.653] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.exePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS
+[2021-10-08T15:27:13.653] [INFO] Startup - [initConfiguration]
+[2021-10-08T15:27:13.654] [INFO] Startup - [initConfiguration]appConfigPath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist/configs/app.config.json
+[2021-10-08T15:27:13.654] [INFO] Startup - [initIoc]
+[2021-10-08T15:27:13.654] [INFO] ConfigurationResolver - [resolve], 成功获取名为iocSettings的配置节点
+[2021-10-08T15:27:13.721] [INFO] Startup - [initIoc]iocSettings:{"injections":[{"interface":"IDeviceManager","implement":"LocalDeviceManager","package":"@aep/aep-device-wosa"},{"interface":"IEventHubClient","implement":"EventHubClient","package":"@aep/aep-framework"},{"interface":"/Start","implement":"StartServiceHandler","package":"@aep/aep-agent-handlers"},{"interface":"/Pause","implement":"PauseServiceHandler","package":"@aep/aep-agent-handlers"},{"interface":"/SystemClose","implement":"SystemShutdownHandler","package":"@aep/aep-agent-handlers"},{"interface":"/SystemRestart","implement":"SystemRestartHandler","package":"@aep/aep-agent-handlers"}]}
+[2021-10-08T15:27:13.721] [INFO] Startup - [checkLicence]
+[2021-10-08T15:27:13.721] [INFO] Startup - [loadPlugins]开始加载插件, 插件目录: /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/node_modules/@aep-plugins/
+[2021-10-08T15:27:13.722] [INFO] Startup - [loadPlugins]加载插件完成
+[2021-10-08T15:27:13.722] [INFO] Startup - [startStaticFileServer]isDev:false
+[2021-10-08T15:27:13.722] [INFO] Startup - [startStaticFileServer]开始启动静态文件服务...
+[2021-10-08T15:27:13.722] [INFO] ConfigurationResolver - [resolve], 成功获取名为staticFileServerSettings的配置节点
+[2021-10-08T15:27:13.722] [DEBUG] Startup - [startStaticFileServer]静态文件服务目录,fullPath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/workspace,port:53008
+[2021-10-08T15:27:13.723] [INFO] StaticFileServer - listening on port 53008
+[2021-10-08T15:27:13.723] [INFO] StaticFileServer - rootDir:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/workspace
+[2021-10-08T15:27:13.723] [INFO] Startup - [startStaticFileServer]启动静态文件服务完成。
+[2021-10-08T15:27:13.724] [INFO] Startup - [startAgentServer]
+[2021-10-08T15:27:13.724] [INFO] ConfigurationResolver - [resolve], 成功获取名为iocSettings的配置节点
+[2021-10-08T15:27:13.724] [INFO] App - [initApp]
+[2021-10-08T15:27:13.724] [INFO] ConfigurationResolver - [resolve], 成功获取名为windowSettings的配置节点
+[2021-10-08T15:27:13.769] [INFO] App - updateConfig {
+  isUpdate: false,
+  delwhiteFiles: [],
+  updateUrl: 'http://29.2.186.151:9086',
+  versionServiceUrl: 'http://29.2.186.151:9086',
+  consumerIP: 'http://29.2.186.151:9086',
+  equipment: 'CTM'
+}
+[2021-10-08T15:27:13.769] [INFO] App - localPathDir /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS
+[2021-10-08T15:27:13.769] [INFO] App - process.argv0 /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/aep
+[2021-10-08T15:27:13.770] [DEBUG] WindowsManager - [getDisplays]
+[2021-10-08T15:27:13.772] [DEBUG] WindowsManager - [getDisplays] [
+  {
+    id: 2,
+    bounds: { x: 0, y: 0, width: 2560, height: 1440 },
+    workArea: { x: 0, y: 25, width: 2560, height: 1335 },
+    accelerometerSupport: 'unknown',
+    monochrome: false,
+    colorDepth: 24,
+    colorSpace: '{primaries:BT709, transfer:BT709_APPLE, matrix:RGB, range:FULL}',
+    depthPerComponent: 8,
+    size: { width: 2560, height: 1440 },
+    displayFrequency: 59,
+    workAreaSize: { width: 2560, height: 1335 },
+    scaleFactor: 1,
+    rotation: 0,
+    internal: false,
+    touchSupport: 'unknown'
+  },
+  {
+    id: 1,
+    bounds: { x: -1280, y: 570, width: 1280, height: 800 },
+    workArea: { x: -1280, y: 595, width: 1280, height: 775 },
+    accelerometerSupport: 'unknown',
+    monochrome: false,
+    colorDepth: 30,
+    colorSpace: '{primaries:BT709, transfer:IEC61966_2_1_HDR, matrix:RGB, range:FULL}',
+    depthPerComponent: 10,
+    size: { width: 1280, height: 800 },
+    displayFrequency: 60,
+    workAreaSize: { width: 1280, height: 775 },
+    scaleFactor: 2,
+    rotation: 0,
+    internal: true,
+    touchSupport: 'unknown'
+  }
+]
+[2021-10-08T15:27:13.773] [DEBUG] WindowsManager - [showWindow]displayIndex:0,display:[object Object]
+[2021-10-08T15:27:13.793] [DEBUG] WindowsManager - [registerWindowsEventsForScheduleTask]
+[2021-10-08T15:27:13.794] [DEBUG] WindowsManager - [registerGlobalShortcut]
+[2021-10-08T15:27:13.794] [INFO] ConfigurationResolver - [resolve], 成功获取名为hotKeySettings的配置节点
+[2021-10-08T15:27:14.095] [DEBUG] WindowsManager - [showWindow]windowKey:mainWindow,windowsId:1
+[2021-10-08T15:27:14.377] [INFO] NativeInteropBridge - [execute-plugin]windowId:1, args:{"service":"EventHubInterop","action":"Initialize","callbackId":"EventHubInterop1036962138","args":"[]"}
+[2021-10-08T15:27:14.377] [INFO] EventHubInterop - 开始获取插件EventHubInterop
+[2021-10-08T15:27:14.378] [INFO] EventHubInterop - 开始执行插件方法，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:27:14.378] [INFO] EventHubInterop - 插件方法执行成功，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:29:19.992] [INFO] App - [initLogger]logSettingFilePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist/configs/log4js.config.json
+[2021-10-08T15:29:19.993] [INFO] Startup - [startup]
+[2021-10-08T15:29:19.994] [INFO] Startup - [initEnvironmentPath]
+[2021-10-08T15:29:19.994] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.appHome:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist
+[2021-10-08T15:29:19.994] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.exePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS
+[2021-10-08T15:29:19.994] [INFO] Startup - [initConfiguration]
+[2021-10-08T15:29:19.994] [INFO] Startup - [initConfiguration]appConfigPath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist/configs/app.config.json
+[2021-10-08T15:29:19.994] [INFO] Startup - [initIoc]
+[2021-10-08T15:29:19.994] [INFO] ConfigurationResolver - [resolve], 成功获取名为iocSettings的配置节点
+[2021-10-08T15:29:20.088] [INFO] Startup - [initIoc]iocSettings:{"injections":[{"interface":"IDeviceManager","implement":"LocalDeviceManager","package":"@aep/aep-device-wosa"},{"interface":"IEventHubClient","implement":"EventHubClient","package":"@aep/aep-framework"},{"interface":"/Start","implement":"StartServiceHandler","package":"@aep/aep-agent-handlers"},{"interface":"/Pause","implement":"PauseServiceHandler","package":"@aep/aep-agent-handlers"},{"interface":"/SystemClose","implement":"SystemShutdownHandler","package":"@aep/aep-agent-handlers"},{"interface":"/SystemRestart","implement":"SystemRestartHandler","package":"@aep/aep-agent-handlers"}]}
+[2021-10-08T15:29:20.088] [INFO] Startup - [checkLicence]
+[2021-10-08T15:29:20.089] [INFO] Startup - [loadPlugins]开始加载插件, 插件目录: /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/node_modules/@aep-plugins/
+[2021-10-08T15:29:20.090] [INFO] Startup - [loadPlugins]加载插件完成
+[2021-10-08T15:29:20.090] [INFO] Startup - [startStaticFileServer]isDev:false
+[2021-10-08T15:29:20.090] [INFO] Startup - [startStaticFileServer]开始启动静态文件服务...
+[2021-10-08T15:29:20.090] [INFO] ConfigurationResolver - [resolve], 成功获取名为staticFileServerSettings的配置节点
+[2021-10-08T15:29:20.090] [DEBUG] Startup - [startStaticFileServer]静态文件服务目录,fullPath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/workspace,port:53008
+[2021-10-08T15:29:20.091] [INFO] StaticFileServer - listening on port 53008
+[2021-10-08T15:29:20.091] [INFO] StaticFileServer - rootDir:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/workspace
+[2021-10-08T15:29:20.091] [INFO] Startup - [startStaticFileServer]启动静态文件服务完成。
+[2021-10-08T15:29:20.091] [INFO] Startup - [startAgentServer]
+[2021-10-08T15:29:20.091] [INFO] ConfigurationResolver - [resolve], 成功获取名为iocSettings的配置节点
+[2021-10-08T15:29:20.091] [INFO] App - [initApp]
+[2021-10-08T15:29:20.091] [INFO] ConfigurationResolver - [resolve], 成功获取名为windowSettings的配置节点
+[2021-10-08T15:29:20.154] [INFO] App - updateConfig {
+  isUpdate: false,
+  delwhiteFiles: [],
+  updateUrl: 'http://29.2.186.151:9086',
+  versionServiceUrl: 'http://29.2.186.151:9086',
+  consumerIP: 'http://29.2.186.151:9086',
+  equipment: 'CTM'
+}
+[2021-10-08T15:29:20.155] [INFO] App - localPathDir /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS
+[2021-10-08T15:29:20.155] [INFO] App - process.argv0 /Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS/aep
+[2021-10-08T15:29:20.155] [DEBUG] WindowsManager - [getDisplays]
+[2021-10-08T15:29:20.158] [DEBUG] WindowsManager - [getDisplays] [
+  {
+    id: 2,
+    bounds: { x: 0, y: 0, width: 2560, height: 1440 },
+    workArea: { x: 0, y: 25, width: 2560, height: 1335 },
+    accelerometerSupport: 'unknown',
+    monochrome: false,
+    colorDepth: 24,
+    colorSpace: '{primaries:BT709, transfer:BT709_APPLE, matrix:RGB, range:FULL}',
+    depthPerComponent: 8,
+    size: { width: 2560, height: 1440 },
+    displayFrequency: 59,
+    workAreaSize: { width: 2560, height: 1335 },
+    scaleFactor: 1,
+    rotation: 0,
+    internal: false,
+    touchSupport: 'unknown'
+  },
+  {
+    id: 1,
+    bounds: { x: -1280, y: 570, width: 1280, height: 800 },
+    workArea: { x: -1280, y: 595, width: 1280, height: 775 },
+    accelerometerSupport: 'unknown',
+    monochrome: false,
+    colorDepth: 30,
+    colorSpace: '{primaries:BT709, transfer:IEC61966_2_1_HDR, matrix:RGB, range:FULL}',
+    depthPerComponent: 10,
+    size: { width: 1280, height: 800 },
+    displayFrequency: 60,
+    workAreaSize: { width: 1280, height: 775 },
+    scaleFactor: 2,
+    rotation: 0,
+    internal: true,
+    touchSupport: 'unknown'
+  }
+]
+[2021-10-08T15:29:20.158] [DEBUG] WindowsManager - [showWindow]displayIndex:0,display:[object Object]
+[2021-10-08T15:29:20.185] [DEBUG] WindowsManager - [registerWindowsEventsForScheduleTask]
+[2021-10-08T15:29:20.185] [DEBUG] WindowsManager - [registerGlobalShortcut]
+[2021-10-08T15:29:20.185] [INFO] ConfigurationResolver - [resolve], 成功获取名为hotKeySettings的配置节点
+[2021-10-08T15:29:20.464] [DEBUG] WindowsManager - [showWindow]windowKey:mainWindow,windowsId:1
+[2021-10-08T15:29:20.727] [INFO] NativeInteropBridge - [execute-plugin]windowId:1, args:{"service":"EventHubInterop","action":"Initialize","callbackId":"EventHubInterop1078226934","args":"[]"}
+[2021-10-08T15:29:20.728] [INFO] EventHubInterop - 开始获取插件EventHubInterop
+[2021-10-08T15:29:20.729] [INFO] EventHubInterop - 开始执行插件方法，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:29:20.729] [INFO] EventHubInterop - 插件方法执行成功，插件：EventHubInterop，方法：Initialize，参数：[]
+[2021-10-08T15:29:20.770] [INFO] NativeInteropBridge - [execute-plugin]windowId:1, args:{"service":"SessionHelper","action":"GetSessionData","callbackId":"SessionHelper1078226935","args":"[]"}
+[2021-10-08T15:29:20.770] [INFO] SessionHelper - 开始获取插件SessionHelper
+[2021-10-08T15:29:20.771] [INFO] SessionHelper - 开始执行插件方法，插件：SessionHelper，方法：GetSessionData，参数：[]
+[2021-10-08T15:29:20.772] [INFO] SessionHelper - 插件方法执行成功，插件：SessionHelper，方法：GetSessionData，参数：[]

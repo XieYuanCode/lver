@@ -1,1 +1,3 @@
 .DS_Store
+lver-server/node_modules/**
+lver/node_modules/**

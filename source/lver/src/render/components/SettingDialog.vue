@@ -1,7 +1,10 @@
 <template>
   <n-card title="Setting" :bordered="false" size="huge">
     <n-card hoverable>
-      <n-tabs default-value="account" type="line">
+      <n-tabs default-value="general" type="line">
+        <n-tab-pane name="general" tab="General">
+          
+        </n-tab-pane>
         <n-tab-pane name="account" tab="Account">
           <n-avatar :size="100" round>
             <n-icon>
