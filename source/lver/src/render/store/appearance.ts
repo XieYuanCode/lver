@@ -1,8 +1,9 @@
-import { darkTheme } from "naive-ui"
 import i18n from "../locale";
+import { ThemeType } from "../model/theme";
+import { switchTheme } from "../utils/theme";
 
 export interface IAppearanceState {
-  theme: any,
+  theme: ThemeType,
   logSkeleton: boolean,
   logRuleSkeleton: boolean,
   language: string
@@ -11,31 +12,29 @@ export interface IAppearanceState {
 const appearance = {
   state() {
     return {
-      theme: null,
+      theme: ThemeType.System,
       logSkeleton: true,
       logRuleSkeleton: true,
-      language: 'en'
+      language: 'ch'
     }
   },
   mutations: {
     /**
      * 切换主题
      */
-    switchTheme(state: IAppearanceState) {
-      if (state.theme === null) {
-        state.theme = darkTheme;
-      } else {
-        state.theme = null;
-      }
+    switchTheme(state: IAppearanceState, theme: ThemeType) {
+      state.theme = theme
+
+      switchTheme(theme)
     },
     /**
      * 关闭骨架屏
      */
-    closeLogSkeleton(state: IAppearanceState) {
-      state.logSkeleton = false
+    switchLogSkeleton(state: IAppearanceState, logSkeleton: boolean) {
+      state.logSkeleton = logSkeleton
     },
-    closeLogRuleSkeleton(state: IAppearanceState) {
-      state.logRuleSkeleton = false
+    switchLogRuleSkeleton(state: IAppearanceState, logRuleSkeleton: boolean) {
+      state.logRuleSkeleton = logRuleSkeleton
     },
     switchLanguage(state: IAppearanceState, language: string) {
       state.language = language

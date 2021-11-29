@@ -1,9 +1,17 @@
 const en = {
   temp: {
+    title_text: "Functional Test Page",
     theme_btn_text: "Theme",
     closeLogSkeleton_btn_text: "Log Skeleton",
     closeLogRuleSkeleton_btn_text: "Log Rule Skeleton",
-    switchLanguage_btn_text: "Language"
+    switchLanguage_btn_text: "Language",
+    language: {
+      ch: "ch",
+      en: "en",
+      fr: "fr",
+      jp: "jp",
+      kor: "kor"
+    }
   },
   view: {
     explore: {

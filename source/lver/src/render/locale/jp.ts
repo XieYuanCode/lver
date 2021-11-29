@@ -1,9 +1,17 @@
 const jp = {
   temp: {
+    title_text: "機能テストページ",
     theme_btn_text: "テーマ",
     closeLogSkeleton_btn_text: "ログ スケルトン",
     closeLogRuleSkeleton_btn_text: "ログ ルール スケルトン",
-    switchLanguage_btn_text: "言語"
+    switchLanguage_btn_text: "言語",
+    language: {
+      ch: "中国语",
+      en: "英語",
+      fr: "フランス語",
+      jp: "日本語",
+      kor: "ハングル"
+    }
   },
   view: {
     explore: {

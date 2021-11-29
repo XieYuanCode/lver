@@ -6,7 +6,7 @@ import fr from "./fr"
 import kor from "./kor"
 
 const i18n = createI18n({
-  locale: 'en',
+  locale: 'ch',
   messages: {
     ch,
     en,

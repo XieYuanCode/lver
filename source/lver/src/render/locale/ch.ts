@@ -1,9 +1,17 @@
 const ch = {
   temp: {
+    title_text: "功能测试页面",
     theme_btn_text: "主题",
     closeLogSkeleton_btn_text: "日志骨架屏",
     closeLogRuleSkeleton_btn_text: "日志规则骨架屏",
-    switchLanguage_btn_text: "语言"
+    switchLanguage_btn_text: "语言",
+    language: {
+      ch: "中文",
+      en: "英文",
+      fr: "法语",
+      jp: "日语",
+      kor: "韩语"
+    }
   },
   view: {
     explore: {

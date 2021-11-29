@@ -1,9 +1,17 @@
 const kor = {
   temp: {
+    title_text: "기능 테스트 페이지",
     theme_btn_text: "주제",
     closeLogSkeleton_btn_text: "로그 스켈레톤",
     closeLogRuleSkeleton_btn_text: "로그 규칙 스켈레톤",
-    switchLanguage_btn_text: "언어"
+    switchLanguage_btn_text: "언어",
+    language: {
+      ch: "중국어",
+      en: "영어",
+      fr: "프랑스어",
+      jp: "일본어",
+      kor: "한국어"
+    }
   },
   view: {
     explore: {

@@ -66,7 +66,7 @@ import LogRuleIcon from "../components/icons/LogRuleIcon.vue";
 import LogExplore from "./LogExplore.vue";
 import LogRuleExplore from "./LogRuleExplore.vue";
 import CrossIcon from "../components/icons/CrossIcon.vue";
-import { SelectBaseOption } from "naive-ui/lib/select/src/interface";
+// import { SelectBaseOption } from "naive-ui/lib/select/src/interface";
 import CreateLogRuleDialog from "../components/CreateLogRuleDialog.vue";
 import ImportLogFileDialog from "../components/ImportLogFileDialog.vue";
 import { useI18n } from "vue-i18n";
@@ -125,21 +125,21 @@ function switchLogRuleExploreView() {
   exploreViewType.value = LogRuleExplore;
 }
 
-const popselected = (
-  value: string | number | Array<string | number> | null,
-  option: SelectBaseOption | null | Array<SelectBaseOption>
-) => {
-  switch (value) {
-    case "new_log_rule":
-      showCreateLogRuleDialog.value = true;
-      break;
-    case "import_log_file":
-      showImportLogFileDialog.value = true;
-      break;
-    default:
-      break;
-  }
-};
+// const popselected = (
+//   value: string | number | Array<string | number> | null,
+//   option: SelectBaseOption | null | Array<SelectBaseOption>
+// ) => {
+//   switch (value) {
+//     case "new_log_rule":
+//       showCreateLogRuleDialog.value = true;
+//       break;
+//     case "import_log_file":
+//       showImportLogFileDialog.value = true;
+//       break;
+//     default:
+//       break;
+//   }
+// };
 const showSetting = () => {
   showSettingDialog.value = true
 }

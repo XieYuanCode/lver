@@ -25,19 +25,19 @@
 
 <script setup lang="ts">
 import { computed, h, reactive, ref } from "vue";
-import { NIcon, useNotification } from "naive-ui";
+// import { NIcon, useNotification } from "naive-ui";
 import FileIcon from "../components/icons/FileIcon.vue";
 import FolderIcon from "../components/icons/FolderIcon.vue";
 import { useStore } from "../store";
 import logManager from "../utils/logManager";
-import { NButton } from "naive-ui";
+// import { NButton } from "naive-ui";
 
 const store = useStore();
 
-const fileIconComponent = () => h(NIcon, {}, [h(FileIcon)]);
-const folderIconComponent = () => h(NIcon, {}, [h(FolderIcon)]);
+// const fileIconComponent = () => h(NIcon, {}, [h(FileIcon)]);
+// const folderIconComponent = () => h(NIcon, {}, [h(FolderIcon)]);
 const pattern = ref(null);
-const notification = useNotification();
+// const notification = useNotification();
 
 const logList = reactive([
   {

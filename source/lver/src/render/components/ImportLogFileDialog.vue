@@ -42,20 +42,20 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref, watch } from "vue";
-import { UploadFileInfo } from "naive-ui";
+// import { UploadFileInfo } from "naive-ui";
 
-let importLogs = ref<UploadFileInfo[]>([]);
+// let importLogs = ref<UploadFileInfo[]>([]);
 const configureButtonDisabled = ref(true);
 const configureView = ref(true);
 
-watch(importLogs, (newValue) => {
-  configureButtonDisabled.value = !Boolean(newValue.length > 0);
-});
+// watch(importLogs, (newValue) => {
+//   configureButtonDisabled.value = !Boolean(newValue.length > 0);
+// });
 
-const importFileChanged = (logs: UploadFileInfo[]) => {
-  importLogs.value = logs;
-  console.log(logs);
-};
+// const importFileChanged = (logs: UploadFileInfo[]) => {
+//   importLogs.value = logs;
+//   console.log(logs);
+// };
 
 const configure = () => {
   configureView.value = false;

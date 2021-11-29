@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron")
+const { app, BrowserWindow, ipcMain, nativeTheme } = require("electron")
 const Store = require("electron-store")
 
 const store = new Store()
@@ -27,5 +27,6 @@ function creatWindow() {
 }
 
 app.whenReady().then(() => {
+  console.log(123, nativeTheme.themeSource)
   creatWindow()
 })

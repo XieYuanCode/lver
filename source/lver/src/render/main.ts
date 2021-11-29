@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { naive } from './component'
+
+import ArcoVue from '@arco-design/web-vue';
+import '@arco-design/web-vue/dist/arco.css'
 
 import i18n from "./locale";
 
@@ -11,7 +13,9 @@ import { store, key } from "./store"
 
 const app = createApp(App)
 
-app.use(naive)
+app.use(ArcoVue, {
+  componentPrefix: 'lver'
+})
 app.use(store, key)
 app.use(i18n)
 

@@ -1,9 +1,17 @@
 const fr = {
   temp: {
+    title_text: "Page de test fonctionnel",
     theme_btn_text: "Thème",
     closeLogSkeleton_btn_text: "Squelette de journal",
     closeLogRuleSkeleton_btn_text: "Squelette de règle de journal",
-    switchLanguage_btn_text: "Langue"
+    switchLanguage_btn_text: "Langue",
+    language: {
+      ch: "chinois",
+      en: "En anglais",
+      fr: "En français",
+      jp: "japonais",
+      kor: "coréen"
+    }
   },
   view: {
     explore: {
