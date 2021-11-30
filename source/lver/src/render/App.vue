@@ -18,6 +18,7 @@ import Explore from "./views/Explore.vue";
 import { useStore } from "./store";
 import Setting from "./views/Setting.vue"
 import Editor from "./views/Editor.vue"
+import { ThemeType } from "./model/theme";
 
 const store = useStore();
 
@@ -25,6 +26,8 @@ const isSettingView = computed(() => store.state.appearance.settingViewVisible)
 
 onMounted(() => {
   // TODO: 读取用户配置
+  store.commit('switchTheme', ThemeType.System)
+  store.commit('switchLanguage', "ch")
 })
 
 </script>
@@ -46,6 +49,7 @@ body {
 
 .lver-layout-content {
   padding-left: 10px;
+  padding-top: 20px;
   background: var(--color-menu-light-bg);
 }
 </style>
