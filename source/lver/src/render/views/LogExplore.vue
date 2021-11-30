@@ -21,7 +21,42 @@
       :default-expanded-keys="[]"
       size="mini"
       @select="handleLogSelected"
-    ></lver-tree>
+    >
+      <template #extra="nodeData">
+        <lver-dropdown>
+          <IconMore style="position: absolute; right: 5px; top: 5px;" />
+          <template #content>
+            <lver-doption
+              v-if="!nodeData.children"
+              @click="openInEditor(nodeData)"
+            >{{ $t("view.explore.log_explore.context_menu.open") }}</lver-doption>
+            <lver-doption>{{ $t("view.explore.log_explore.context_menu.open_local") }}</lver-doption>
+            <lver-doption
+              @click="deleteLog(nodeData)"
+            >{{ $t("view.explore.log_explore.context_menu.delete") }}</lver-doption>
+            <lver-doption>{{ $t("view.explore.log_explore.context_menu.share") }}</lver-doption>
+          </template>
+        </lver-dropdown>
+        <lver-tag
+          size="mini"
+          style="position: absolute; right: 30px; top: 0px;"
+          color="arcoblue"
+          v-if="isTagVisiable && nodeData.type === 'local'"
+        >{{ $t("view.explore.log_explore.tag.local") }}</lver-tag>
+        <lver-tag
+          size="mini"
+          style="position: absolute; right: 30px; top: 0px;"
+          color="green"
+          v-if="isTagVisiable && nodeData.type === 'share'"
+        >{{ $t("view.explore.log_explore.tag.share") }}</lver-tag>
+        <lver-tag
+          size="mini"
+          style="position: absolute; right: 30px; top: 0px;"
+          color="magenta"
+          v-if="isTagVisiable && nodeData.type === 'online'"
+        >{{ $t("view.explore.log_explore.tag.online") }}</lver-tag>
+      </template>
+    </lver-tree>
     <lver-empty v-if="!skeleton && !logList" />
   </div>
 </template>
@@ -30,6 +65,7 @@
 import { computed, reactive, h, ref, onMounted } from 'vue';
 import { useStore } from "../store";
 import { TreeNodeData } from '@arco-design/web-vue/es/tree/interface';
+import { IconMore } from '@arco-design/web-vue/es/icon';
 
 const store = useStore();
 
@@ -38,10 +74,21 @@ const skeleton = computed(() => store.state.appearance.logSkeleton);
 const searchKey = ref("")
 
 const logList = computed(() => store.getters.renderLogList)
+const isTagVisiable = computed(() => store.state.appearance.tag)
 
 const handleLogSelected = (selected: boolean, selectedNode: { node: TreeNodeData }) => {
-  // 如果选择的不是目录 就打开
-  !selectedNode.node.children && store.commit('openNewEditor', selectedNode.node)
+  store.commit('switchSettingViewVisible', false)
+  store.commit('openNewEditor', selectedNode.node)
+}
+
+const openInEditor = (nodeData: TreeNodeData) => {
+  store.commit('switchSettingViewVisible', false)
+  store.commit('openNewEditor', nodeData)
+}
+
+const deleteLog = (nodeData: TreeNodeData) => {
+  console.log(123, nodeData.key)
+  store.commit('removeLogFile', nodeData.key)
 }
 
 onMounted(() => {

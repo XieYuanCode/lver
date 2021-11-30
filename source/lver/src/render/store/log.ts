@@ -3,7 +3,7 @@ import { IconFile, IconFolder } from '@arco-design/web-vue/es/icon';
 import { h, VNode } from "vue"
 
 interface ILogView {
-  uuid: string,
+  key: string,
   children?: ILogView[]
   icon: () => VNode
 }
@@ -17,107 +17,29 @@ const data = {
     return {
       logList: [
         {
-          key: "00000001",
-          title: "农行",
-          children: [
-            {
-              key: "00000002",
-              title: "2021-08",
-              children: [
-                {
-                  key: "00000003",
-                  title: "UI显示异常",
-                },
-                {
-                  key: "00000004",
-                  title: "技术组件执行异常",
-                },
-              ],
-            },
-            {
-              key: "00000005",
-              title: "2021-09",
-              children: [
-                {
-                  key: "00000006",
-                  title: "执行速度日志",
-                },
-                {
-                  key: "00000007",
-                  title: "数值传递异常",
-                },
-              ],
-            },
-          ],
+          key: "1",
+          title: "UI显示异常1",
+          file: "",
+          type: "local"
         },
         {
-          key: "00000008",
-          title: "张家港",
-          children: [
-            {
-              key: "00000009",
-              title: "2021-08",
-              children: [
-                {
-                  key: "0000010",
-                  title: "UI显示异常",
-                },
-                {
-                  key: "0000011",
-                  title: "技术组件执行异常",
-                },
-              ],
-            },
-            {
-              key: "0000012",
-              title: "2021-09",
-              children: [
-                {
-                  key: "0000013",
-                  title: "执行速度日志",
-                },
-                {
-                  key: "0000014",
-                  title: "数值传递异常",
-                },
-              ],
-            },
-          ]
+          key: "2",
+          title: "UI显示异常2",
+          file: "",
+          type: "share"
         },
         {
-          key: "0000015",
-          title: "昆山",
-          children: [
-            {
-              key: "0000016",
-              title: "2021-08",
-              children: [
-                {
-                  key: "0000017",
-                  title: "UI显示异常",
-                },
-                {
-                  key: "0000018",
-                  title: "技术组件执行异常",
-                },
-              ],
-            },
-            {
-              key: "0000019",
-              title: "2021-09",
-              children: [
-                {
-                  key: "0000020",
-                  title: "执行速度日志",
-                },
-                {
-                  key: "0000021",
-                  title: "数值传递异常",
-                },
-              ],
-            },
-          ],
+          key: "3",
+          title: "UI显示异常3",
+          file: "",
+          type: "online"
         },
+        {
+          key: "4",
+          title: "UI显示异常4",
+          file: "",
+          type: "local"
+        }
       ]
     }
   },
@@ -144,17 +66,17 @@ const data = {
      * 新增一个日志
      */
     appendNewLogFile(state: ILogViewModel, targetLog: ILogView) {
-      const isExist = !!state.logList.find(log => log.uuid === targetLog.uuid)
+      const isExist = !!state.logList.find(log => log.key === targetLog.key)
 
       !isExist && state.logList.push(targetLog)
     },
     /**
      * 删除一个日志
      */
-    removeLogFile(state: ILogViewModel, uuid: string) {
-      const index = state.logList.findIndex(log => log.uuid === uuid)
+    removeLogFile(state: ILogViewModel, key: string) {
+      const index = state.logList.findIndex(log => log.key === key)
 
-      state.logList.splice(index, 1)
+      index != -1 && state.logList.splice(index, 1)
     }
   }
 }

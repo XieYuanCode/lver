@@ -1,3 +1,6 @@
+import { version } from "../utils/appInfo"
+import { isMac, isWin } from "../utils/system"
+
 const ch = {
   view: {
     empty_text: "暂无数据",
@@ -8,8 +11,18 @@ const ch = {
         title: "日志",
         searcher_placeholder: "搜索日志",
         addbutton: {
-          new_folder: "新建文件夹",
           import_log: "导入日志文件"
+        },
+        context_menu: {
+          open: "打开",
+          open_local: isMac() ? "在访达中打开" : "在资源管理器中打开",
+          delete: "删除",
+          share: "分享"
+        },
+        tag: {
+          local: "本地",
+          share: "分享",
+          online: "在线"
         }
       },
       log_rule_explore: {
@@ -33,6 +46,8 @@ const ch = {
       general: {
         header_text: "通用",
         language_label_text: "语言",
+        tag_label_text: "标签",
+        tag_tip_description: '打开标签选项，可以在日志列表的后方看到日志的来源。',
         language: {
           ch: "中文",
           en: "英文",
@@ -48,6 +63,12 @@ const ch = {
           light: "浅色",
           system: "系统"
         }
+      },
+      about: {
+        header_text: "关于",
+        author: "作者: 谢渊",
+        version: "版本: " + version,
+        feedback_btn_text: "反馈"
       }
     },
     dialog: {

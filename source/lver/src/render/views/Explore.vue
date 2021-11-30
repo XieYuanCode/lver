@@ -35,14 +35,6 @@
             :disabled="store.state.appearance.logSkeleton"
           >
             {{
-              $t("view.explore.log_explore.addbutton.new_folder")
-            }}
-          </lver-doption>
-          <lver-doption
-            v-if="currentExploreSelected === 'log'"
-            :disabled="store.state.appearance.logSkeleton"
-          >
-            {{
               $t("view.explore.log_explore.addbutton.import_log")
             }}
           </lver-doption>
@@ -80,6 +72,7 @@ const switchSettingViewVisible = () => { store.commit("switchSettingViewVisible"
   flex-direction: column;
   justify-content: space-between;
   padding: 10px;
+  user-select: none;
 }
 
 .explore-main-hearder {

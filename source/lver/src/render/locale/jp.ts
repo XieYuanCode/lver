@@ -1,3 +1,6 @@
+import { version } from "vue"
+import { isMac } from "../utils/system"
+
 const jp = {
   view: {
     empty_text: "無数の根拠",
@@ -8,8 +11,18 @@ const jp = {
         title: "ログ",
         searcher_placeholder: "探す ログ",
         addbutton: {
-          new_folder: "新しいフォルダ",
           import_log: "ログファイルのインポート"
+        },
+        context_menu: {
+          open: "開ける",
+          open_local: isMac() ? "Finder で開く" : "File Explore で開く",
+          delete: "消去",
+          share: "共有"
+        },
+        tag: {
+          local: "ローカル",
+          share: "共有",
+          online: "オンライン"
         }
       },
       log_rule_explore: {
@@ -33,6 +46,8 @@ const jp = {
       general: {
         header_text: "通常",
         language_label_text: "言語",
+        tag_label_text: "ラベル",
+        tag_tip_description: 'ラベルオプションを開くと、ログリストの最後にログのソースが表示されます。',
         language: {
           ch: "中文",
           en: "英文",
@@ -48,6 +63,12 @@ const jp = {
           light: "薄い",
           system: "システム"
         }
+      },
+      about: {
+        header_text: "だいたい",
+        author: "著者: 谢渊",
+        version: "版本: " + version,
+        feedback_btn_text: "反馈"
       }
     },
     dialog: {

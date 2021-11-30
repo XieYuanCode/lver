@@ -1,3 +1,6 @@
+import { version } from "vue"
+import { isMac } from "../utils/system"
+
 const kor = {
   view: {
     empty_text: "무수한 증거",
@@ -8,8 +11,18 @@ const kor = {
         title: "통나무",
         searcher_placeholder: "검색 로그",
         addbutton: {
-          new_folder: "새 폴더",
           import_log: "로그 파일 가져오기"
+        },
+        context_menu: {
+          open: "開ける",
+          open_local: isMac() ? "Finder에 표시" : "File Explore에 표시",
+          delete: "삭제",
+          share: "공유하다"
+        },
+        tag: {
+          local: "현지의",
+          share: "공유하다",
+          online: "온라인"
         }
       },
       log_rule_explore: {
@@ -33,6 +46,8 @@ const kor = {
       general: {
         header_text: "보통",
         language_label_text: "언어",
+        tag_label_text: "상표",
+        tag_tip_description: '레이블 옵션을 열면 로그 목록 뒷면에서 로그 소스를 볼 수 있습니다.',
         language: {
           ch: "중국어",
           en: "영어",
@@ -48,6 +63,12 @@ const kor = {
           light: "연한 색상",
           system: "시스템"
         }
+      },
+      about: {
+        header_text: "정보",
+        author: "작가: 谢渊",
+        version: "버전: " + version,
+        feedback_btn_text: "피드백"
       }
     },
     dialog: {

@@ -1,3 +1,6 @@
+import { version } from "vue"
+import { isMac } from "../utils/system"
+
 const en = {
   view: {
     empty_text: "No Data",
@@ -8,8 +11,18 @@ const en = {
         title: "logs",
         searcher_placeholder: "search logs",
         addbutton: {
-          new_folder: "New folder",
           import_log: "Import log file"
+        },
+        context_menu: {
+          open: "open",
+          open_local: isMac() ? "Reveal in Finder" : "Reveal in File Explore",
+          delete: "delete",
+          share: "share"
+        },
+        tag: {
+          local: "local",
+          share: "share",
+          online: "online"
         }
       },
       log_rule_explore: {
@@ -26,13 +39,15 @@ const en = {
       }
     },
     setting: {
-      header_text: "设置",
+      header_text: "Setting",
       account: {
-        header_text: "账户"
+        header_text: "Account"
       },
       general: {
-        header_text: "general",
+        header_text: "General",
         language_label_text: "language",
+        tag_label_text: "tag",
+        tag_tip_description: 'Open the tag option, you can see the source of the log at the back of the log list.',
         language: {
           ch: "Chinese",
           en: "English",
@@ -41,13 +56,19 @@ const en = {
         }
       },
       theme: {
-        header_text: "theme",
+        header_text: "Theme",
         theme_label_text: "theme color",
         theme: {
           dark: "dark",
           light: "light",
           system: "system"
         }
+      },
+      about: {
+        header_text: "About",
+        author: "author: 谢渊",
+        version: "version: " + version,
+        feedback_btn_text: "Feedback"
       }
     },
     dialog: {

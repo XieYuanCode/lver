@@ -48,7 +48,7 @@ body {
 }
 
 .lver-layout-content {
-  padding-left: 10px;
+  padding-left: 20px;
   padding-top: 20px;
   background: var(--color-menu-light-bg);
 }
