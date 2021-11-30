@@ -1,18 +1,6 @@
 const jp = {
-  temp: {
-    title_text: "機能テストページ",
-    theme_btn_text: "テーマ",
-    closeLogSkeleton_btn_text: "ログ スケルトン",
-    closeLogRuleSkeleton_btn_text: "ログ ルール スケルトン",
-    switchLanguage_btn_text: "言語",
-    language: {
-      ch: "中国语",
-      en: "英語",
-      jp: "日本語",
-      kor: "ハングル"
-    }
-  },
   view: {
+    empty_text: "無数の根拠",
     explore: {
       log_view_btn_text: "ログ",
       log_rule_view_btn_text: "ログ ルール",
@@ -29,17 +17,48 @@ const jp = {
         searcher_placeholder: "探す ログ ルール",
         addbutton: {
           new_log_rule: "新しいログルール",
+        },
+        collapse: {
+          local: "地元",
+          online: "オンライン",
+          share: "分かち合い"
         }
+      }
+    },
+    setting: {
+      header_text: "設置",
+      account: {
+        header_text: "口座"
+      },
+      general: {
+        header_text: "通常",
+        language_label_text: "言語",
+        language: {
+          ch: "中文",
+          en: "英文",
+          jp: "日本語",
+          kor: "ハングル"
+        }
+      },
+      theme: {
+        header_text: "テーマ",
+        theme_label_text: "テーマカラー",
+        theme: {
+          dark: "濃い色の",
+          light: "薄い",
+          system: "システム"
+        }
+      }
+    },
+    dialog: {
+      new_log_rule: {
+        title: "新しいログルール",
+        create_rule_placrhole_text_press: "押す",
+        create_rule_placrhole_text_left: "to copy the first text of the clipboard here",
       }
     }
   },
-  dialog: {
-    new_log_rule: {
-      title: "新しいログルール",
-      create_rule_placrhole_text_press: "押す",
-      create_rule_placrhole_text_left: "to copy the first text of the clipboard here",
-    }
-  }
+
 }
 
 export default jp

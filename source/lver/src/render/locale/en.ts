@@ -1,18 +1,6 @@
 const en = {
-  temp: {
-    title_text: "Functional Test Page",
-    theme_btn_text: "Theme",
-    closeLogSkeleton_btn_text: "Log Skeleton",
-    closeLogRuleSkeleton_btn_text: "Log Rule Skeleton",
-    switchLanguage_btn_text: "Language",
-    language: {
-      ch: "ch",
-      en: "en",
-      jp: "jp",
-      kor: "kor"
-    }
-  },
   view: {
+    empty_text: "No Data",
     explore: {
       log_view_btn_text: "log",
       log_rule_view_btn_text: "log rule",
@@ -29,6 +17,36 @@ const en = {
         searcher_placeholder: "search log rules",
         addbutton: {
           new_log_rule: "New log rule",
+        },
+        collapse: {
+          local: "local",
+          online: "online",
+          share: "share"
+        }
+      }
+    },
+    setting: {
+      header_text: "设置",
+      account: {
+        header_text: "账户"
+      },
+      general: {
+        header_text: "general",
+        language_label_text: "language",
+        language: {
+          ch: "Chinese",
+          en: "English",
+          jp: "Japanese",
+          kor: "Korean"
+        }
+      },
+      theme: {
+        header_text: "theme",
+        theme_label_text: "theme color",
+        theme: {
+          dark: "dark",
+          light: "light",
+          system: "system"
         }
       }
     },
@@ -39,7 +57,8 @@ const en = {
         create_rule_placrhole_text_left: "to copy the first text of the clipboard here",
       }
     }
-  }
+  },
+
 }
 
 export default en

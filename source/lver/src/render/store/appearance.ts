@@ -6,7 +6,8 @@ export interface IAppearanceState {
   theme: ThemeType,
   logSkeleton: boolean,
   logRuleSkeleton: boolean,
-  language: string
+  language: string,
+  settingViewVisible: boolean
 }
 
 const appearance = {
@@ -15,7 +16,8 @@ const appearance = {
       theme: ThemeType.System,
       logSkeleton: true,
       logRuleSkeleton: true,
-      language: 'ch'
+      language: 'ch',
+      settingViewVisible: false
     }
   },
   mutations: {
@@ -31,16 +33,17 @@ const appearance = {
      * 关闭骨架屏
      */
     switchLogSkeleton(state: IAppearanceState, logSkeleton: boolean) {
-      console.log(logSkeleton);
       state.logSkeleton = logSkeleton
     },
     switchLogRuleSkeleton(state: IAppearanceState, logRuleSkeleton: boolean) {
-      console.log(logRuleSkeleton);
       state.logRuleSkeleton = logRuleSkeleton
     },
     switchLanguage(state: IAppearanceState, language: string) {
       state.language = language
       i18n.global.locale = language as 'en' | 'ch' | 'jp' | 'kor'
+    },
+    switchSettingViewVisible(state: IAppearanceState, visible: boolean) {
+      state.settingViewVisible = visible
     }
   }
 }

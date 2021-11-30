@@ -1,274 +1,66 @@
 <template>
   <div class="LogExplore">
-    LogExplore
-    <!-- <span class="log-explore-title">{{$t("view.explore.log_explore.title")}}</span>
-    <n-skeleton v-if="skeleton" text :repeat="3"></n-skeleton>
-    <n-input
-      v-model:value="pattern"
-      v-else
-      :placeholder="$t('view.explore.log_explore.searcher_placeholder')"
-      class="log-search-input"
-    />
-    <n-tree
-      :pattern="pattern"
+    <p class="log-explore-title">{{ $t("view.explore.log_explore.title") }}</p>
+    <lver-skeleton :animation="true" v-if="skeleton">
+      <lver-space direction="vertical" :style="{ width: '100%' }" size="large">
+        <lver-skeleton-line :rows="3" />
+      </lver-space>
+    </lver-skeleton>
+    <lver-input-search
+      size="mini"
+      v-model="searchKey"
+      class="search-input"
       v-if="!skeleton"
-      block-line
-      :data="logList"
+      :placeholder="$t('view.explore.log_explore.searcher_placeholder')"
+    />
+    <lver-tree
+      blockNode
       selectable
-      virtual-scroll
-      class="loglist"
-      draggable
-      @drop="handleDrop"
-      @update:selected-keys="selectedLog"
-    /> -->
+      :data="logList"
+      v-if="!skeleton && logList"
+      :default-expanded-keys="[]"
+      size="mini"
+      @select="handleLogSelected"
+    ></lver-tree>
+    <lver-empty v-if="!skeleton && !logList" />
   </div>
 </template>
 
 <script setup lang="ts">
-// import { computed, h, reactive, ref } from "vue";
-// // import { NIcon, useNotification } from "naive-ui";
-// import FileIcon from "../components/icons/FileIcon.vue";
-// import FolderIcon from "../components/icons/FolderIcon.vue";
-// import { useStore } from "../store";
-// import logManager from "../utils/logManager";
-// import { NButton } from "naive-ui";
+import { computed, reactive, h, ref, onMounted } from 'vue';
+import { useStore } from "../store";
+import { TreeNodeData } from '@arco-design/web-vue/es/tree/interface';
 
-// const store = useStore();
+const store = useStore();
 
-// // const fileIconComponent = () => h(NIcon, {}, [h(FileIcon)]);
-// // const folderIconComponent = () => h(NIcon, {}, [h(FolderIcon)]);
-// const pattern = ref(null);
-// // const notification = useNotification();
+const skeleton = computed(() => store.state.appearance.logSkeleton);
 
-// const logList = reactive([
-//   {
-//     key: "00000001",
-//     label: "农行",
-//     children: [
-//       {
-//         key: "00000002",
-//         label: "2021-08",
-//         prefix: folderIconComponent,
-//         children: [
-//           {
-//             key: "00000003",
-//             label: "UI显示异常",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//           {
-//             key: "00000004",
-//             label: "技术组件执行异常",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary" },
-//                 { default: () => "R" }
-//               ),
-//           },
-//         ],
-//       },
-//       {
-//         key: "00000005",
-//         label: "2021-09",
-//         prefix: folderIconComponent,
-//         children: [
-//           {
-//             key: "00000006",
-//             label: "执行速度日志",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//           {
-//             key: "00000007",
-//             label: "数值传递异常",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//         ],
-//       },
-//     ],
-//     prefix: folderIconComponent,
-//   },
-//   {
-//     key: "00000008",
-//     label: "张家港",
-//     children: [
-//       {
-//         key: "00000009",
-//         label: "2021-08",
-//         prefix: folderIconComponent,
-//         children: [
-//           {
-//             key: "0000010",
-//             label: "UI显示异常",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//           {
-//             key: "0000011",
-//             label: "技术组件执行异常",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//         ],
-//       },
-//       {
-//         key: "0000012",
-//         label: "2021-09",
-//         prefix: folderIconComponent,
-//         children: [
-//           {
-//             key: "0000013",
-//             label: "执行速度日志",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//           {
-//             key: "0000014",
-//             label: "数值传递异常",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//         ],
-//       },
-//     ],
-//     prefix: folderIconComponent,
-//   },
-//   {
-//     key: "0000015",
-//     label: "昆山",
-//     children: [
-//       {
-//         key: "0000016",
-//         label: "2021-08",
-//         prefix: folderIconComponent,
-//         children: [
-//           {
-//             key: "0000017",
-//             label: "UI显示异常",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//           {
-//             key: "0000018",
-//             label: "技术组件执行异常",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//         ],
-//       },
-//       {
-//         key: "0000019",
-//         label: "2021-09",
-//         prefix: folderIconComponent,
-//         children: [
-//           {
-//             key: "0000020",
-//             label: "执行速度日志",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//           {
-//             key: "0000021",
-//             label: "数值传递异常",
-//             prefix: fileIconComponent,
-//             suffix: () =>
-//               h(
-//                 NButton,
-//                 { text: true, type: "primary", onClick: test },
-//                 { default: () => "R" }
-//               ),
-//           },
-//         ],
-//       },
-//     ],
-//     prefix: folderIconComponent,
-//   },
-// ]);
+const searchKey = ref("")
 
-// const handleDrop = () => {
-//   notification.warning({
-//     content: "拖拽还没做好呢",
-//     meta: "先使用右键排序功能吧！",
-//     duration: 3000,
-//   });
-// };
+const logList = computed(() => store.getters.renderLogList)
 
-// const test = () => {
-//   console.log(123);
-// };
-// const skeleton = computed(() => store.state.appearance.logSkeleton);
+const handleLogSelected = (selected: boolean, selectedNode: { node: TreeNodeData }) => {
+  // 如果选择的不是目录 就打开
+  !selectedNode.node.children && store.commit('openNewEditor', selectedNode.node)
+}
 
-// const selectedLog = (node: string | number[]) => {
-//   if (node.length === 0) return 
-//   console.log(node);
-// };
+onMounted(() => {
+  // TODO: 模拟
+  setTimeout(() => {
+    store.commit("switchLogSkeleton", false)
+  }, 1000);
+})
 </script>
 
 <style scoped>
-.loglist {
-  overflow-y: scroll;
-}
 .log-explore-title {
   user-select: none;
-  font-size: 10px;
-  font-weight: 900;
-  color: rgb(119, 119, 119);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--color-text-3);
   margin-bottom: 20px;
 }
-.log-search-input {
-  margin: 10px;
+.search-input {
+  margin-bottom: 10px;
 }
 </style>
