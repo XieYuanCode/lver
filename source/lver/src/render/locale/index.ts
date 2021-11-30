@@ -2,7 +2,6 @@ import { createI18n } from "vue-i18n"
 import ch from "./ch"
 import en from "./en"
 import jp from "./jp"
-import fr from "./fr"
 import kor from "./kor"
 
 const i18n = createI18n({
@@ -11,7 +10,6 @@ const i18n = createI18n({
     ch,
     en,
     jp,
-    fr,
     kor
   }
 })

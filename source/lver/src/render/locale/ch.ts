@@ -8,7 +8,6 @@ const ch = {
     language: {
       ch: "中文",
       en: "英文",
-      fr: "法语",
       jp: "日语",
       kor: "韩语"
     }

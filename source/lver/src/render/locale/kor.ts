@@ -8,7 +8,6 @@ const kor = {
     language: {
       ch: "중국어",
       en: "영어",
-      fr: "프랑스어",
       jp: "일본어",
       kor: "한국어"
     }

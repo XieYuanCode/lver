@@ -1,8 +1,8 @@
 <template>
   <lver-layout class="layout">
     <lver-layout>
-      <lver-layout-sider :resize-directions="['right']">
-        <!-- <explore></explore> -->
+      <lver-layout-sider style="width:280px;">
+        <explore></explore>
       </lver-layout-sider>
       <lver-layout-content>
         <lver-form :style="{ width: '1000px' }" :model="{}">
@@ -16,19 +16,14 @@
               </lver-radio-group>
             </lver-form-item>
             <lver-divider />
-            <lver-form-item
-              field="LogSkeleton"
-              :label="$t('temp.closeLogSkeleton_btn_text')"
-              @change="logSkeletonChanged"
-            >
-              <lver-switch size="small" v-model="logSkeleton" />
+            <lver-form-item field="LogSkeleton" :label="$t('temp.closeLogSkeleton_btn_text')">
+              <lver-switch size="small" v-model="logSkeleton" @change="logSkeletonChanged" />
             </lver-form-item>
             <lver-form-item
               field="LogRuleSkeleton"
               :label="$t('temp.closeLogRuleSkeleton_btn_text')"
-              @change="LogRuleSkeletonChanged"
             >
-              <lver-switch size="small" v-model="logRuleSkeleton" />
+              <lver-switch size="small" v-model="logRuleSkeleton" @change="LogRuleSkeletonChanged" />
             </lver-form-item>
             <lver-divider />
             <lver-form-item field="language" :label="$t('temp.switchLanguage_btn_text')">
@@ -53,11 +48,6 @@
                     $t("temp.language.jp")
                   }}
                 </lver-radio>
-                <lver-radio value="fr">
-                  {{
-                    $t("temp.language.fr")
-                  }}
-                </lver-radio>
                 <lver-radio value="kor">
                   {{
                     $t("temp.language.kor")
@@ -73,11 +63,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import Explore from "./views/Explore.vue";
 import { useStore } from "./store";
-import { switchTheme } from "./utils/theme";
-import { ThemeType } from "./model/theme";
 
 const store = useStore();
 
@@ -108,8 +96,12 @@ body {
 }
 
 .arco-layout-sider {
+  width: 400px;
+}
+
+/* .arco-layout-content {
   width: 200px;
   min-width: 10px;
   max-width: 400px;
-}
+} */
 </style>

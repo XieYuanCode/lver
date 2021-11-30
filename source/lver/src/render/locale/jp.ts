@@ -8,7 +8,6 @@ const jp = {
     language: {
       ch: "中国语",
       en: "英語",
-      fr: "フランス語",
       jp: "日本語",
       kor: "ハングル"
     }

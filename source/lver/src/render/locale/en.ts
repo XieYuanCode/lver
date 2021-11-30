@@ -8,7 +8,6 @@ const en = {
     language: {
       ch: "ch",
       en: "en",
-      fr: "fr",
       jp: "jp",
       kor: "kor"
     }
