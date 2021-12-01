@@ -1,15 +1,18 @@
 export interface IEditor {
   key: string
   title: string
+  path: string
 }
 
 export interface IEditorVieModel {
+  activeEditorKey: string
   editorList: IEditor[]
 }
 
 const data = {
   state() {
     return {
+      activeEditorKey: null,
       editorList: []
     }
   },
@@ -20,7 +23,12 @@ const data = {
     openNewEditor(state: IEditorVieModel, targetEditor: IEditor) {
       const isOpend = Boolean(state.editorList.find(editor => editor.key === targetEditor.key))
 
-      !isOpend && state.editorList.push(targetEditor)
+      if (isOpend) {
+        state.activeEditorKey = targetEditor.key
+      } else {
+        state.editorList.push(targetEditor)
+      }
+
     },
     /**
      * 关闭一个现有编辑器
@@ -29,6 +37,10 @@ const data = {
       const index = state.editorList.findIndex(editor => editor.key === key)
 
       state.editorList.splice(index, 1)
+    },
+
+    activeEditor(state: IEditorVieModel, key: string) {
+
     }
   }
 }

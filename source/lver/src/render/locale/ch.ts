@@ -47,6 +47,8 @@ const ch = {
         header_text: "通用",
         language_label_text: "语言",
         tag_label_text: "标签",
+        encoding_label_text: "日志解析编码",
+        end_of_line_sequence_label_text: "换行符",
         tag_tip_description: '打开标签选项，可以在日志列表的后方看到日志的来源。',
         language: {
           ch: "中文",
@@ -76,6 +78,9 @@ const ch = {
         title: "新建日志规则",
         create_rule_placrhole_text_press: "按下",
         create_rule_placrhole_text_left: "将剪贴板第一条文本复制到这里",
+      },
+      import_log_file: {
+        title: "导入日志文件"
       }
     }
   },

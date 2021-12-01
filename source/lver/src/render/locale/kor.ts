@@ -47,6 +47,8 @@ const kor = {
         header_text: "보통",
         language_label_text: "언어",
         tag_label_text: "상표",
+        encoding_label_text: "日志解析编码",
+        end_of_line_sequence_label_text: "换行符",
         tag_tip_description: '레이블 옵션을 열면 로그 목록 뒷면에서 로그 소스를 볼 수 있습니다.',
         language: {
           ch: "중국어",

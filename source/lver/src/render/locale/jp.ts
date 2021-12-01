@@ -47,6 +47,8 @@ const jp = {
         header_text: "通常",
         language_label_text: "言語",
         tag_label_text: "ラベル",
+        encoding_label_text: "日志解析编码",
+        end_of_line_sequence_label_text: "换行符",
         tag_tip_description: 'ラベルオプションを開くと、ログリストの最後にログのソースが表示されます。',
         language: {
           ch: "中文",

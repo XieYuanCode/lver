@@ -27,10 +27,11 @@
           <IconMore style="position: absolute; right: 5px; top: 5px;" />
           <template #content>
             <lver-doption
-              v-if="!nodeData.children"
               @click="openInEditor(nodeData)"
             >{{ $t("view.explore.log_explore.context_menu.open") }}</lver-doption>
-            <lver-doption>{{ $t("view.explore.log_explore.context_menu.open_local") }}</lver-doption>
+            <lver-doption
+              @click="openInLocal(nodeData)"
+            >{{ $t("view.explore.log_explore.context_menu.open_local") }}</lver-doption>
             <lver-doption
               @click="deleteLog(nodeData)"
             >{{ $t("view.explore.log_explore.context_menu.delete") }}</lver-doption>
@@ -79,16 +80,21 @@ const isTagVisiable = computed(() => store.state.appearance.tag)
 const handleLogSelected = (selected: boolean, selectedNode: { node: TreeNodeData }) => {
   store.commit('switchSettingViewVisible', false)
   store.commit('openNewEditor', selectedNode.node)
+  store.commit('activeEditor', selectedNode.node.key)
 }
 
 const openInEditor = (nodeData: TreeNodeData) => {
   store.commit('switchSettingViewVisible', false)
   store.commit('openNewEditor', nodeData)
+  store.commit('activeEditor', nodeData.key)
 }
 
 const deleteLog = (nodeData: TreeNodeData) => {
-  console.log(123, nodeData.key)
   store.commit('removeLogFile', nodeData.key)
+}
+
+const openInLocal = (nodeData: TreeNodeData) => { 
+  require('electron').shell.showItemInFolder((nodeData as any).path)
 }
 
 onMounted(() => {

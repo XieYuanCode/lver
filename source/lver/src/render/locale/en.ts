@@ -47,6 +47,8 @@ const en = {
         header_text: "General",
         language_label_text: "language",
         tag_label_text: "tag",
+        encoding_label_text: "日志解析编码",
+        end_of_line_sequence_label_text: "换行符",
         tag_tip_description: 'Open the tag option, you can see the source of the log at the back of the log list.',
         language: {
           ch: "Chinese",

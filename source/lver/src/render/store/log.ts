@@ -3,44 +3,22 @@ import { IconFile, IconFolder } from '@arco-design/web-vue/es/icon';
 import { h, VNode } from "vue"
 
 interface ILogView {
-  key: string,
-  children?: ILogView[]
-  icon: () => VNode
+  title: string
+  key: string
+  path: string
+  icon?: () => VNode
 }
 
 export interface ILogViewModel {
-  logList: ILogView[]
+  logList: ILogView[],
+  selectedFiles: FileList
 }
 
 const data = {
   state() {
     return {
-      logList: [
-        {
-          key: "1",
-          title: "UI显示异常1",
-          file: "",
-          type: "local"
-        },
-        {
-          key: "2",
-          title: "UI显示异常2",
-          file: "",
-          type: "share"
-        },
-        {
-          key: "3",
-          title: "UI显示异常3",
-          file: "",
-          type: "online"
-        },
-        {
-          key: "4",
-          title: "UI显示异常4",
-          file: "",
-          type: "local"
-        }
-      ]
+      logList: [],
+      selectedFiles: []
     }
   },
   getters: {
@@ -48,27 +26,26 @@ const data = {
       const appendIcon = (logViews: ILogView[]) => {
         let temp = logViews
         logViews.map(logItem => {
-          if (logItem.children) {
-            logItem.icon = () => h(IconFolder)
-            appendIcon(logItem.children)
-          } else {
-            logItem.icon = () => h(IconFile)
-          }
+          logItem.icon = () => h(IconFile)
         })
 
         return temp
       }
-      return appendIcon(state.logList)
+      return state.logList.length === 0 ? null : appendIcon(state.logList)
     }
   },
   mutations: {
     /**
      * 新增一个日志
      */
-    appendNewLogFile(state: ILogViewModel, targetLog: ILogView) {
-      const isExist = !!state.logList.find(log => log.key === targetLog.key)
+    appendNewLogFile(state: ILogViewModel, targetLog: ILog) {
+      const isExist = state.logList && !!state.logList.find(log => log.path === targetLog.file)
 
-      !isExist && state.logList.push(targetLog)
+      !isExist && state.logList.push({
+        title: targetLog.name,
+        key: targetLog.uuid,
+        path: targetLog.file
+      })
     },
     /**
      * 删除一个日志
@@ -77,6 +54,10 @@ const data = {
       const index = state.logList.findIndex(log => log.key === key)
 
       index != -1 && state.logList.splice(index, 1)
+    },
+
+    changeSelectedFiles(state: ILogViewModel, files: FileList) {
+      state.selectedFiles = files
     }
   }
 }

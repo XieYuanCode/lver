@@ -7,7 +7,7 @@ export default interface ILog {
   /**
    * 日志名称
    */
-  name?: string
+  name: string
   /**
    * 文件名
    */
@@ -19,7 +19,7 @@ export default interface ILog {
   /**
    * 日志文件路径
    */
-  file?: string
+  file: string
   /**
    * 日志md5码
    */
@@ -52,19 +52,19 @@ export default interface ILog {
 
 export class Log implements ILog {
   filename: string;
-  name?: string;
+  name: string;
   uuid: string;
-  file?: string;
+  file: string;
   hash: string;
   recordDate: Date;
   analyseSuccessful: boolean = false;
   rule?: ILogRule;
 
-  constructor(filename: string, uuid: string, name?: string) {
+  constructor(filename: string, uuid: string, file: string) {
     this.filename = filename
     this.uuid = uuid
-    this.name = name || filename
-    this.file = "todo"
+    this.name = filename
+    this.file = file
     this.hash = "todo"
     this.recordDate = new Date()
   }

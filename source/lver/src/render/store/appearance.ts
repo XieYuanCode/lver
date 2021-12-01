@@ -1,5 +1,7 @@
 import i18n from "../locale";
+import { LineSequence } from "../model/LineSequence";
 import { ThemeType } from "../model/theme";
+import { isWin } from "../utils/system";
 import { switchTheme } from "../utils/theme";
 
 export interface IAppearanceState {
@@ -8,7 +10,9 @@ export interface IAppearanceState {
   logRuleSkeleton: boolean,
   language: string,
   settingViewVisible: boolean,
-  tag: boolean
+  tag: boolean,
+  encoding: string,
+  endOfLineSequence: LineSequence
 }
 
 const appearance = {
@@ -19,7 +23,9 @@ const appearance = {
       logRuleSkeleton: true,
       language: 'ch',
       settingViewVisible: false,
-      tag: false
+      tag: false,
+      encoding: "utf8",
+      endOfLineSequence: isWin() ? LineSequence.CRLF : LineSequence.LF
     }
   },
   mutations: {
@@ -64,6 +70,20 @@ const appearance = {
      */
     switchTagVisible(state: IAppearanceState, visible: boolean) {
       state.tag = visible
+    },
+
+    /**
+     * 切换编码
+     */
+    switchEncoding(state: IAppearanceState, encoding: string) {
+      state.encoding = encoding
+    },
+
+    /**
+     * 切换换行符
+     */
+    switchEndOfLineSequence(state: IAppearanceState, endOfLineSequence: LineSequence) {
+      state.endOfLineSequence = endOfLineSequence
     }
   }
 }

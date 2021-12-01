@@ -33,10 +33,19 @@
           <lver-doption
             v-if="currentExploreSelected === 'log'"
             :disabled="store.state.appearance.logSkeleton"
+            @click="openFileSelectDialog"
           >
             {{
               $t("view.explore.log_explore.addbutton.import_log")
             }}
+            <input
+              id="file-input"
+              type="file"
+              name="name"
+              v-show="false"
+              multiple
+              @input="uploadLogFile"
+            />
           </lver-doption>
           <lver-doption v-else :disabled="store.state.appearance.logRuleSkeleton">
             {{
@@ -50,11 +59,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, getCurrentInstance, h } from 'vue';
 import LogExplore from "./LogExplore.vue";
 import LogRuleExplore from "./LogRuleExplore.vue";
 import { useStore } from '../store';
 import { IconSettings } from '@arco-design/web-vue/es/icon';
+import { Log } from '../model/iLog';
+import { uuid } from '../utils/uuid';
 
 const store = useStore()
 
@@ -63,6 +74,28 @@ const exploreView = computed(() => currentExploreSelected.value === "log" ? LogE
 
 const settingViewVisible = computed(() => store.state.appearance.settingViewVisible)
 const switchSettingViewVisible = () => { store.commit("switchSettingViewVisible", !settingViewVisible.value) }
+
+// const internalInstance = getCurrentInstance()
+let selectFileInput: HTMLInputElement
+
+const openFileSelectDialog = () => {
+  selectFileInput = document.getElementById("file-input") as HTMLInputElement
+  selectFileInput?.click()
+}
+
+const uploadLogFile = () => {
+  if (!selectFileInput?.files?.length) return
+  if (selectFileInput?.files?.length <= 0) return
+
+  store.commit("changeSelectedFiles", selectFileInput.files)
+
+  for (let index = 0; index < selectFileInput.files.length; index++) {
+    const file = selectFileInput.files.item(index)
+    const log = new Log(file?.name || "", uuid(), (file as any)?.path as string)
+
+    store.commit("appendNewLogFile", log)
+  }
+}
 </script>
 
 <style scoped>

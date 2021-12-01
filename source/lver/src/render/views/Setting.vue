@@ -50,9 +50,7 @@
                 :style="{ width: '360px' }"
                 :title="$t('view.setting.general.tag_label_text')"
               >
-                <img
-                  :src="tag_tip_img_url"
-                />
+                <img :src="tag_tip_img_url" />
                 <br />
                 {{
                   $t('view.setting.general.tag_tip_description')
@@ -60,6 +58,37 @@
               </lver-card>
             </template>
           </lver-trigger>
+        </lver-form-item>
+        <!-- 编码 -->
+        <lver-form-item field="encoding" :label="$t('view.setting.general.encoding_label_text')">
+          <lver-radio-group type="button" size="mini" @change="encodingChanged" v-model="encoding">
+            <lver-radio value="ascii">ascii</lver-radio>
+            <lver-radio value="base64">base64</lver-radio>
+            <lver-radio value="base64url">base64url</lver-radio>
+            <lver-radio value="binary">binary</lver-radio>
+            <lver-radio value="hex">hex</lver-radio>
+            <lver-radio value="latin1">latin1</lver-radio>
+            <lver-radio value="ucs-2">ucs-2</lver-radio>
+            <lver-radio value="ucs2">ucs2</lver-radio>
+            <lver-radio value="utf-8">utf-8</lver-radio>
+            <lver-radio value="utf16le">utf16le</lver-radio>
+            <lver-radio value="utf8">utf8</lver-radio>
+          </lver-radio-group>
+        </lver-form-item>
+        <!-- 换行符 -->
+        <lver-form-item
+          field="encoding"
+          :label="$t('view.setting.general.end_of_line_sequence_label_text')"
+        >
+          <lver-radio-group
+            type="button"
+            size="mini"
+            @change="endOfLineSequenceChanged"
+            v-model="endOfLineSequence"
+          >
+            <lver-radio value="LF">LF</lver-radio>
+            <lver-radio value="CRLF">CRLF</lver-radio>
+          </lver-radio-group>
         </lver-form-item>
       </lver-space>
     </lver-form>
@@ -81,9 +110,14 @@
     <!-- 关于 -->
     <lver-typography-title type="secondary" :heading="3">{{ $t("view.setting.about.header_text") }}</lver-typography-title>
     <lver-typography-title type="secondary" :heading="6">{{ $t("view.setting.about.author") }}</lver-typography-title>
-    <lver-typography-title type="secondary" :heading="6">github: <lver-link @click="openExternal">https://github.com/XieYuanCode</lver-link></lver-typography-title>
+    <lver-typography-title type="secondary" :heading="6">
+      github:
+      <lver-link @click="openExternal">https://github.com/XieYuanCode</lver-link>
+    </lver-typography-title>
     <lver-typography-title type="secondary" :heading="6">{{ $t("view.setting.about.version") }}</lver-typography-title>
-    <lver-typography-title type="secondary" :heading="6"><lver-button @click="feedback">{{ $t("view.setting.about.feedback_btn_text") }}</lver-button></lver-typography-title>
+    <lver-typography-title type="secondary" :heading="6">
+      <lver-button @click="feedback">{{ $t("view.setting.about.feedback_btn_text") }}</lver-button>
+    </lver-typography-title>
   </lver-typography>
 </template>
 
@@ -96,10 +130,14 @@ const store = useStore();
 const language = ref(store.state.appearance.language);
 const theme = ref(store.state.appearance.theme);
 const tag = ref(store.state.appearance.tag)
+const encoding = ref(store.state.appearance.encoding)
+const endOfLineSequence = ref(store.state.appearance.endOfLineSequence)
 
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) };
 const tagChanged = (e: string) => { store.commit("switchTagVisible", e) };
+const encodingChanged = (e: string) => { store.commit("switchEncoding", e) };
+const endOfLineSequenceChanged = (e: string) => { store.commit("switchEndOfLineSequence", e) }
 
 const tag_tip_img_url = computed(() => {
   if (store.state.appearance.theme === ThemeType.Dark) {
@@ -118,14 +156,14 @@ const tag_tip_img_url = computed(() => {
 /**
  * 打开外链
  */
-const openExternal = ()=>{
+const openExternal = () => {
   require('electron').shell.openExternal('https://github.com/XieYuanCode')
 }
 
 /**
  * 反馈
  */
-const feedback = ()=>{
+const feedback = () => {
   require('electron').shell.openExternal("mailto:17010289943@163.com?subject=lver反馈说明&body=")
 }
 </script>
