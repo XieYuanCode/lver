@@ -21,6 +21,7 @@
       :default-expanded-keys="[]"
       size="mini"
       @select="handleLogSelected"
+      v-model:selected-keys="selectedLog"
     >
       <template #extra="nodeData">
         <lver-dropdown>
@@ -77,6 +78,15 @@ const searchKey = ref("")
 const logList = computed(() => store.getters.renderLogList)
 const isTagVisiable = computed(() => store.state.appearance.tag)
 
+const selectedLog = computed({
+  get() {
+    return [store.state.editorView.activeEditorKey]
+  },
+  set(activeEditorKey: any[]) {
+    store.commit("activeEditor", activeEditorKey[0])
+  }
+})
+
 const handleLogSelected = (selected: boolean, selectedNode: { node: TreeNodeData }) => {
   store.commit('switchSettingViewVisible', false)
   store.commit('openNewEditor', selectedNode.node)
@@ -93,15 +103,15 @@ const deleteLog = (nodeData: TreeNodeData) => {
   store.commit('removeLogFile', nodeData.key)
 }
 
-const openInLocal = (nodeData: TreeNodeData) => { 
+const openInLocal = (nodeData: TreeNodeData) => {
   require('electron').shell.showItemInFolder((nodeData as any).path)
 }
 
 onMounted(() => {
   // TODO: 模拟
-  setTimeout(() => {
-    store.commit("switchLogSkeleton", false)
-  }, 1000);
+  // setTimeout(() => {
+  store.commit("switchLogSkeleton", false)
+  // }, 1000);
 })
 </script>
 

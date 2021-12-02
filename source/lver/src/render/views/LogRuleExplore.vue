@@ -34,9 +34,9 @@ const searchKey = ref()
 
 onMounted(() => {
   // TODO: 模拟
-  setTimeout(() => {
-    store.commit("switchLogRuleSkeleton", false)
-  }, 1000);
+  // setTimeout(() => {
+  store.commit("switchLogRuleSkeleton", false)
+  // }, 1000);
 })
 </script>
 

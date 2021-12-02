@@ -41,7 +41,14 @@ const ch = {
     setting: {
       header_text: "设置",
       account: {
-        header_text: "账户"
+        header_text: "账户",
+        login_text: "登陆",
+        login: {
+          wechat: "微信",
+          qq: "QQ",
+          github: "github"
+        },
+        tip: "登陆后可以使用云端备份、日志分享、规则上传等功能"
       },
       general: {
         header_text: "通用",

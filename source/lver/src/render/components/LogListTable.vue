@@ -49,7 +49,7 @@ const analyse = () => {
 }
 
 onMounted(() => {
-  readFileData()
+  // readFileData()
 })
 </script>
 

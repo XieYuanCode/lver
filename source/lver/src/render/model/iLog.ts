@@ -29,6 +29,10 @@ export default interface ILog {
    */
   recordDate: Date
   /**
+   * 最后修改时间
+   */
+  lastModifiedData?: Date
+  /**
    * 是否分析成功表示
    */
   analyseSuccessful: boolean
@@ -36,6 +40,8 @@ export default interface ILog {
    * 绑定的规则
    */
   rule?: ILogRule
+
+  [key: string]: any
 
   /**
    * 根据特定的日志定义器分析日志
@@ -58,6 +64,7 @@ export class Log implements ILog {
   hash: string;
   recordDate: Date;
   analyseSuccessful: boolean = false;
+  lastModifiedData?: Date;
   rule?: ILogRule;
 
   constructor(filename: string, uuid: string, file: string) {

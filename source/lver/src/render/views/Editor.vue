@@ -1,13 +1,12 @@
 <template>
   <div class="editor-view">
     <lver-tabs
-      :active-key="activeEditorKey"
+      v-model:active-key="activeEditorKey"
       :editable="true"
       size="mini"
       :animation="true"
       v-if="editors.length > 0"
       @delete="closeEditor"
-      @change="handleActiveEditorChanged"
       class="editor-tab"
     >
       <lver-tab-pane v-for="(editor, index) in editors" :key="editor.key" :title="editor.title">
@@ -17,9 +16,7 @@
           :title="editor.title"
           bordered
         />
-        editor.key{{editor.key}}
-        activeEditorKey{{activeEditorKey}}
-        <log-list-table :path="editor.path"></log-list-table>
+        <!-- <log-list-table :path="editor.path"></log-list-table> -->
       </lver-tab-pane>
     </lver-tabs>
     <lver-empty v-else>
@@ -39,9 +36,15 @@ import ILog from '../model/iLog';
 const store = useStore()
 
 const editors = computed(() => store.state.editorView.editorList)
-const activeEditorKey = ref(store.state.editorView.activeEditorKey)
-
-const handleActiveEditorChanged = (key: string) => { store.commit("activeEditor", key); }
+const activeEditorKey = computed({
+  get() {
+    return store.state.editorView.activeEditorKey
+  },
+  set(key) {
+    console.log(key);
+    store.commit("activeEditor", key)
+  }
+})
 
 const createDescriptions = (editor: ILog) => {
   const descriptions = new Array()
@@ -67,10 +70,13 @@ const closeEditor = (key: string) => store.commit("closeEditor", key)
 
 .editor-tab {
   height: 100%;
+  user-select: none;
 }
 
 .lver-descriptions {
-  width: 90%;
+  width: 96%;
   margin-bottom: 20px;
+  border: 1px solid var(--color-neutral-3);
+  padding: 10px;
 }
 </style>

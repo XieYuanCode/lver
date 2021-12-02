@@ -1,12 +1,7 @@
-export interface IEditor {
-  key: string
-  title: string
-  path: string
-}
-
+import ILog from "../model/iLog"
 export interface IEditorVieModel {
   activeEditorKey: string
-  editorList: IEditor[]
+  editorList: ILog[]
 }
 
 const data = {
@@ -40,7 +35,7 @@ const data = {
     },
 
     activeEditor(state: IEditorVieModel, key: string) {
-
+      state.activeEditorKey = key
     }
   }
 }
