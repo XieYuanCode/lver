@@ -1,11 +1,17 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { join } from "path"
+import { join, resolve } from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
   // root: join(__dirname, "src/render"),
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "src"),
+      store: resolve(__dirname, "src/render/store"),
+    }
+  },
   build: {
     outDir: join(__dirname, 'dist/render'),
     assetsDir: '', // 相对路径 加载问题
