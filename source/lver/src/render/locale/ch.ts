@@ -16,8 +16,10 @@ const ch = {
         context_menu: {
           open: "打开",
           open_local: isMac() ? "在访达中打开" : "在资源管理器中打开",
+          rename: "重命名",
           delete: "删除",
-          share: "分享"
+          share: "分享",
+          rename_empty: "无法重命名为空或者一个或多个空格"
         },
         tag: {
           local: "本地",
@@ -40,14 +42,21 @@ const ch = {
     },
     setting: {
       header_text: "设置",
+      log: {
+        header_text: "日志",
+        pagination_title: "分页"
+      },
       account: {
         header_text: "账户",
         login_text: "登陆",
+        logout_text: "登出",
         login: {
           wechat: "微信",
           qq: "QQ",
           github: "github"
         },
+        login_success_tip: "登陆成功",
+        logout_success_tip: "登出成功",
         tip: "登陆后可以使用云端备份、日志分享、规则上传等功能"
       },
       general: {
@@ -56,6 +65,7 @@ const ch = {
         tag_label_text: "标签",
         encoding_label_text: "日志解析编码",
         end_of_line_sequence_label_text: "换行符",
+        log_description_label_text: "日志描述",
         tag_tip_description: '打开标签选项，可以在日志列表的后方看到日志的来源。',
         language: {
           ch: "中文",
@@ -89,6 +99,26 @@ const ch = {
       import_log_file: {
         title: "导入日志文件"
       }
+    },
+    editor: {
+      log_editor: {
+        log_description: {
+          name: "名称",
+          filename: "文件名",
+          file: '文件路径',
+          recordDate: "记录时间",
+          createDate: "产生时间",
+          uuid: "唯一标识",
+          analyseSuccessful: "成功分析",
+          lastModifiedData: "最后编辑时间",
+          description: "描述"
+        },
+        close_descriotion_btn_text: "关闭",
+        edit_descriotion_btn_text: "编辑",
+        log_table_label_text: "日志详情",
+        log_description_closed_text: "日志描述已经关闭，你可以稍后在设置中重新打开",
+        search_input_placeholder: "搜索日志, 支持使用类似：level: ERROR的筛选模式",
+      },
     }
   },
 }

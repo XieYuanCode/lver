@@ -66,45 +66,6 @@
                 </template>
               </lver-trigger>
             </lver-form-item>
-            <!-- 编码 -->
-            <lver-form-item
-              field="encoding"
-              :label="$t('view.setting.general.encoding_label_text')"
-            >
-              <lver-radio-group
-                type="button"
-                size="mini"
-                @change="encodingChanged"
-                v-model="encoding"
-              >
-                <lver-radio value="ascii">ascii</lver-radio>
-                <lver-radio value="base64">base64</lver-radio>
-                <lver-radio value="base64url">base64url</lver-radio>
-                <lver-radio value="binary">binary</lver-radio>
-                <lver-radio value="hex">hex</lver-radio>
-                <lver-radio value="latin1">latin1</lver-radio>
-                <lver-radio value="ucs-2">ucs-2</lver-radio>
-                <lver-radio value="ucs2">ucs2</lver-radio>
-                <lver-radio value="utf-8">utf-8</lver-radio>
-                <lver-radio value="utf16le">utf16le</lver-radio>
-                <lver-radio value="utf8">utf8</lver-radio>
-              </lver-radio-group>
-            </lver-form-item>
-            <!-- 换行符 -->
-            <lver-form-item
-              field="encoding"
-              :label="$t('view.setting.general.end_of_line_sequence_label_text')"
-            >
-              <lver-radio-group
-                type="button"
-                size="mini"
-                @change="endOfLineSequenceChanged"
-                v-model="endOfLineSequence"
-              >
-                <lver-radio value="LF">LF</lver-radio>
-                <lver-radio value="CRLF">CRLF</lver-radio>
-              </lver-radio-group>
-            </lver-form-item>
           </lver-space>
         </lver-form>
         <lver-divider orientation="center">{{ $t("view.setting.general.header_text") }}</lver-divider>
@@ -146,17 +107,88 @@
           </lver-space>
         </lver-form>
         <div v-if="isLogined" class="user-info">
-          <lver-card :style="{ width: '360px' }" :title="store.state.user.name" hoverable>
-            <template #extra>
-              <lver-link>Log out</lver-link>
-            </template>
-            ByteDance's core product, Toutiao ("Headlines"), is a content platform in
-            China and around the world. Toutiao started out as a news recommendation
-            engine and gradually evolved into a platform delivering content in various
-            formats.
+          <lver-card hoverable :style="{ width: '360px', marginBottom: '20px' }">
+            <div
+              :style="{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }"
+            >
+              <span :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }">
+                <lver-avatar
+                  :style="{ marginRight: '8px', backgroundColor: '#165DFF' }"
+                  :size="28"
+                >A</lver-avatar>
+                <lver-typography-text>{{ store.state.user.name }}</lver-typography-text>
+              </span>
+              <lver-link @click="logout">{{ $t('view.setting.account.logout_text') }}</lver-link>
+            </div>
           </lver-card>
         </div>
         <lver-divider orientation="center">{{ $t("view.setting.account.header_text") }}</lver-divider>
+      </lver-tab-pane>
+      <!-- 日志 -->
+      <lver-tab-pane key="log">
+        <template #title>
+          <icon-brush />
+          {{ $t("view.setting.log.header_text") }}
+        </template>
+        <lver-form :model="{}" layout="vertical">
+          <lver-space direction="vertical" size="mini">
+            <!-- 编码 -->
+            <lver-form-item
+              field="encoding"
+              :label="$t('view.setting.general.encoding_label_text')"
+            >
+              <lver-radio-group
+                type="button"
+                size="mini"
+                @change="encodingChanged"
+                v-model="encoding"
+              >
+                <lver-radio value="ascii">ascii</lver-radio>
+                <lver-radio value="base64">base64</lver-radio>
+                <lver-radio value="base64url">base64url</lver-radio>
+                <lver-radio value="binary">binary</lver-radio>
+                <lver-radio value="hex">hex</lver-radio>
+                <lver-radio value="latin1">latin1</lver-radio>
+                <lver-radio value="ucs-2">ucs-2</lver-radio>
+                <lver-radio value="ucs2">ucs2</lver-radio>
+                <lver-radio value="utf-8">utf-8</lver-radio>
+                <lver-radio value="utf16le">utf16le</lver-radio>
+                <lver-radio value="utf8">utf8</lver-radio>
+              </lver-radio-group>
+            </lver-form-item>
+            <!-- 换行符 -->
+            <lver-form-item
+              field="line_sequence"
+              :label="$t('view.setting.general.end_of_line_sequence_label_text')"
+            >
+              <lver-radio-group
+                type="button"
+                size="mini"
+                @change="endOfLineSequenceChanged"
+                v-model="endOfLineSequence"
+              >
+                <lver-radio value="LF">LF</lver-radio>
+                <lver-radio value="CRLF">CRLF</lver-radio>
+              </lver-radio-group>
+            </lver-form-item>
+            <!-- 日志描述 -->
+            <lver-form-item
+              field="log_description"
+              :label="$t('view.setting.general.log_description_label_text')"
+            >
+              <lver-switch size="small" v-model="logDescription" @change="logDescriptionChanged"></lver-switch>
+            </lver-form-item>
+            <!-- 分页 -->
+            <lver-form-item field="pagination" :label="$t('view.setting.log.pagination_title')">
+              <lver-switch size="small" v-model="pagination" @change="paginationChanged"></lver-switch>
+            </lver-form-item>
+          </lver-space>
+        </lver-form>
+        <lver-divider orientation="center">{{ $t("view.setting.log.header_text") }}</lver-divider>
       </lver-tab-pane>
       <!-- 主题 -->
       <lver-tab-pane key="theme">
@@ -176,8 +208,9 @@
           </lver-space>
         </lver-form>
         <lver-divider orientation="center">{{ $t("view.setting.theme.header_text") }}</lver-divider>
-      </lver-tab-pane>关于
-      <lver-tab-pane key="about">
+      </lver-tab-pane>
+      <!-- 关于 -->
+      <lver-tab-pane keyd="about">
         <template #title>
           <icon-info-circle />
           {{ $t("view.setting.about.header_text") }}
@@ -199,9 +232,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, getCurrentInstance } from "vue";
 import { ThemeType } from "../model/theme";
 import { useStore } from "../store";
+import { useI18n } from "vue-i18n"
+
+const { t } = useI18n()
+const internalInstance = getCurrentInstance()
 
 const store = useStore();
 const language = ref(store.state.appearance.language);
@@ -210,12 +247,16 @@ const tag = ref(store.state.appearance.tag)
 const encoding = ref(store.state.appearance.encoding)
 const endOfLineSequence = ref(store.state.appearance.endOfLineSequence)
 const isLogined = computed(() => store.state.user.logined)
+const logDescription = ref(store.state.appearance.logDescription)
+const pagination = ref(store.state.appearance.pagination)
 
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) };
-const tagChanged = (e: string) => { store.commit("switchTagVisible", e) };
+const tagChanged = (e: boolean) => { store.commit("switchTagVisible", e) };
 const encodingChanged = (e: string) => { store.commit("switchEncoding", e) };
 const endOfLineSequenceChanged = (e: string) => { store.commit("switchEndOfLineSequence", e) }
+const logDescriptionChanged = (e: boolean) => { store.commit('switchlogDescription', e) }
+const paginationChanged = (e: boolean) => { store.commit('switchPagination', e) }
 
 const tag_tip_img_url = computed(() => {
   if (store.state.appearance.theme === ThemeType.Dark) {
@@ -248,15 +289,29 @@ const feedback = () => {
 /**
  * 微信登陆
  */
-const loginWithWechat = () => { store.commit('login') }
+const loginWithWechat = () => {
+  store.commit('login')
+  internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
+}
 /**
  * QQ登陆
  */
-const loginWithQQ = () => { store.commit('login') }
+const loginWithQQ = () => {
+  store.commit('login')
+  internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
+}
 /**
  * github登陆
  */
-const loginWithGithub = () => { store.commit('login') }
+const loginWithGithub = () => {
+  store.commit('login')
+  internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
+}
+
+const logout = () => {
+  store.commit('logout')
+  internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.logout_success_tip"))
+}
 </script>
 
 <style scoped>

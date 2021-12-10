@@ -8,6 +8,11 @@ export default interface ILog {
    * 日志名称
    */
   name: string
+
+  /**
+   * 描述
+   */
+  description?: string
   /**
    * 文件名
    */
@@ -29,6 +34,10 @@ export default interface ILog {
    */
   recordDate: Date
   /**
+   * 产生时间
+   */
+  createDate?: Date
+  /**
    * 最后修改时间
    */
   lastModifiedData?: Date
@@ -39,7 +48,7 @@ export default interface ILog {
   /**
    * 绑定的规则
    */
-  rule?: ILogRule
+  ruleName?: string
 
   [key: string]: any
 
@@ -59,13 +68,15 @@ export default interface ILog {
 export class Log implements ILog {
   filename: string;
   name: string;
+  description?: string;
   uuid: string;
   file: string;
   hash: string;
   recordDate: Date;
   analyseSuccessful: boolean = false;
   lastModifiedData?: Date;
-  rule?: ILogRule;
+  createDate?: Date
+  ruleName?: string;
 
   constructor(filename: string, uuid: string, file: string) {
     this.filename = filename

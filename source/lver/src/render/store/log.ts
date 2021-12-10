@@ -14,17 +14,20 @@ const data = {
   },
   getters: {
     renderLogList: (state: ILogViewModel) => {
-      const appendIcon = (logs: ILog[]) => {
-        let temp = logs
-        logs.map(log => {
-          log.icon = () => h(IconFile)
-          log.title = log.name
-          log.key = log.uuid
-        })
+      if (!state.logList) return null
+      if (state.logList.length === 0) return null
 
-        return temp
-      }
-      return state.logList.length === 0 ? null : appendIcon(state.logList)
+      let temp: ILog[] = []
+
+      state.logList.forEach(log => {
+        const temp_log = log
+        temp_log.icon = () => h(IconFile)
+        temp_log.title = log.name
+        temp_log.key = log.uuid
+        temp.push(temp_log)
+      })
+
+      return temp
     }
   },
   mutations: {
@@ -43,6 +46,16 @@ const data = {
       const index = state.logList.findIndex(log => log.key === key)
 
       index != -1 && state.logList.splice(index, 1)
+    },
+
+    changeLogName(state: ILogViewModel, { uuid, value }) {
+      const targetLog = state.logList.find(log => log.uuid === uuid);
+      targetLog && (targetLog.name = value)
+    },
+
+    updateLogInfo(state: ILogViewModel, { uuid, log }) {
+      const targetLog = state.logList.find(log => log.uuid === uuid);
+      targetLog && Object.assign(targetLog, log)
     }
   }
 }

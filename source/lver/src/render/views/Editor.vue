@@ -10,13 +10,8 @@
       class="editor-tab"
     >
       <lver-tab-pane v-for="(editor, index) in editors" :key="editor.key" :title="editor.title">
-        <lver-descriptions
-          class="lver-descriptions"
-          :data="createDescriptions(editor as any)"
-          :title="editor.title"
-          bordered
-        />
-        <!-- <log-list-table :path="editor.path"></log-list-table> -->
+        <description :log="editor" v-if="isDescriptionShow"></description>
+        <log-list-table :editor="editor"></log-list-table>
       </lver-tab-pane>
     </lver-tabs>
     <lver-empty v-else>
@@ -30,12 +25,14 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useStore } from '../store';
+import Description from '../components/Description.vue';
 import LogListTable from '../components/LogListTable.vue';
 import ILog from '../model/iLog';
 
 const store = useStore()
 
 const editors = computed(() => store.state.editorView.editorList)
+const isDescriptionShow = computed(() => store.state.appearance.logDescription)
 const activeEditorKey = computed({
   get() {
     return store.state.editorView.activeEditorKey
@@ -45,19 +42,6 @@ const activeEditorKey = computed({
     store.commit("activeEditor", key)
   }
 })
-
-const createDescriptions = (editor: ILog) => {
-  const descriptions = new Array()
-
-  Object.keys(editor).forEach(editorKey => {
-    descriptions.push({
-      label: editorKey,
-      value: (editor as any)[editorKey] || ""
-    })
-  })
-
-  return descriptions
-}
 
 const closeEditor = (key: string) => store.commit("closeEditor", key)
 

@@ -12,7 +12,9 @@ export interface IAppearanceState {
   settingViewVisible: boolean,
   tag: boolean,
   encoding: string,
-  endOfLineSequence: LineSequence
+  endOfLineSequence: LineSequence,
+  logDescription: boolean,
+  pagination: boolean
 }
 
 const appearance = {
@@ -23,9 +25,11 @@ const appearance = {
       logRuleSkeleton: true,
       language: 'ch',
       settingViewVisible: false,
+      logDescription: true,
       tag: false,
       encoding: "utf8",
-      endOfLineSequence: isWin() ? LineSequence.CRLF : LineSequence.LF
+      endOfLineSequence: isWin() ? LineSequence.CRLF : LineSequence.LF,
+      pagination: true
     }
   },
   mutations: {
@@ -84,6 +88,17 @@ const appearance = {
      */
     switchEndOfLineSequence(state: IAppearanceState, endOfLineSequence: LineSequence) {
       state.endOfLineSequence = endOfLineSequence
+    },
+
+    /**
+     * 切换日志描述是否显示
+     */
+    switchlogDescription(state: IAppearanceState, logDescription: boolean) {
+      state.logDescription = logDescription
+    },
+
+    switchPagination(state: IAppearanceState, pagination: boolean) {
+      state.pagination = pagination
     }
   }
 }

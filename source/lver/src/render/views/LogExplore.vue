@@ -34,9 +34,15 @@
               @click="openInLocal(nodeData)"
             >{{ $t("view.explore.log_explore.context_menu.open_local") }}</lver-doption>
             <lver-doption
+              @click="rename(nodeData)"
+            >{{ $t("view.explore.log_explore.context_menu.rename") }}</lver-doption>
+            <lver-doption
               @click="deleteLog(nodeData)"
             >{{ $t("view.explore.log_explore.context_menu.delete") }}</lver-doption>
-            <lver-doption>{{ $t("view.explore.log_explore.context_menu.share") }}</lver-doption>
+            <lver-doption
+              @click="shareLog(nodeData)"
+              :disabled="!store.state.user.logined"
+            >{{ $t("view.explore.log_explore.context_menu.share") }}</lver-doption>
           </template>
         </lver-dropdown>
         <lver-tag
@@ -64,12 +70,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, h, ref, onMounted } from 'vue';
+import { computed, reactive, h, ref, onMounted, render, createApp, getCurrentInstance, defineComponent } from 'vue';
 import { useStore } from "../store";
-import { TreeNodeData } from '@arco-design/web-vue/es/tree/interface';
 import { IconMore } from '@arco-design/web-vue/es/icon';
+import ILog from '../model/iLog';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n()
 const store = useStore();
+const currentInstance = getCurrentInstance()
 
 const skeleton = computed(() => store.state.appearance.logSkeleton);
 
@@ -87,31 +96,86 @@ const selectedLog = computed({
   }
 })
 
-const handleLogSelected = (selected: boolean, selectedNode: { node: TreeNodeData }) => {
+const handleLogSelected = (selected: boolean, selectedNode: { node: ILog }) => {
   store.commit('switchSettingViewVisible', false)
   store.commit('openNewEditor', selectedNode.node)
   store.commit('activeEditor', selectedNode.node.key)
 }
 
-const openInEditor = (nodeData: TreeNodeData) => {
+const openInEditor = (nodeData: ILog) => {
   store.commit('switchSettingViewVisible', false)
   store.commit('openNewEditor', nodeData)
   store.commit('activeEditor', nodeData.key)
 }
 
-const deleteLog = (nodeData: TreeNodeData) => {
+const deleteLog = (nodeData: ILog) => {
   store.commit('removeLogFile', nodeData.key)
 }
 
-const openInLocal = (nodeData: TreeNodeData) => {
-  require('electron').shell.showItemInFolder((nodeData as any).path)
+const openInLocal = (nodeData: ILog) => {
+  require('electron').shell.showItemInFolder((nodeData as any).file)
+}
+
+const shareLog = (nodeData: ILog) => {
+  console.log("shareLog");
+}
+
+const rename = (nodeData: ILog) => {
+  // 找到所有的treeNode
+  const treeNodes = document.getElementsByClassName("arco-tree-node")
+  // 找到目标treeNode
+  const targetElementNode = Array.from(treeNodes).find(treeNode => treeNode.getAttribute('uuid') === nodeData.uuid)
+  if (!targetElementNode) return
+
+  const parentElement = targetElementNode?.parentElement;
+  let restored = false
+
+  const input = document.createElement("input")
+  input.style.width = "200px"
+  input.style.height = "15px"
+  input.style.marginLeft = "22px"
+  input.style.fontSize = "9xpx"
+  input.style.color = "var(--color-text-1)"
+  input.style.backgroundColor = "var(--color-fill-2)"
+  input.style.border = "1px solid transparent"
+  input.style.borderRadius = "var(--border-radius-small)"
+  input.style.lineHeight = "1.667"
+  input.style.paddingLeft = '5px'
+  input.style.paddingRight = '5px'
+  input.style.transition = "color .1s cubic-bezier(0,0,1,1),border-color .1s cubic-bezier(0,0,1,1),background-color .1s cubic-bezier(0,0,1,1)"
+  input.style.outline = "none"
+  input.spellcheck = false;
+  input.value = nodeData.name;
+  input.addEventListener('focusout', () => {
+    if (restored === false) {
+      if (!input.value || input.value.trim() === "") {
+        currentInstance?.appContext.config.globalProperties.$message.error(t("view.explore.log_explore.context_menu.rename_empty"))
+      } else {
+        store.commit("changeLogName", { uuid: nodeData.uuid, value: input.value })
+        parentElement?.replaceChild(targetElementNode, input)
+      }
+    }
+  })
+  input.addEventListener("keydown", e => {
+    if (e.code === "Enter" || e.code === "NumpadEnter") {
+      if (!input.value || input.value.trim() === "") {
+        currentInstance?.appContext.config.globalProperties.$message.error(t("view.explore.log_explore.context_menu.rename_empty"))
+      } else {
+        store.commit("changeLogName", { uuid: nodeData.uuid, value: input.value })
+        restored = true
+        parentElement?.replaceChild(targetElementNode, input)
+      }
+    } else if (e.code === "Escape") {
+      restored = true
+      parentElement?.replaceChild(targetElementNode, input)
+    }
+  })
+  parentElement?.replaceChild(input, targetElementNode)
+  input.focus()
 }
 
 onMounted(() => {
-  // TODO: 模拟
-  // setTimeout(() => {
   store.commit("switchLogSkeleton", false)
-  // }, 1000);
 })
 </script>
 

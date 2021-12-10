@@ -16,6 +16,9 @@ const user = {
   mutations: {
     login(state: IUserState) {
       state.logined = true
+    },
+    logout(state: IUserState) {
+      state.logined = false
     }
   }
 }
