@@ -15,6 +15,7 @@ const ch = {
         },
         context_menu: {
           open: "打开",
+          editDeitil: "编辑详情",
           open_local: isMac() ? "在访达中打开" : "在资源管理器中打开",
           rename: "重命名",
           delete: "删除",
@@ -50,16 +51,17 @@ const ch = {
         header_text: "账户",
         login_text: "登陆",
         logout_text: "登出",
+        sync_text: "同步",
         login: {
           wechat: "微信",
           qq: "QQ",
-          github: "github"
+          github: "github",
+          gitee: '码云'
         },
         login_success_tip: "登陆成功",
         login_failed_tip: "登录失败",
         logout_success_tip: "登出成功",
-        tip: "登陆后可以使用云端备份、日志分享、规则上传等功能"
-      },
+        tip: "登陆后可以使用云端备份、日志分享、规则上传等功能"      },
       general: {
         header_text: "通用",
         language_label_text: "语言",
@@ -92,6 +94,10 @@ const ch = {
       }
     },
     dialog: {
+      edit_log_detail: {
+        confirm_btn_text: "确认",
+        cancel_btn_text: "取消",
+      },
       new_log_rule: {
         title: "新建日志规则",
         create_rule_placrhole_text_press: "按下",
@@ -107,7 +113,7 @@ const ch = {
           name: "名称",
           filename: "文件名",
           file: '文件路径',
-          recordDate: "记录时间",
+          recordDate: "导入时间",
           createDate: "产生时间",
           uuid: "唯一标识",
           analyseSuccessful: "成功分析",
@@ -116,6 +122,7 @@ const ch = {
         },
         close_descriotion_btn_text: "关闭",
         edit_descriotion_btn_text: "编辑",
+        save_descriotion_btn_text: "保存",
         log_table_label_text: "日志详情",
         log_description_closed_text: "日志描述已经关闭，你可以稍后在设置中重新打开",
         search_input_placeholder: "搜索日志, 支持使用类似：level: ERROR的筛选模式",

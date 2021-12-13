@@ -97,15 +97,11 @@ onMounted(() => {
 <style scoped>
 .log-list-table {
   width: 99%;
-  overflow-y: scroll;
 }
 .arco-tabs-content {
   height: 100%;
 }
 
-.lver-table {
-  width: 99%;
-}
 
 .log-editor-header {
   display: flex;

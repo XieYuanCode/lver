@@ -34,6 +34,33 @@ let LoginService = class LoginService {
         userInfo.data['success'] = true;
         return Promise.resolve(userInfo.data);
     }
+    async login_gitee(authCode) {
+        console.log('authCode', authCode);
+        const tokenResponse = await (0, axios_1.default)({
+            method: 'post',
+            url: 'https://gitee.com/oauth/token?grant_type=authorization_code&code=' +
+                `${authCode}&` +
+                `client_id=1592815aa8a6d503cd041d93e6273d16f32664f85507d8b1510e43e875b473f3&` +
+                `client_secret=b6153bd963fd2f230ccb7cf62caf1310ca65a2c6172636fb036344f86e730624&` +
+                `redirect_uri=http://localhost:8000/login/gitee_redirect`,
+            headers: {
+                accept: 'application/json',
+            },
+        });
+        const accessToken = tokenResponse.data.access_token;
+        console.log('accessToken', accessToken);
+        const userInfo = await (0, axios_1.default)({
+            method: 'get',
+            url: `https://gitee.com/api/v5/user?access_token=${accessToken}`,
+            headers: {
+                accept: 'application/json',
+                Authorization: `token ${accessToken}`,
+            },
+        });
+        userInfo.data['success'] = true;
+        console.log(123, userInfo.data);
+        return Promise.resolve(userInfo.data);
+    }
 };
 LoginService = __decorate([
     (0, common_1.Injectable)()

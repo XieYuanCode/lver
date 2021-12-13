@@ -5,4 +5,6 @@ export declare class LoginController {
     private _loggingEvent;
     login_github(): Promise<any>;
     github_redirect(request: any): any;
+    login_gitee(): Promise<any>;
+    gitee_redirect(request: any): any;
 }

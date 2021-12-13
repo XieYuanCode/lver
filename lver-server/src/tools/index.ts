@@ -1,15 +1,15 @@
-import { exec } from 'child_process';
+import { spawn } from 'child_process';
 
 export const openDefaultBrowser = (url: string) => {
   switch (process.platform) {
     case 'darwin':
-      exec(`open ${url}`);
+      spawn('open', [url]);
       break;
     case 'win32':
-      exec(`start ${url}`);
+      spawn('start', [url]);
       break;
     case 'linux':
-      exec(`xdg-open ${url}`);
+      spawn('xdg-open', [url]);
     default:
       break;
   }

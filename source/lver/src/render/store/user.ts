@@ -1,5 +1,6 @@
 export enum LoginType {
-  Github
+  Github,
+  Gitee
 }
 export interface IUserState {
   type: LoginType

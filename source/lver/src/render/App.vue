@@ -51,6 +51,5 @@ body {
   padding-left: 20px;
   padding-top: 20px;
   background: var(--color-menu-light-bg);
-  overflow-y: scroll;
 }
 </style>

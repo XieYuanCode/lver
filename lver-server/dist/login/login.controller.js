@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginController = void 0;
 const common_1 = require("@nestjs/common");
 const login_service_1 = require("./login.service");
-const tools_1 = require("../tools");
 const stream_1 = require("stream");
 let LoginController = class LoginController {
     constructor(loginService) {
@@ -25,10 +24,8 @@ let LoginController = class LoginController {
     login_github() {
         return new Promise((resolve, reject) => {
             this._loggingEvent.on('loggined', (e) => {
-                console.log('e', e);
                 resolve(e);
             });
-            (0, tools_1.openDefaultBrowser)(`https://github.com/login/oauth/authorize?client_id=14d1f9d8eaf6722537d1&redirect_uri=http://localhost:8000/login/github_redirect`);
         });
     }
     github_redirect(request) {
@@ -40,6 +37,28 @@ let LoginController = class LoginController {
         }
         else if (query.code) {
             this.loginService.login_github(query.code).then((e) => {
+                this._loggingEvent.emit('loggined', e);
+                return 'loggin successed!';
+            });
+        }
+    }
+    login_gitee() {
+        return new Promise((resolve, reject) => {
+            this._loggingEvent.on('loggined', (e) => {
+                resolve(e);
+            });
+        });
+    }
+    gitee_redirect(request) {
+        console.log('github_redirect in!!!');
+        const query = request.query;
+        console.log(query);
+        if (query.error) {
+            this._loggingEvent.emit('loggined', query);
+            return query.description;
+        }
+        else if (query.code) {
+            this.loginService.login_gitee(query.code).then((e) => {
                 this._loggingEvent.emit('loggined', e);
                 return 'loggin successed!';
             });
@@ -59,6 +78,19 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Object)
 ], LoginController.prototype, "github_redirect", null);
+__decorate([
+    (0, common_1.Get)('gitee'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], LoginController.prototype, "login_gitee", null);
+__decorate([
+    (0, common_1.Get)('gitee_redirect/'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Object)
+], LoginController.prototype, "gitee_redirect", null);
 LoginController = __decorate([
     (0, common_1.Controller)('login'),
     __metadata("design:paramtypes", [login_service_1.LoginService])

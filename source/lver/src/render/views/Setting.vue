@@ -85,13 +85,22 @@
                   type="outline"
                   size="mini"
                   @click="loginWithGithub"
-                  :loading="isGithubLogging"
-                  :disable="isGithubLogging"
+                  :loading="isLogging"
+                  :disable="isLogging"
                 >
                   <template #icon>
                     <icon-github />
                   </template>
                   <template #default>{{ $t('view.setting.account.login.github') }}</template>
+                </lver-button>
+                <lver-button
+                  type="outline"
+                  size="mini"
+                  @click="loginWithGitee"
+                  :loading="isLogging"
+                  :disable="isLogging"
+                >
+                  <template #default>{{ $t('view.setting.account.login.gitee') }}</template>
                 </lver-button>
               </lver-space>
             </lver-form-item>
@@ -110,14 +119,15 @@
               }"
             >
               <span :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }">
-                <lver-avatar
-                  :style="{ marginRight: '8px' }"
-                  :size="28"
-                  :src="store.state.user.avatar"
-                >A</lver-avatar>
+                <lver-avatar :style="{ marginRight: '8px' }" :size="28">
+                  <img alt="avatar" :src="store.state.user.avatar" />
+                </lver-avatar>
                 <lver-typography-text>{{ store.state.user.name }}</lver-typography-text>
               </span>
-              <lver-link @click="logout">{{ $t('view.setting.account.logout_text') }}</lver-link>
+              <div>
+                <lver-link @click="syncData">{{ $t('view.setting.account.sync_text') }}</lver-link>
+                <lver-link @click="logout">{{ $t('view.setting.account.logout_text') }}</lver-link>
+              </div>
             </div>
           </lver-card>
         </div>
@@ -268,7 +278,8 @@ const tag_tip_img_url = computed(() => {
   }
 })
 
-const isGithubLogging = ref(false)
+const isLogging = ref(false)
+
 /**
  * 打开外链
  */
@@ -287,26 +298,55 @@ const feedback = () => {
  * github登陆
  */
 const loginWithGithub = async () => {
-  isGithubLogging.value = true
+  isLogging.value = true
   try {
+    require('electron').shell.openExternal('https://github.com/login/oauth/authorize?client_id=14d1f9d8eaf6722537d1&redirect_uri=http://localhost:8000/login/github_redirect')
     const response = await fetch(`http://localhost:8000/login/github`)
     const loginResult = await response.json()
-    console.log("loginResult", loginResult);
     if (loginResult.error && loginResult.error_description) {
       internalInstance && internalInstance.appContext.config.globalProperties.$message.error(loginResult.error_description)
     } else if (loginResult.success) {
       store.commit('login', {
         type: LoginType.Github, name: loginResult.login, avatar: loginResult.avatar_url
       })
+      internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
     } else {
-      internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_failed_tip"))
+      internalInstance && internalInstance.appContext.config.globalProperties.$message.error(t("view.setting.account.login_failed_tip"))
     }
   } catch (error) {
-
+    internalInstance && internalInstance.appContext.config.globalProperties.$message.error(t("view.setting.account.login_failed_tip"))
   } finally {
-    isGithubLogging.value = false
+    isLogging.value = false
   }
 }
+
+/**
+ * gitee登录
+ */
+const loginWithGitee = async () => {
+  isLogging.value = true
+  try {
+    require('electron').shell.openExternal('https://gitee.com/oauth/authorize?client_id=1592815aa8a6d503cd041d93e6273d16f32664f85507d8b1510e43e875b473f3&redirect_uri=http://localhost:8000/login/gitee_redirect&response_type=code')
+    const response = await fetch(`http://localhost:8000/login/gitee`)
+    const loginResult = await response.json()
+    if (loginResult.error && loginResult.error_description) {
+      internalInstance && internalInstance.appContext.config.globalProperties.$message.error(loginResult.error_description)
+    } else if (loginResult.success) {
+      store.commit('login', {
+        type: LoginType.Gitee, name: loginResult.name, avatar: loginResult.avatar_url
+      })
+      internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
+    } else {
+      internalInstance && internalInstance.appContext.config.globalProperties.$message.error(t("view.setting.account.login_failed_tip"))
+    }
+  } catch (error) {
+    internalInstance && internalInstance.appContext.config.globalProperties.$message.error(t("view.setting.account.login_failed_tip"))
+  } finally {
+    isLogging.value = false
+  }
+}
+
+const syncData = async () => { }
 
 const logout = () => {
   store.commit('logout')
