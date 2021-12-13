@@ -78,22 +78,16 @@
         </template>
         <lver-form :model="{}" layout="vertical" v-if="!isLogined">
           <lver-space direction="vertical" size="mini">
-            <!-- 语言 -->
+            <!-- 账户 -->
             <lver-form-item field="login" :label="$t('view.setting.account.login_text')">
               <lver-space>
-                <lver-button type="outline" size="mini" @click="loginWithWechat">
-                  <template #icon>
-                    <icon-wechat />
-                  </template>
-                  <template #default>{{ $t('view.setting.account.login.wechat') }}</template>
-                </lver-button>
-                <lver-button type="outline" size="mini" @click="loginWithQQ">
-                  <template #icon>
-                    <icon-qq />
-                  </template>
-                  <template #default>{{ $t('view.setting.account.login.qq') }}</template>
-                </lver-button>
-                <lver-button type="outline" size="mini" @click="loginWithGithub">
+                <lver-button
+                  type="outline"
+                  size="mini"
+                  @click="loginWithGithub"
+                  :loading="isGithubLogging"
+                  :disable="isGithubLogging"
+                >
                   <template #icon>
                     <icon-github />
                   </template>
@@ -117,8 +111,9 @@
             >
               <span :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }">
                 <lver-avatar
-                  :style="{ marginRight: '8px', backgroundColor: '#165DFF' }"
+                  :style="{ marginRight: '8px' }"
                   :size="28"
+                  :src="store.state.user.avatar"
                 >A</lver-avatar>
                 <lver-typography-text>{{ store.state.user.name }}</lver-typography-text>
               </span>
@@ -236,6 +231,7 @@ import { ref, computed, getCurrentInstance } from "vue";
 import { ThemeType } from "../model/theme";
 import { useStore } from "../store";
 import { useI18n } from "vue-i18n"
+import { LoginType } from "../store/user";
 
 const { t } = useI18n()
 const internalInstance = getCurrentInstance()
@@ -272,6 +268,7 @@ const tag_tip_img_url = computed(() => {
   }
 })
 
+const isGithubLogging = ref(false)
 /**
  * 打开外链
  */
@@ -287,25 +284,28 @@ const feedback = () => {
 }
 
 /**
- * 微信登陆
- */
-const loginWithWechat = () => {
-  store.commit('login')
-  internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
-}
-/**
- * QQ登陆
- */
-const loginWithQQ = () => {
-  store.commit('login')
-  internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
-}
-/**
  * github登陆
  */
-const loginWithGithub = () => {
-  store.commit('login')
-  internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
+const loginWithGithub = async () => {
+  isGithubLogging.value = true
+  try {
+    const response = await fetch(`http://localhost:8000/login/github`)
+    const loginResult = await response.json()
+    console.log("loginResult", loginResult);
+    if (loginResult.error && loginResult.error_description) {
+      internalInstance && internalInstance.appContext.config.globalProperties.$message.error(loginResult.error_description)
+    } else if (loginResult.success) {
+      store.commit('login', {
+        type: LoginType.Github, name: loginResult.login, avatar: loginResult.avatar_url
+      })
+    } else {
+      internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_failed_tip"))
+    }
+  } catch (error) {
+
+  } finally {
+    isGithubLogging.value = false
+  }
 }
 
 const logout = () => {

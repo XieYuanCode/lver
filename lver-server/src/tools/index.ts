@@ -1,7 +1,16 @@
-import { createHash } from 'crypto';
+import { exec } from 'child_process';
 
-export const calculateHash = (buffer: Buffer) => {
-  const hash = createHash('md5');
-  hash.update(buffer);
-  return hash.digest('hex');
+export const openDefaultBrowser = (url: string) => {
+  switch (process.platform) {
+    case 'darwin':
+      exec(`open ${url}`);
+      break;
+    case 'win32':
+      exec(`start ${url}`);
+      break;
+    case 'linux':
+      exec(`xdg-open ${url}`);
+    default:
+      break;
+  }
 };

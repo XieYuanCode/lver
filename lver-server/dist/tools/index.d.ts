@@ -1,1 +1,1 @@
-export declare const calculateHash: (buffer: Buffer) => string;
+export declare const openDefaultBrowser: (url: string) => void;

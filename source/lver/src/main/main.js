@@ -18,6 +18,7 @@ function creatWindow() {
     transparent: true,
     resizable: true,
     webPreferences: {
+      webSecurity: false,
       nodeIntegration: true,
       contextIsolation: false,
       devTools: true

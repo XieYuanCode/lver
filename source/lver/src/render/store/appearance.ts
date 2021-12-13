@@ -5,15 +5,45 @@ import { isWin } from "../utils/system";
 import { switchTheme } from "../utils/theme";
 
 export interface IAppearanceState {
+  /**
+   * 主题
+   */
   theme: ThemeType,
+  /**
+   * 日志骨架屏
+   */
   logSkeleton: boolean,
+  /**
+   * 日志列表骨架屏
+   */
   logRuleSkeleton: boolean,
+  /**
+   * 语言
+   */
   language: string,
+  /**
+   * 设置页面是否显示
+   */
   settingViewVisible: boolean,
+  /**
+   * tag是否显示
+   */
   tag: boolean,
+  /**
+   * 日志解析编码
+   */
   encoding: string,
+  /**
+   * 日志解析行分隔符
+   */
   endOfLineSequence: LineSequence,
+  /**
+   * 日志描述是否显示
+   */
   logDescription: boolean,
+  /**
+   * 日志分页是否显示
+   */
   pagination: boolean
 }
 

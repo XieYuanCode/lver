@@ -56,6 +56,7 @@ const ch = {
           github: "github"
         },
         login_success_tip: "登陆成功",
+        login_failed_tip: "登录失败",
         logout_success_tip: "登出成功",
         tip: "登陆后可以使用云端备份、日志分享、规则上传等功能"
       },

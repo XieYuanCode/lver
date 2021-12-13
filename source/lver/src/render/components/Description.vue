@@ -59,7 +59,7 @@
 <script lang="ts" setup>
 import { computed, defineProps, getCurrentInstance, ref, reactive } from "vue";
 import { useI18n } from "vue-i18n";
-import { useStore } from "store";
+import { useStore } from "../store";
 import dayjs from "dayjs";
 
 import ILog from "../model/iLog";

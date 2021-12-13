@@ -12,13 +12,15 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const share_controller_1 = require("./share/share.controller");
 const share_service_1 = require("./share/share.service");
+const login_controller_1 = require("./login/login.controller");
+const login_service_1 = require("./login/login.service");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [],
-        controllers: [app_controller_1.AppController, share_controller_1.ShareController],
-        providers: [app_service_1.AppService, share_service_1.ShareService],
+        controllers: [app_controller_1.AppController, share_controller_1.ShareController, login_controller_1.LoginController],
+        providers: [app_service_1.AppService, share_service_1.ShareService, login_service_1.LoginService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

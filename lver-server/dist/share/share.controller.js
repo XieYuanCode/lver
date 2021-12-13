@@ -15,15 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShareController = void 0;
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
-const tools_1 = require("../tools");
 const share_service_1 = require("./share.service");
 let ShareController = class ShareController {
     constructor(shareService) {
         this.shareService = shareService;
     }
     async upload(files) {
-        files &&
-            this.shareService.saveLogFile((0, tools_1.calculateHash)(files[0].buffer), files[0].buffer);
     }
 };
 __decorate([
