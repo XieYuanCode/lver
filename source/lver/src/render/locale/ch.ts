@@ -52,6 +52,19 @@ const ch = {
         login_text: "登陆",
         logout_text: "登出",
         sync_text: "同步",
+        user_info_card: {
+          title: '账户详情',
+          registry_date: "注册日期",
+          login_times: "登录次数"
+        },
+        cloud_info_card: {
+          title: '云储存详情',
+          management_btn_text: "管理",
+          log_counts: "日志数量",
+          used_size: "已用",
+          total_size: "总量",
+          used_percent: "已用百分比",
+        },
         login: {
           wechat: "微信",
           qq: "QQ",
@@ -61,7 +74,8 @@ const ch = {
         login_success_tip: "登陆成功",
         login_failed_tip: "登录失败",
         logout_success_tip: "登出成功",
-        tip: "登陆后可以使用云端备份、日志分享、规则上传等功能"      },
+        tip: "登陆后可以使用云端备份、日志分享、规则上传等功能"
+      },
       general: {
         header_text: "通用",
         language_label_text: "语言",

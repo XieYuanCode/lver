@@ -31,7 +31,7 @@
               @click="openInEditor(nodeData)"
             >{{ $t("view.explore.log_explore.context_menu.open") }}</lver-doption>
             <lver-doption
-              @click="editDetail(nodeData)"
+              @click="openInEditor(nodeData)"
             >{{ $t("view.explore.log_explore.context_menu.editDeitil") }}</lver-doption>
             <lver-doption
               @click="openInLocal(nodeData)"

@@ -119,17 +119,99 @@
               }"
             >
               <span :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }">
-                <lver-avatar :style="{ marginRight: '8px' }" :size="28">
+                <lver-avatar
+                  :style="{ marginRight: '8px' }"
+                  :size="28"
+                  @click="handleAvatarClicked"
+                >
                   <img alt="avatar" :src="store.state.user.avatar" />
                 </lver-avatar>
                 <lver-typography-text>{{ store.state.user.name }}</lver-typography-text>
               </span>
               <div>
-                <lver-link @click="syncData">{{ $t('view.setting.account.sync_text') }}</lver-link>
-                <lver-link @click="logout">{{ $t('view.setting.account.logout_text') }}</lver-link>
+                <lver-link
+                  :disabled="isSyncing"
+                  @click="syncData"
+                >{{ $t('view.setting.account.sync_text') }}</lver-link>
+                <lver-link
+                  :disabled="isSyncing"
+                  @click="logout"
+                >{{ $t('view.setting.account.logout_text') }}</lver-link>
               </div>
             </div>
           </lver-card>
+          <lver-divider />
+          <div class="user-info-cards">
+            <lver-card
+              :style="{ width: '360px' }"
+              :title="t('view.setting.account.user_info_card.title')"
+              hoverable
+              class="user-info-card"
+            >
+              <lver-statistic
+                :title="t('view.setting.account.user_info_card.registry_date')"
+                :value="store.state.user.registry_date"
+                format="YYYY-MM-DD"
+                :style="{ marginBottom: '10px' }"
+              />
+              <br />
+              <lver-statistic
+                :title="t('view.setting.account.user_info_card.login_times')"
+                :value="store.state.user.login_times"
+                show-group-separator
+              />
+            </lver-card>
+            <lver-card
+              :loading="isSyncing"
+              :style="{ width: '360px' }"
+              :title="t('view.setting.account.cloud_info_card.title')"
+              hoverable
+              class="user-info-card"
+            >
+              <template #extra>
+                <lver-link>{{ t('view.setting.account.cloud_info_card.management_btn_text') }}</lver-link>
+              </template>
+              <lver-statistic
+                :title="t('view.setting.account.cloud_info_card.log_counts')"
+                :value="store.state.user.cloud.log_counts"
+                show-group-separator
+                :style="{ marginBottom: '10px' }"
+              />
+              <br />
+              <lver-statistic
+                :title="t('view.setting.account.cloud_info_card.used_size')"
+                :value="store.state.user.cloud.used_size"
+                show-group-separator
+                :style="{ marginBottom: '10px' }"
+              >
+                <template #suffix>KB</template>
+              </lver-statistic>
+              <br />
+              <lver-statistic
+                :title="t('view.setting.account.cloud_info_card.total_size')"
+                :value="store.state.user.cloud.total_size"
+                show-group-separator
+                :style="{ marginBottom: '10px' }"
+              >
+                <template #suffix>KB</template>
+              </lver-statistic>
+              <br />
+              <lver-statistic
+                :title="t('view.setting.account.cloud_info_card.used_percent')"
+                :value="store.state.user.cloud.used_percent"
+                show-group-separator
+              >
+                <template #suffix>%</template>
+              </lver-statistic>
+            </lver-card>
+            <!-- <lver-card :style="{ width: '360px' }" title="Arco Card" hoverable>
+              <template #extra>
+                <lver-link>More</lver-link>
+              </template>
+              Card content
+              <br />Card content
+            </lver-card>-->
+          </div>
         </div>
         <lver-divider orientation="center">{{ $t("view.setting.account.header_text") }}</lver-divider>
       </lver-tab-pane>
@@ -279,6 +361,7 @@ const tag_tip_img_url = computed(() => {
 })
 
 const isLogging = ref(false)
+const isSyncing = ref(false)
 
 /**
  * 打开外链
@@ -306,8 +389,9 @@ const loginWithGithub = async () => {
     if (loginResult.error && loginResult.error_description) {
       internalInstance && internalInstance.appContext.config.globalProperties.$message.error(loginResult.error_description)
     } else if (loginResult.success) {
+      console.log("loginResult", loginResult)
       store.commit('login', {
-        type: LoginType.Github, name: loginResult.login, avatar: loginResult.avatar_url
+        type: LoginType.Github, name: loginResult.login, avatar: loginResult.avatar_url, html_url: loginResult.html_url
       })
       internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
     } else {
@@ -332,8 +416,9 @@ const loginWithGitee = async () => {
     if (loginResult.error && loginResult.error_description) {
       internalInstance && internalInstance.appContext.config.globalProperties.$message.error(loginResult.error_description)
     } else if (loginResult.success) {
+      console.log("loginResult", loginResult)
       store.commit('login', {
-        type: LoginType.Gitee, name: loginResult.name, avatar: loginResult.avatar_url
+        type: LoginType.Gitee, name: loginResult.name, avatar: loginResult.avatar_url, html_url: loginResult.html_url
       })
       internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
     } else {
@@ -346,7 +431,22 @@ const loginWithGitee = async () => {
   }
 }
 
-const syncData = async () => { }
+/**
+ * 点击头像
+ */
+const handleAvatarClicked = () => {
+  require('electron').shell.openExternal(store.state.user.html_url)
+}
+
+/**
+ * 同步数据
+ */
+const syncData = async () => {
+  isSyncing.value = true
+  setTimeout(() => {
+    isSyncing.value = false
+  }, 3000)
+}
 
 const logout = () => {
   store.commit('logout')
@@ -357,5 +457,15 @@ const logout = () => {
 <style scoped>
 .setting-title {
   margin-bottom: 30px;
+}
+
+.user-info-cards {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.user-info-card {
+  margin-right: 20px;
 }
 </style>
