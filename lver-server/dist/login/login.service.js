@@ -42,7 +42,7 @@ let LoginService = class LoginService {
                 `${authCode}&` +
                 `client_id=1592815aa8a6d503cd041d93e6273d16f32664f85507d8b1510e43e875b473f3&` +
                 `client_secret=b6153bd963fd2f230ccb7cf62caf1310ca65a2c6172636fb036344f86e730624&` +
-                `redirect_uri=http://localhost:8000/login/gitee_redirect`,
+                `redirect_uri=http://81.70.22.185:3001/login/gitee_redirect`,
             headers: {
                 accept: 'application/json',
             },

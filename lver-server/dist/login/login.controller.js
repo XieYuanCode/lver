@@ -29,18 +29,19 @@ let LoginController = class LoginController {
         });
     }
     github_redirect(request) {
-        console.log('github_redirect in!!!');
-        const query = request.query;
-        if (query.error) {
-            this._loggingEvent.emit('loggined', query);
-            return query.description;
-        }
-        else if (query.code) {
-            this.loginService.login_github(query.code).then((e) => {
-                this._loggingEvent.emit('loggined', e);
-                return 'loggin successed!';
-            });
-        }
+        return new Promise((resolve, reject) => {
+            const query = request.query;
+            if (query.error) {
+                this._loggingEvent.emit('loggined', query);
+                resolve(query.description);
+            }
+            else if (query.code) {
+                this.loginService.login_github(query.code).then((e) => {
+                    this._loggingEvent.emit('loggined', e);
+                    resolve('loggin successed!');
+                });
+            }
+        });
     }
     login_gitee() {
         return new Promise((resolve, reject) => {
@@ -50,19 +51,19 @@ let LoginController = class LoginController {
         });
     }
     gitee_redirect(request) {
-        console.log('github_redirect in!!!');
-        const query = request.query;
-        console.log(query);
-        if (query.error) {
-            this._loggingEvent.emit('loggined', query);
-            return query.description;
-        }
-        else if (query.code) {
-            this.loginService.login_gitee(query.code).then((e) => {
-                this._loggingEvent.emit('loggined', e);
-                return 'loggin successed!';
-            });
-        }
+        return new Promise((resolve, reject) => {
+            const query = request.query;
+            if (query.error) {
+                this._loggingEvent.emit('loggined', query);
+                resolve(query.description);
+            }
+            else if (query.code) {
+                this.loginService.login_gitee(query.code).then((e) => {
+                    this._loggingEvent.emit('loggined', e);
+                    resolve('loggin successed!');
+                });
+            }
+        });
     }
 };
 __decorate([
@@ -89,7 +90,7 @@ __decorate([
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], LoginController.prototype, "gitee_redirect", null);
 LoginController = __decorate([
     (0, common_1.Controller)('login'),

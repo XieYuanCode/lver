@@ -19,18 +19,19 @@ export class LoginController {
 
   @Get('github_redirect/')
   github_redirect(@Req() request): any {
-    console.log('github_redirect in!!!');
-    const query = request.query;
+    return new Promise((resolve, reject) => {
+      const query = request.query;
 
-    if (query.error) {
-      this._loggingEvent.emit('loggined', query);
-      return query.description;
-    } else if (query.code) {
-      this.loginService.login_github(query.code).then((e) => {
-        this._loggingEvent.emit('loggined', e);
-        return 'loggin successed!';
-      });
-    }
+      if (query.error) {
+        this._loggingEvent.emit('loggined', query);
+        resolve(query.description);
+      } else if (query.code) {
+        this.loginService.login_github(query.code).then((e) => {
+          this._loggingEvent.emit('loggined', e);
+          resolve('loggin successed!');
+        });
+      }
+    })
   }
 
   @Get('gitee')
@@ -43,20 +44,19 @@ export class LoginController {
   }
 
   @Get('gitee_redirect/')
-  gitee_redirect(@Req() request): any {
-    console.log('github_redirect in!!!');
-    const query = request.query;
+  gitee_redirect(@Req() request): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const query = request.query;
 
-    console.log(query)
-
-    if (query.error) {
-      this._loggingEvent.emit('loggined', query);
-      return query.description;
-    } else if (query.code) {
-      this.loginService.login_gitee(query.code).then((e) => {
-        this._loggingEvent.emit('loggined', e);
-        return 'loggin successed!';
-      });
-    }
+      if (query.error) {
+        this._loggingEvent.emit('loggined', query);
+        resolve(query.description);
+      } else if (query.code) {
+        this.loginService.login_gitee(query.code).then((e) => {
+          this._loggingEvent.emit('loggined', e);
+          resolve('loggin successed!');
+        });
+      }
+    })
   }
 }
