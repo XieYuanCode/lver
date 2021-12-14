@@ -1,7 +1,7 @@
 <template>
   <lver-layout class="layout">
-    <lver-layout>
-      <lver-layout-sider style="width:280px;">
+    <lver-layout style="height: 100%">
+      <lver-layout-sider style="width:280px; height: 100%;">
         <explore></explore>
       </lver-layout-sider>
       <lver-layout-content class="lver-layout-content">
@@ -48,6 +48,7 @@ body {
 }
 
 .lver-layout-content {
+  height: calc(100% - 20px);
   padding-left: 20px;
   padding-top: 20px;
   background: var(--color-menu-light-bg);

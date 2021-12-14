@@ -9,7 +9,7 @@
       @delete="closeEditor"
       class="editor-tab"
     >
-      <lver-tab-pane v-for="(editor, index) in editors" :key="editor.key" :title="editor.title">
+      <lver-tab-pane v-for="(editor, index) in editors" :key="editor.key" :title="editor.title" style="height: 100%">
         <description :log="editor" v-if="isDescriptionShow"></description>
         <log-list-table :editor="editor"></log-list-table>
       </lver-tab-pane>
@@ -49,12 +49,19 @@ const closeEditor = (key: string) => store.commit("closeEditor", key)
 
 <style scoped>
 .editor-view {
+  overflow: hidden;
   height: 100%;
 }
 
 .editor-tab {
   height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
   user-select: none;
+}
+
+.arco-tabs-content {
+  height: 100%;
 }
 
 .lver-descriptions {
