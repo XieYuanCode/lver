@@ -13,7 +13,7 @@ const store = createStore<IState>({
     appearance,
     editorView,
     logView,
-    user
+    user,
   }
 })
 

@@ -51,10 +51,10 @@ const kor = {
         end_of_line_sequence_label_text: "换行符",
         tag_tip_description: '레이블 옵션을 열면 로그 목록 뒷면에서 로그 소스를 볼 수 있습니다.',
         language: {
-          ch: "중국어",
-          en: "영어",
-          jp: "일본어",
-          kor: "한국어"
+          ch: "简体中文",
+          en: "English",
+          jp: "日本語",
+          kor: "한국어",
         }
       },
       theme: {

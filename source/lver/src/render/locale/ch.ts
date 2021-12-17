@@ -11,7 +11,8 @@ const ch = {
         title: "日志",
         searcher_placeholder: "搜索日志",
         addbutton: {
-          import_log: "导入日志文件"
+          import_log: "本地日志",
+          import_shared_log: "共享日志",
         },
         context_menu: {
           open: "打开",
@@ -52,6 +53,7 @@ const ch = {
         login_text: "登陆",
         logout_text: "登出",
         sync_text: "同步",
+        cancel_auth_text: "取消授权",
         user_info_card: {
           title: '账户详情',
           registry_date: "注册日期",
@@ -85,10 +87,10 @@ const ch = {
         log_description_label_text: "日志描述",
         tag_tip_description: '打开标签选项，可以在日志列表的后方看到日志的来源。',
         language: {
-          ch: "中文",
-          en: "英文",
-          jp: "日语",
-          kor: "韩语"
+          ch: "简体中文",
+          en: "English",
+          jp: "日本語",
+          kor: "한국어",
         }
       },
       theme: {
@@ -100,11 +102,28 @@ const ch = {
           system: "系统"
         }
       },
+      shortcut: {
+        header_text: "快捷键",
+        tabel_action_text: "行为",
+        table_key_text: "快捷键"
+      },
+      update: {
+        header_text: "更新",
+        channel_label_text: "更新渠道",
+        stable_channel_text: "稳定版",
+        beta_channel_text: "测试版",
+        auto_check_label_text: "自动检查更新",
+        update_interval_label_text: "更新间隔",
+        day_text: "天",
+        last_check_time_label_text: "上次检查时间",
+      },
       about: {
         header_text: "关于",
         author: "作者: 谢渊",
-        version: "版本: " + version,
-        feedback_btn_text: "反馈"
+        version: version,
+        feedback_btn_text: "反馈",
+        changelog_btn_text: "更新日志",
+        developer: "开发者"
       }
     },
     dialog: {
@@ -118,7 +137,7 @@ const ch = {
         create_rule_placrhole_text_left: "将剪贴板第一条文本复制到这里",
       },
       import_log_file: {
-        title: "导入日志文件"
+        title: "导入本地日志文件"
       }
     },
     editor: {

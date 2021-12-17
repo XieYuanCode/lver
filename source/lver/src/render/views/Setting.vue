@@ -135,6 +135,10 @@
                 >{{ $t('view.setting.account.sync_text') }}</lver-link>
                 <lver-link
                   :disabled="isSyncing"
+                  @click="cancelAuth"
+                >{{ $t('view.setting.account.cancel_auth_text') }}</lver-link>
+                <lver-link
+                  :disabled="isSyncing"
                   @click="logout"
                 >{{ $t('view.setting.account.logout_text') }}</lver-link>
               </div>
@@ -213,7 +217,9 @@
             </lver-card>-->
           </div>
         </div>
-        <lver-divider orientation="center">{{ $t("view.setting.account.header_text") }}</lver-divider>
+        <lver-divider
+          orientation="center"
+        >{{ $t("view.setting.account.header_text") }} {{ isLogined ? '| ' : null }} {{ isLogined ? store.state.user.name : null }}</lver-divider>
       </lver-tab-pane>
       <!-- 日志 -->
       <lver-tab-pane key="log">
@@ -296,6 +302,68 @@
         </lver-form>
         <lver-divider orientation="center">{{ $t("view.setting.theme.header_text") }}</lver-divider>
       </lver-tab-pane>
+      <!-- 快捷键 -->
+      <lver-tab-pane key="shortcut">
+        <template #title>
+          <icon-thunderbolt />
+          {{ $t("view.setting.shortcut.header_text") }}
+        </template>
+        <lver-divider
+          orientation="center"
+        >{{ $t("view.setting.shortcut.header_text") }} | {{ platform }}</lver-divider>
+      </lver-tab-pane>
+      <!-- 更新 -->
+      <lver-tab-pane key="update">
+        <template #title>
+          <icon-to-bottom />
+          {{ $t("view.setting.update.header_text") }}
+        </template>
+        <lver-form :model="{}" layout="vertical">
+          <lver-space direction="vertical" size="mini">
+            <lver-form-item field="channel" :label="$t('view.setting.update.channel_label_text')">
+              <lver-radio-group
+                type="button"
+                size="mini"
+                v-model="updateChannel"
+                @change="updateChannelChanged"
+              >
+                <lver-radio value="Stable">{{ $t('view.setting.update.stable_channel_text') }}</lver-radio>
+                <lver-radio value="Beta" disabled>{{ $t('view.setting.update.beta_channel_text') }}</lver-radio>
+              </lver-radio-group>
+            </lver-form-item>
+            <lver-form-item
+              field="autoCheck"
+              :label="$t('view.setting.update.auto_check_label_text')"
+            >
+              <lver-switch
+                size="small"
+                v-model="isAutoCheckUpdate"
+                @change="autoCheckUpdateChanged"
+              ></lver-switch>
+            </lver-form-item>
+            <lver-form-item
+              field="updateInterval"
+              :label="$t('view.setting.update.update_interval_label_text')"
+            >
+              <lver-radio-group
+                type="button"
+                size="mini"
+                v-model="updateInterval"
+                :disabled="!isAutoCheckUpdate"
+                @change="updateIntervalChanged"
+              >
+                <lver-radio :value="1">1 {{ $t('view.setting.update.day_text') }}</lver-radio>
+                <lver-radio :value="3">3 {{ $t('view.setting.update.day_text') }}</lver-radio>
+                <lver-radio :value="7">7 {{ $t('view.setting.update.day_text') }}</lver-radio>
+                <lver-radio :value="30">30 {{ $t('view.setting.update.day_text') }}</lver-radio>
+              </lver-radio-group>
+            </lver-form-item>
+          </lver-space>
+        </lver-form>
+        <lver-divider
+          orientation="center"
+        >{{ $t("view.setting.update.header_text") }} | {{ $t("view.setting.update.last_check_time_label_text") }}: {{ store.state.appearance.lastCheckUpdateTime }}</lver-divider>
+      </lver-tab-pane>
       <!-- 关于 -->
       <lver-tab-pane keyd="about">
         <template #title>
@@ -307,11 +375,16 @@
           github:
           <lver-link @click="openExternal">https://github.com/XieYuanCode</lver-link>
         </lver-typography-title>
-        <lver-typography-title type="secondary" :heading="6">{{ $t("view.setting.about.version") }}</lver-typography-title>
         <lver-typography-title type="secondary" :heading="6">
+          <lver-button
+            @click="openChangelogWebsite"
+            :style="{ marginRight: '20px' }"
+          >{{ $t("view.setting.about.changelog_btn_text") }}</lver-button>
           <lver-button @click="feedback">{{ $t("view.setting.about.feedback_btn_text") }}</lver-button>
         </lver-typography-title>
-        <lver-divider orientation="center">{{ $t("view.setting.about.header_text") }}</lver-divider>
+        <lver-divider
+          orientation="center"
+        >{{ $t("view.setting.about.header_text") }} ｜ {{ $t("view.setting.about.version") }}</lver-divider>
       </lver-tab-pane>
     </lver-tabs>
     <!-- 关于 -->
@@ -324,9 +397,18 @@ import { ThemeType } from "../model/theme";
 import { useStore } from "../store";
 import { useI18n } from "vue-i18n"
 import { LoginType } from "../store/user";
+import { isLinux, isMac, isWin } from "../utils/system";
 
 const { t } = useI18n()
 const internalInstance = getCurrentInstance()
+
+const platform = isMac() ? "macOS" : isWin() ? "Windows" : isLinux() ? "Linux" : "Unknown"
+const shortcutTableData = ref([
+  {
+    action: 'close current tab',
+    key: 'Ctrl + W'
+  }
+])
 
 const store = useStore();
 const language = ref(store.state.appearance.language);
@@ -337,6 +419,9 @@ const endOfLineSequence = ref(store.state.appearance.endOfLineSequence)
 const isLogined = computed(() => store.state.user.logined)
 const logDescription = ref(store.state.appearance.logDescription)
 const pagination = ref(store.state.appearance.pagination)
+const isAutoCheckUpdate = ref(store.state.appearance.autoUpdate)
+const updateInterval = ref(store.state.appearance.updateInterval)
+const updateChannel = ref(store.state.appearance.updateChannel)
 
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) };
@@ -345,6 +430,9 @@ const encodingChanged = (e: string) => { store.commit("switchEncoding", e) };
 const endOfLineSequenceChanged = (e: string) => { store.commit("switchEndOfLineSequence", e) }
 const logDescriptionChanged = (e: boolean) => { store.commit('switchlogDescription', e) }
 const paginationChanged = (e: boolean) => { store.commit('switchPagination', e) }
+const autoCheckUpdateChanged = (e: boolean) => { store.commit('switchAutoUpdate', e) }
+const updateIntervalChanged = (e: number) => { store.commit('switchUpdateInterval', e) }
+const updateChannelChanged = (e: string) => { store.commit('switchUpdateChannel', e) }
 
 const tag_tip_img_url = computed(() => {
   if (store.state.appearance.theme === ThemeType.Dark) {
@@ -374,7 +462,7 @@ const openExternal = () => {
  * 反馈
  */
 const feedback = () => {
-  require('electron').shell.openExternal("mailto:17010289943@163.com?subject=lver反馈说明&body=")
+  require('electron').shell.openExternal("mailto:17010289943@163.com?subject=lver bug report or feature report&body=")
 }
 
 /**
@@ -448,9 +536,21 @@ const syncData = async () => {
   }, 3000)
 }
 
+const cancelAuth = () => {
+  const cancelAuthUrl = store.state.user.type === LoginType.Github ? "https://github.com/settings/connections/applications/14d1f9d8eaf6722537d1" : "https://gitee.com/oauth/applications/13616/authorized_application"
+  require('electron').shell.openExternal(cancelAuthUrl)
+}
+
+/**
+ * 登出
+ */
 const logout = () => {
   store.commit('logout')
   internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.logout_success_tip"))
+}
+
+const openChangelogWebsite = () => {
+
 }
 </script>
 
@@ -467,5 +567,9 @@ const logout = () => {
 
 .user-info-card {
   margin-right: 20px;
+}
+
+.shortcut-table {
+  width: 99%;
 }
 </style>

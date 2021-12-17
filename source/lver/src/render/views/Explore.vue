@@ -35,6 +35,7 @@
             :disabled="store.state.appearance.logSkeleton"
             @click="openFileSelectDialog"
           >
+            <icon-import />
             {{
               $t("view.explore.log_explore.addbutton.import_log")
             }}
@@ -46,6 +47,15 @@
               multiple
               @input="uploadLogFile"
             />
+          </lver-doption>
+          <lver-doption
+            v-if="currentExploreSelected === 'log'"
+            :disabled="store.state.appearance.logSkeleton"
+          >
+            <icon-cloud-download />
+            {{
+              $t("view.explore.log_explore.addbutton.import_shared_log")
+            }}
           </lver-doption>
           <lver-doption v-else :disabled="store.state.appearance.logRuleSkeleton">
             {{

@@ -51,10 +51,10 @@ const jp = {
         end_of_line_sequence_label_text: "换行符",
         tag_tip_description: 'ラベルオプションを開くと、ログリストの最後にログのソースが表示されます。',
         language: {
-          ch: "中文",
-          en: "英文",
+          ch: "简体中文",
+          en: "English",
           jp: "日本語",
-          kor: "ハングル"
+          kor: "한국어",
         }
       },
       theme: {

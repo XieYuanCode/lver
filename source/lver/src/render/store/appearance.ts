@@ -1,6 +1,7 @@
 import i18n from "../locale";
 import { LineSequence } from "../model/LineSequence";
 import { ThemeType } from "../model/theme";
+import { UpdateChannel } from "../model/updateChannel";
 import { isWin } from "../utils/system";
 import { switchTheme } from "../utils/theme";
 
@@ -44,7 +45,21 @@ export interface IAppearanceState {
   /**
    * 日志分页是否显示
    */
-  pagination: boolean
+  pagination: boolean,
+  /**
+   * 更新渠道
+   */
+  updateChannel: UpdateChannel,
+  /**
+   * 自动更新
+   */
+  autoUpdate: boolean,
+  /**
+   * 更新周期
+   */
+  updateInterval: number,
+
+  lastCheckUpdateTime: Date
 }
 
 const appearance = {
@@ -59,7 +74,11 @@ const appearance = {
       tag: false,
       encoding: "utf8",
       endOfLineSequence: isWin() ? LineSequence.CRLF : LineSequence.LF,
-      pagination: true
+      pagination: true,
+      updateChannel: UpdateChannel.Stable,
+      autoUpdate: true,
+      updateInterval: 7,
+      lastCheckUpdateTime: new Date()
     }
   },
   mutations: {
@@ -129,6 +148,22 @@ const appearance = {
 
     switchPagination(state: IAppearanceState, pagination: boolean) {
       state.pagination = pagination
+    },
+
+    switchUpdateChannel(state: IAppearanceState, updateChannel: UpdateChannel) {
+      state.updateChannel = updateChannel
+    },
+
+    switchAutoUpdate(state: IAppearanceState, autoUpdate: boolean) {
+      state.autoUpdate = autoUpdate
+    },
+
+    switchUpdateInterval(state: IAppearanceState, updateInterval: number) {
+      state.updateInterval = updateInterval
+    },
+
+    switchLastCheckUpdateTime(state: IAppearanceState, lastCheckUpdateTime: Date) {
+      state.lastCheckUpdateTime = lastCheckUpdateTime
     }
   }
 }

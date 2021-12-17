@@ -55,9 +55,9 @@ const user = {
   state() {
     return {
       type: LoginType.Github,
-      name: "xieyuan",
+      name: "",
       registry_date: new Date(),
-      login_times: 14,
+      login_times: Math.floor(Math.random() * 100),
       avatar: "",
       logined: false,
       cloud: {

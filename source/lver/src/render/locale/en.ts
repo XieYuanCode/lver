@@ -51,10 +51,10 @@ const en = {
         end_of_line_sequence_label_text: "换行符",
         tag_tip_description: 'Open the tag option, you can see the source of the log at the back of the log list.',
         language: {
-          ch: "Chinese",
+          ch: "简体中文",
           en: "English",
-          jp: "Japanese",
-          kor: "Korean"
+          jp: "日本語",
+          kor: "한국어",
         }
       },
       theme: {
