@@ -5,6 +5,7 @@ import appearance from "./appearance"
 import editorView from "./editorView"
 import user from "./user"
 import logView from "./log"
+import shortcut from "./shortcut"
 
 const key: InjectionKey<Store<IState>> = Symbol()
 
@@ -14,6 +15,7 @@ const store = createStore<IState>({
     editorView,
     logView,
     user,
+    shortcut
   }
 })
 

@@ -48,8 +48,14 @@
               </lver-radio-group>
             </lver-form-item>
             <!-- 标签 -->
-            <lver-form-item field="tag" :label="$t('view.setting.general.tag_label_text')">
-              <lver-switch size="small" v-model="tag" @change="tagChanged"></lver-switch>
+            <lver-form-item field="tag">
+              {{ t('view.setting.general.tag_label_text') }}
+              <lver-switch
+                size="small"
+                v-model="tag"
+                @change="tagChanged"
+                :style="{ marginLeft: '10px' }"
+              ></lver-switch>
               <lver-trigger class="tip" position="right" auto-fit-position>
                 <icon-question-circle-fill style="margin-left: 10px;" />
                 <template #content>
@@ -269,15 +275,24 @@
               </lver-radio-group>
             </lver-form-item>
             <!-- 日志描述 -->
-            <lver-form-item
-              field="log_description"
-              :label="$t('view.setting.general.log_description_label_text')"
-            >
-              <lver-switch size="small" v-model="logDescription" @change="logDescriptionChanged"></lver-switch>
+            <lver-form-item field="log_description">
+              {{ t('view.setting.general.log_description_label_text') }}
+              <lver-switch
+                size="small"
+                v-model="logDescription"
+                @change="logDescriptionChanged"
+                :style="{ marginLeft: '10px' }"
+              ></lver-switch>
             </lver-form-item>
             <!-- 分页 -->
-            <lver-form-item field="pagination" :label="$t('view.setting.log.pagination_title')">
-              <lver-switch size="small" v-model="pagination" @change="paginationChanged"></lver-switch>
+            <lver-form-item field="pagination">
+              {{ t('view.setting.log.pagination_title') }}
+              <lver-switch
+                size="small"
+                v-model="pagination"
+                @change="paginationChanged"
+                :style="{ marginLeft: '10px' }"
+              ></lver-switch>
             </lver-form-item>
           </lver-space>
         </lver-form>
@@ -308,6 +323,20 @@
           <icon-thunderbolt />
           {{ $t("view.setting.shortcut.header_text") }}
         </template>
+        <lver-form :model="{}" layout="vertical">
+          <lver-space direction="vertical" size="mini">
+            <lver-form-item field="shorrcut_enable">
+              {{ t('view.setting.shortcut.shorrcut_enable_label_text') }}
+              <lver-switch
+                size="small"
+                :style="{ marginLeft: '10px' }"
+                v-model="shortcutEnable"
+                @change="shortcutEnableChanged"
+              ></lver-switch>
+            </lver-form-item>
+          </lver-space>
+        </lver-form>
+        <shortcut></shortcut>
         <lver-divider
           orientation="center"
         >{{ $t("view.setting.shortcut.header_text") }} | {{ platform }}</lver-divider>
@@ -331,14 +360,13 @@
                 <lver-radio value="Beta" disabled>{{ $t('view.setting.update.beta_channel_text') }}</lver-radio>
               </lver-radio-group>
             </lver-form-item>
-            <lver-form-item
-              field="autoCheck"
-              :label="$t('view.setting.update.auto_check_label_text')"
-            >
+            <lver-form-item field="autoCheck">
+              {{ t('view.setting.update.auto_check_label_text') }}
               <lver-switch
                 size="small"
                 v-model="isAutoCheckUpdate"
                 @change="autoCheckUpdateChanged"
+                :style="{ marginLeft: '10px' }"
               ></lver-switch>
             </lver-form-item>
             <lver-form-item
@@ -398,11 +426,13 @@ import { useStore } from "../store";
 import { useI18n } from "vue-i18n"
 import { LoginType } from "../store/user";
 import { isLinux, isMac, isWin } from "../utils/system";
+import Shortcut from "../components/Shortcut.vue";
 
 const { t } = useI18n()
 const internalInstance = getCurrentInstance()
 
 const platform = isMac() ? "macOS" : isWin() ? "Windows" : isLinux() ? "Linux" : "Unknown"
+
 const shortcutTableData = ref([
   {
     action: 'close current tab',
@@ -422,6 +452,7 @@ const pagination = ref(store.state.appearance.pagination)
 const isAutoCheckUpdate = ref(store.state.appearance.autoUpdate)
 const updateInterval = ref(store.state.appearance.updateInterval)
 const updateChannel = ref(store.state.appearance.updateChannel)
+const shortcutEnable = ref(store.state.appearance.isShortcutEnable)
 
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) };
@@ -433,6 +464,7 @@ const paginationChanged = (e: boolean) => { store.commit('switchPagination', e) 
 const autoCheckUpdateChanged = (e: boolean) => { store.commit('switchAutoUpdate', e) }
 const updateIntervalChanged = (e: number) => { store.commit('switchUpdateInterval', e) }
 const updateChannelChanged = (e: string) => { store.commit('switchUpdateChannel', e) }
+const shortcutEnableChanged = (e: boolean) => { store.commit("switchShortcutEnable", e) }
 
 const tag_tip_img_url = computed(() => {
   if (store.state.appearance.theme === ThemeType.Dark) {
@@ -536,17 +568,18 @@ const syncData = async () => {
   }, 3000)
 }
 
-const cancelAuth = () => {
-  const cancelAuthUrl = store.state.user.type === LoginType.Github ? "https://github.com/settings/connections/applications/14d1f9d8eaf6722537d1" : "https://gitee.com/oauth/applications/13616/authorized_application"
-  require('electron').shell.openExternal(cancelAuthUrl)
-}
-
 /**
  * 登出
  */
 const logout = () => {
   store.commit('logout')
   internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.logout_success_tip"))
+}
+
+const cancelAuth = () => {
+  const cancelAuthUrl = store.state.user.type === LoginType.Github ? "https://github.com/settings/connections/applications/14d1f9d8eaf6722537d1" : "https://gitee.com/oauth/applications/13616/authorized_application"
+  require('electron').shell.openExternal(cancelAuthUrl)
+  logout()
 }
 
 const openChangelogWebsite = () => {

@@ -58,8 +58,14 @@ export interface IAppearanceState {
    * 更新周期
    */
   updateInterval: number,
-
+  /**
+   * 最后检查更新时间
+   */
   lastCheckUpdateTime: Date
+  /**
+   * 是否启动快捷键
+   */
+  isShortcutEnable: boolean
 }
 
 const appearance = {
@@ -78,7 +84,8 @@ const appearance = {
       updateChannel: UpdateChannel.Stable,
       autoUpdate: true,
       updateInterval: 7,
-      lastCheckUpdateTime: new Date()
+      lastCheckUpdateTime: new Date(),
+      isShortcutEnable: true
     }
   },
   mutations: {
@@ -164,6 +171,10 @@ const appearance = {
 
     switchLastCheckUpdateTime(state: IAppearanceState, lastCheckUpdateTime: Date) {
       state.lastCheckUpdateTime = lastCheckUpdateTime
+    },
+
+    switchShortcutEnable(state: IAppearanceState, isShortcutEnable: boolean) {
+      state.isShortcutEnable = isShortcutEnable
     }
   }
 }

@@ -105,7 +105,8 @@ const ch = {
       shortcut: {
         header_text: "快捷键",
         tabel_action_text: "行为",
-        table_key_text: "快捷键"
+        table_key_text: "快捷键",
+        shorrcut_enable_label_text: "启用快捷键"
       },
       update: {
         header_text: "更新",

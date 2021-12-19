@@ -119,6 +119,7 @@ const deleteLog = (nodeData: ILog) => {
 }
 
 const openInLocal = (nodeData: ILog) => {
+  require('electron').shell.beep()
   require('electron').shell.showItemInFolder((nodeData as any).file)
 }
 
