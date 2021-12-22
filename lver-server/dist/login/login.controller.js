@@ -38,7 +38,9 @@ let LoginController = class LoginController {
             else if (query.code) {
                 this.loginService.login_github(query.code).then((e) => {
                     this._loggingEvent.emit('loggined', e);
-                    resolve('loggin successed!');
+                    resolve({
+                        message: 'loggin successed!'
+                    });
                 });
             }
         });
@@ -60,7 +62,9 @@ let LoginController = class LoginController {
             else if (query.code) {
                 this.loginService.login_gitee(query.code).then((e) => {
                     this._loggingEvent.emit('loggined', e);
-                    resolve('loggin successed!');
+                    resolve({
+                        message: 'loggin successed!'
+                    });
                 });
             }
         });
@@ -73,6 +77,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], LoginController.prototype, "login_github", null);
 __decorate([
+    (0, common_1.Render)('login'),
     (0, common_1.Get)('github_redirect/'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -86,6 +91,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], LoginController.prototype, "login_gitee", null);
 __decorate([
+    (0, common_1.Render)('login'),
     (0, common_1.Get)('gitee_redirect/'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),

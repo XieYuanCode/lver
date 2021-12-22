@@ -1,6 +1,5 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Controller, Get, Render, Req } from '@nestjs/common';
 import { LoginService } from './login.service';
-import { openDefaultBrowser } from '../tools';
 import { EventEmitter } from 'stream';
 
 @Controller('login')
@@ -17,6 +16,7 @@ export class LoginController {
     });
   }
 
+  @Render('login')
   @Get('github_redirect/')
   github_redirect(@Req() request): any {
     return new Promise((resolve, reject) => {
@@ -28,10 +28,12 @@ export class LoginController {
       } else if (query.code) {
         this.loginService.login_github(query.code).then((e) => {
           this._loggingEvent.emit('loggined', e);
-          resolve('loggin successed!');
+          resolve({
+            message: 'loggin successed!'
+          });
         });
       }
-    })
+    });
   }
 
   @Get('gitee')
@@ -43,6 +45,7 @@ export class LoginController {
     });
   }
 
+  @Render('login')
   @Get('gitee_redirect/')
   gitee_redirect(@Req() request): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -54,9 +57,11 @@ export class LoginController {
       } else if (query.code) {
         this.loginService.login_gitee(query.code).then((e) => {
           this._loggingEvent.emit('loggined', e);
-          resolve('loggin successed!');
+          resolve({
+            message: 'loggin successed!'
+          });
         });
       }
-    })
+    });
   }
 }

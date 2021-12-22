@@ -2,4 +2,4 @@ export const isMac = () => /macintosh|macintel/g.test(navigator.userAgent.toLowe
 export const isWin = () => /windows|win32|win64|wow32|wow64/g.test(navigator.userAgent.toLowerCase())
 export const isLinux = () => /x11/g.test(navigator.userAgent.toLowerCase())
 export const isAndroid = () => /android|adr/g.test(navigator.userAgent.toLowerCase())
-export const isiOs = () => /ios|iphone|ipad|ipod|iwatch/g.test(navigator.userAgent.toLowerCase()) 
+export const isiOS = () => /ios|iphone|ipad|ipod|iwatch/g.test(navigator.userAgent.toLowerCase()) 

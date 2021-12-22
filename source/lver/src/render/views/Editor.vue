@@ -38,7 +38,6 @@ const activeEditorKey = computed({
     return store.state.editorView.activeEditorKey
   },
   set(key) {
-    console.log(key);
     store.commit("activeEditor", key)
   }
 })

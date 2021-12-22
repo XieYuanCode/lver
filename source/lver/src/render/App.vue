@@ -18,7 +18,8 @@ import Explore from "./views/Explore.vue";
 import { useStore } from "./store";
 import Setting from "./views/Setting.vue"
 import Editor from "./views/Editor.vue"
-import { ThemeType } from "./model/theme";
+import { switchTheme } from "./utils/theme";
+import i18n from "./locale";
 
 const store = useStore();
 
@@ -26,8 +27,8 @@ const isSettingView = computed(() => store.state.appearance.settingViewVisible)
 
 onMounted(() => {
   // TODO: 读取用户配置
-  store.commit('switchTheme', ThemeType.System)
-  store.commit('switchLanguage', "ch")
+  switchTheme(store.state.appearance.theme);
+  i18n.global.locale = store.state.appearance.language as "ch" | "en" | "jp" | "kor";
 })
 
 </script>

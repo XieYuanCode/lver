@@ -4,7 +4,7 @@ import { ThemeType } from "../model/theme";
 import { UpdateChannel } from "../model/updateChannel";
 import { isWin } from "../utils/system";
 import { switchTheme } from "../utils/theme";
-
+import { electronStore } from "../utils/electronStore";
 export interface IAppearanceState {
   /**
    * 主题
@@ -71,21 +71,21 @@ export interface IAppearanceState {
 const appearance = {
   state() {
     return {
-      theme: ThemeType.System,
+      theme: electronStore.store.get("theme", ThemeType.System),
       logSkeleton: true,
       logRuleSkeleton: true,
-      language: 'ch',
+      language: electronStore.store.get("language", 'ch'),
       settingViewVisible: false,
-      logDescription: true,
-      tag: false,
-      encoding: "utf8",
-      endOfLineSequence: isWin() ? LineSequence.CRLF : LineSequence.LF,
-      pagination: true,
-      updateChannel: UpdateChannel.Stable,
-      autoUpdate: true,
-      updateInterval: 7,
-      lastCheckUpdateTime: new Date(),
-      isShortcutEnable: true
+      logDescription: electronStore.store.get("logDescription", true),
+      tag: electronStore.store.get("tag", false),
+      encoding: electronStore.store.get("encoding", "utf8"),
+      endOfLineSequence: electronStore.store.get("endOfLineSequence", isWin() ? LineSequence.CRLF : LineSequence.LF),
+      pagination: electronStore.store.get("pagination", true),
+      updateChannel: electronStore.store.get("updateChannel", UpdateChannel.Stable),
+      autoUpdate: electronStore.store.get("autoUpdate", true),
+      updateInterval: electronStore.store.get("updateInterval", 7),
+      lastCheckUpdateTime: electronStore.store.get("lastCheckUpdateTime", ""),
+      isShortcutEnable: electronStore.store.get("isShortcutEnable", true)
     }
   },
   mutations: {
@@ -94,8 +94,8 @@ const appearance = {
      */
     switchTheme(state: IAppearanceState, theme: ThemeType) {
       state.theme = theme
-
       switchTheme(theme)
+      electronStore.store.set('theme', theme)
     },
     /**
      * 切换日志骨架屏
@@ -116,6 +116,7 @@ const appearance = {
     switchLanguage(state: IAppearanceState, language: string) {
       state.language = language
       i18n.global.locale = language as 'en' | 'ch' | 'jp' | 'kor'
+      electronStore.store.set('language', language)
     },
 
     /**
@@ -130,6 +131,7 @@ const appearance = {
      */
     switchTagVisible(state: IAppearanceState, visible: boolean) {
       state.tag = visible
+      electronStore.store.set('tag', visible)
     },
 
     /**
@@ -137,6 +139,7 @@ const appearance = {
      */
     switchEncoding(state: IAppearanceState, encoding: string) {
       state.encoding = encoding
+      electronStore.store.set('encoding', encoding)
     },
 
     /**
@@ -144,6 +147,7 @@ const appearance = {
      */
     switchEndOfLineSequence(state: IAppearanceState, endOfLineSequence: LineSequence) {
       state.endOfLineSequence = endOfLineSequence
+      electronStore.store.set('endOfLineSequence', endOfLineSequence)
     },
 
     /**
@@ -151,30 +155,55 @@ const appearance = {
      */
     switchlogDescription(state: IAppearanceState, logDescription: boolean) {
       state.logDescription = logDescription
+      electronStore.store.set('logDescription', logDescription)
     },
 
+    /**
+     * 分页是否显示
+     */
     switchPagination(state: IAppearanceState, pagination: boolean) {
       state.pagination = pagination
+      electronStore.store.set('pagination', pagination)
     },
 
+    /**
+     * 更新渠道
+     */
     switchUpdateChannel(state: IAppearanceState, updateChannel: UpdateChannel) {
       state.updateChannel = updateChannel
+      electronStore.store.set('updateChannel', updateChannel)
     },
 
+    /**
+     * 自动更新
+     */
     switchAutoUpdate(state: IAppearanceState, autoUpdate: boolean) {
       state.autoUpdate = autoUpdate
+      electronStore.store.set('autoUpdate', autoUpdate)
     },
 
+    /**
+     * 更新周期
+     */
     switchUpdateInterval(state: IAppearanceState, updateInterval: number) {
       state.updateInterval = updateInterval
+      electronStore.store.set('updateInterval', updateInterval)
     },
 
+    /**
+     * 最后检查更新时间
+     */
     switchLastCheckUpdateTime(state: IAppearanceState, lastCheckUpdateTime: Date) {
       state.lastCheckUpdateTime = lastCheckUpdateTime
+      electronStore.store.set('lastCheckUpdateTime', lastCheckUpdateTime)
     },
 
+    /**
+     * 快捷键是否启用
+     */
     switchShortcutEnable(state: IAppearanceState, isShortcutEnable: boolean) {
       state.isShortcutEnable = isShortcutEnable
+      electronStore.store.set('isShortcutEnable', isShortcutEnable)
     }
   }
 }

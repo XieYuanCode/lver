@@ -116,12 +116,19 @@
           </lver-space>
         </lver-form>
         <div v-if="isLogined" class="user-info">
-          <lver-card hoverable :style="{ width: '360px', marginBottom: '20px' }">
+          <lver-card
+            hoverable
+            :style="{
+              width: '360px',
+              marginBottom: '20px'
+            }"
+          >
             <div
               :style="{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
+              
               }"
             >
               <span :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }">
@@ -130,15 +137,12 @@
                   :size="28"
                   @click="handleAvatarClicked"
                 >
-                  <img alt="avatar" :src="store.state.user.avatar" />
+                  <img alt="avatar" :src="store.state.user.avatar || ''" />
                 </lver-avatar>
                 <lver-typography-text>{{ store.state.user.name }}</lver-typography-text>
+                <lver-typography-text>{{ store.state.user.type === LoginType.Gitee ? "(Gitee)" : "(Github)" }}</lver-typography-text>
               </span>
               <div>
-                <lver-link
-                  :disabled="isSyncing"
-                  @click="syncData"
-                >{{ $t('view.setting.account.sync_text') }}</lver-link>
                 <lver-link
                   :disabled="isSyncing"
                   @click="cancelAuth"
@@ -158,18 +162,16 @@
               hoverable
               class="user-info-card"
             >
-              <lver-statistic
-                :title="t('view.setting.account.user_info_card.registry_date')"
-                :value="store.state.user.registry_date"
-                format="YYYY-MM-DD"
-                :style="{ marginBottom: '10px' }"
-              />
-              <br />
-              <lver-statistic
-                :title="t('view.setting.account.user_info_card.login_times')"
-                :value="store.state.user.login_times"
-                show-group-separator
-              />
+              <template #extra>
+                <lver-link
+                  @click="goToBlog"
+                  v-if="store.state.user.blog"
+                >{{ t('view.setting.account.user_info_card.blog_btn_text') }}</lver-link>
+                <lver-link
+                  @click="goToHtmlUrl"
+                  v-if="store.state.user.html_url"
+                >{{ t('view.setting.account.user_info_card.html_url_btn_text') }}</lver-link>
+              </template>
             </lver-card>
             <lver-card
               :loading="isSyncing"
@@ -180,6 +182,10 @@
             >
               <template #extra>
                 <lver-link>{{ t('view.setting.account.cloud_info_card.management_btn_text') }}</lver-link>
+                <lver-link
+                  :disabled="isSyncing"
+                  @click="syncData"
+                >{{ $t('view.setting.account.sync_text') }}</lver-link>
               </template>
               <lver-statistic
                 :title="t('view.setting.account.cloud_info_card.log_counts')"
@@ -428,6 +434,8 @@ import { LoginType } from "../store/user";
 import { isLinux, isMac, isWin } from "../utils/system";
 import Shortcut from "../components/Shortcut.vue";
 
+const shell = require('electron').shell
+
 const { t } = useI18n()
 const internalInstance = getCurrentInstance()
 
@@ -487,14 +495,14 @@ const isSyncing = ref(false)
  * 打开外链
  */
 const openExternal = () => {
-  require('electron').shell.openExternal('https://github.com/XieYuanCode')
+  shell.openExternal('https://github.com/XieYuanCode')
 }
 
 /**
  * 反馈
  */
 const feedback = () => {
-  require('electron').shell.openExternal("mailto:17010289943@163.com?subject=lver bug report or feature report&body=")
+  shell.openExternal("mailto:17010289943@163.com?subject=lver bug report or feature report&body=")
 }
 
 /**
@@ -503,15 +511,19 @@ const feedback = () => {
 const loginWithGithub = async () => {
   isLogging.value = true
   try {
-    require('electron').shell.openExternal('https://github.com/login/oauth/authorize?client_id=14d1f9d8eaf6722537d1&redirect_uri=http://81.70.22.185:3001/login/github_redirect')
+    shell.openExternal('https://github.com/login/oauth/authorize?client_id=14d1f9d8eaf6722537d1&redirect_uri=http://81.70.22.185:3001/login/github_redirect')
     const response = await fetch(`http://81.70.22.185:3001/login/github`)
     const loginResult = await response.json()
     if (loginResult.error && loginResult.error_description) {
       internalInstance && internalInstance.appContext.config.globalProperties.$message.error(loginResult.error_description)
     } else if (loginResult.success) {
-      console.log("loginResult", loginResult)
       store.commit('login', {
-        type: LoginType.Github, name: loginResult.login, avatar: loginResult.avatar_url, html_url: loginResult.html_url
+        type: LoginType.Github,
+        name: loginResult.login,
+        avatar: loginResult.avatar_url,
+        html_url: loginResult.html_url,
+        bio: loginResult.bio,
+        blog: loginResult.blog,
       })
       internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
     } else {
@@ -530,15 +542,19 @@ const loginWithGithub = async () => {
 const loginWithGitee = async () => {
   isLogging.value = true
   try {
-    require('electron').shell.openExternal('https://gitee.com/oauth/authorize?client_id=1592815aa8a6d503cd041d93e6273d16f32664f85507d8b1510e43e875b473f3&redirect_uri=http://81.70.22.185:3001/login/gitee_redirect&response_type=code')
+    shell.openExternal('https://gitee.com/oauth/authorize?client_id=1592815aa8a6d503cd041d93e6273d16f32664f85507d8b1510e43e875b473f3&redirect_uri=http://81.70.22.185:3001/login/gitee_redirect&response_type=code')
     const response = await fetch(`http://81.70.22.185:3001/login/gitee`)
     const loginResult = await response.json()
     if (loginResult.error && loginResult.error_description) {
       internalInstance && internalInstance.appContext.config.globalProperties.$message.error(loginResult.error_description)
     } else if (loginResult.success) {
-      console.log("loginResult", loginResult)
       store.commit('login', {
-        type: LoginType.Gitee, name: loginResult.name, avatar: loginResult.avatar_url, html_url: loginResult.html_url
+        type: LoginType.Gitee,
+        name: loginResult.name,
+        avatar: loginResult.avatar_url,
+        html_url: loginResult.html_url,
+        bio: loginResult.bio,
+        blog: loginResult.blog,
       })
       internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.login_success_tip"))
     } else {
@@ -555,7 +571,15 @@ const loginWithGitee = async () => {
  * 点击头像
  */
 const handleAvatarClicked = () => {
-  require('electron').shell.openExternal(store.state.user.html_url)
+  shell.openExternal(store.state.user.html_url)
+}
+
+const goToBlog = () => {
+  shell.openExternal(store.state.user.blog)
+}
+
+const goToHtmlUrl = () => {
+  shell.openExternal(store.state.user.html_url)
 }
 
 /**
@@ -578,7 +602,7 @@ const logout = () => {
 
 const cancelAuth = () => {
   const cancelAuthUrl = store.state.user.type === LoginType.Github ? "https://github.com/settings/connections/applications/14d1f9d8eaf6722537d1" : "https://gitee.com/oauth/applications/13616/authorized_application"
-  require('electron').shell.openExternal(cancelAuthUrl)
+  shell.openExternal(cancelAuthUrl)
   logout()
 }
 

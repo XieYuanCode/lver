@@ -56,8 +56,8 @@ const ch = {
         cancel_auth_text: "取消授权",
         user_info_card: {
           title: '账户详情',
-          registry_date: "注册日期",
-          login_times: "登录次数"
+          blog_btn_text: '博客',
+          html_url_btn_text: '主页',
         },
         cloud_info_card: {
           title: '云储存详情',

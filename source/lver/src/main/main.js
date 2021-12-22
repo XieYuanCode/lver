@@ -1,11 +1,7 @@
-const { app, BrowserWindow, ipcMain, nativeTheme } = require("electron")
+const { app, BrowserWindow } = require("electron")
 const Store = require("electron-store")
 
-const store = new Store()
-
-ipcMain.on("setting_confirmed", (e, args) => {
-  store.set("setting", args)
-})
+Store.initRenderer()
 
 function creatWindow() {
   const win = new BrowserWindow({
@@ -31,6 +27,6 @@ function creatWindow() {
 }
 
 app.whenReady().then(() => {
-  console.log(123, nativeTheme.themeSource)
+  app.setAsDefaultProtocolClient('lver', process.execPath, [`${__dirname}`])
   creatWindow()
 })
