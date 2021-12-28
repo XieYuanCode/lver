@@ -65,7 +65,12 @@ export interface IAppearanceState {
   /**
    * 是否启动快捷键
    */
-  isShortcutEnable: boolean
+  isShortcutEnable: boolean,
+
+  /**
+   * 窗口透明度
+   */
+  windowOpacity: number
 }
 
 const appearance = {
@@ -85,7 +90,8 @@ const appearance = {
       autoUpdate: electronStore.store.get("autoUpdate", true),
       updateInterval: electronStore.store.get("updateInterval", 7),
       lastCheckUpdateTime: electronStore.store.get("lastCheckUpdateTime", ""),
-      isShortcutEnable: electronStore.store.get("isShortcutEnable", true)
+      isShortcutEnable: electronStore.store.get("isShortcutEnable", true),
+      windowOpacity: electronStore.store.get("windowOpacity", 0.9)
     }
   },
   mutations: {
@@ -204,6 +210,15 @@ const appearance = {
     switchShortcutEnable(state: IAppearanceState, isShortcutEnable: boolean) {
       state.isShortcutEnable = isShortcutEnable
       electronStore.store.set('isShortcutEnable', isShortcutEnable)
+    },
+
+    /**
+     * 窗口透明度
+     */
+    switchWindowOpacity(state: IAppearanceState, windowOpacity: number) {
+      state.windowOpacity = windowOpacity
+      require('electron').ipcRenderer.send('opacity-changed', windowOpacity)
+      electronStore.store.set('windowOpacity', windowOpacity)
     }
   }
 }

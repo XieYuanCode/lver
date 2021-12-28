@@ -96,6 +96,7 @@ const ch = {
       theme: {
         header_text: "主题",
         theme_label_text: "外观",
+        window_opacity_label_text: "窗口透明度",
         theme: {
           dark: "深色",
           light: "浅色",

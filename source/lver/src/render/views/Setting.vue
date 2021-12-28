@@ -319,6 +319,17 @@
                 <lver-radio value="System">{{ $t('view.setting.theme.theme.system') }}</lver-radio>
               </lver-radio-group>
             </lver-form-item>
+            <lver-form-item field="opacity" label="透明度">
+              <lver-slider
+                :step="0.01"
+                :min="0"
+                :max="1"
+                :format-tooltip="formatter"
+                :style="{ width: '200px' }"
+                v-model="windowOpacity"
+                @change="windowOpacityChanged"
+              />
+            </lver-form-item>
           </lver-space>
         </lver-form>
         <lver-divider orientation="center">{{ $t("view.setting.theme.header_text") }}</lver-divider>
@@ -434,7 +445,7 @@ import { LoginType } from "../store/user";
 import { isLinux, isMac, isWin } from "../utils/system";
 import Shortcut from "../components/Shortcut.vue";
 
-const shell = require('electron').shell
+const { shell, ipcRenderer } = require('electron');
 
 const { t } = useI18n()
 const internalInstance = getCurrentInstance()
@@ -461,6 +472,7 @@ const isAutoCheckUpdate = ref(store.state.appearance.autoUpdate)
 const updateInterval = ref(store.state.appearance.updateInterval)
 const updateChannel = ref(store.state.appearance.updateChannel)
 const shortcutEnable = ref(store.state.appearance.isShortcutEnable)
+const windowOpacity = ref(store.state.appearance.windowOpacity)
 
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) };
@@ -473,6 +485,7 @@ const autoCheckUpdateChanged = (e: boolean) => { store.commit('switchAutoUpdate'
 const updateIntervalChanged = (e: number) => { store.commit('switchUpdateInterval', e) }
 const updateChannelChanged = (e: string) => { store.commit('switchUpdateChannel', e) }
 const shortcutEnableChanged = (e: boolean) => { store.commit("switchShortcutEnable", e) }
+const windowOpacityChanged = (e: number) => { store.commit("switchWindowOpacity", e) }
 
 const tag_tip_img_url = computed(() => {
   if (store.state.appearance.theme === ThemeType.Dark) {
@@ -490,6 +503,7 @@ const tag_tip_img_url = computed(() => {
 
 const isLogging = ref(false)
 const isSyncing = ref(false)
+const formatter = (value: string) => value
 
 /**
  * 打开外链
@@ -600,12 +614,14 @@ const logout = () => {
   internalInstance && internalInstance.appContext.config.globalProperties.$message.success(t("view.setting.account.logout_success_tip"))
 }
 
+// 取消授权
 const cancelAuth = () => {
   const cancelAuthUrl = store.state.user.type === LoginType.Github ? "https://github.com/settings/connections/applications/14d1f9d8eaf6722537d1" : "https://gitee.com/oauth/applications/13616/authorized_application"
   shell.openExternal(cancelAuthUrl)
   logout()
 }
 
+// 更新日志
 const openChangelogWebsite = () => {
 
 }

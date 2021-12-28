@@ -103,7 +103,7 @@
 
 <script setup lang="ts">
 import ILog from '../model/iLog';
-import { defineProps, computed, reactive, defineExpose } from 'vue';
+import { computed, reactive } from 'vue';
 import { useI18n } from "vue-i18n";
 import { useStore } from '../store';
 const { t } = useI18n()

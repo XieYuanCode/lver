@@ -13,6 +13,14 @@
     "url": "https://github.com/XieYuanCode/lver/issues",
     "email": "17010289943@163.com"
   },
+  "build": {
+    "productName": "lver",
+    "appId": "com.xieyuan.lver",
+    "asar": false,
+    "mac": {
+      "icon": "build/icons/icon.png"
+    }
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -27,7 +35,6 @@
     "start": "concurrently \"vite\" \"electron .\" "
   },
   "dependencies": {
-    "@multiavatar/multiavatar": "^1.0.7",
     "dayjs": "^1.10.7",
     "electron-store": "^8.0.1",
     "vue": "^3.2.13",

@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, defineProps, ref, computed, reactive } from 'vue';
+import { onMounted, ref, computed, reactive } from 'vue';
 import ILog from '../model/iLog';
 import { LineSequence } from '../model/LineSequence';
 import { useStore } from '../store';

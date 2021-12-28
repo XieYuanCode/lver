@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineProps, ref, getCurrentInstance, reactive } from "vue";
+import { computed, ref, getCurrentInstance, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "../store";
 import dayjs from "dayjs";

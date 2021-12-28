@@ -1,18 +1,31 @@
-const { app, BrowserWindow } = require("electron")
+const { app, BrowserWindow, TouchBar, Tray, Menu, ipcMain } = require("electron")
 const Store = require("electron-store")
+const path = require('path')
 
+const { TouchBarLabel, TouchBarButton, TouchBarSpacer } = TouchBar
+const store = new Store();
 Store.initRenderer()
 
+var tray = null
+let win = null
+
+const trayContextMenu = Menu.buildFromTemplate([])
+
 function creatWindow() {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 1920,
     height: 1080,
+    title: 'lver',
+    resizable: true,
+    movable: true,
+    icon: path.join(__dirname, '..', 'build', 'icons', 'icon.png'),
     frame: process.platform === "win32",
     titleBarStyle: process.platform === "win32" ? "default" : "hidden",
     vibrancy: 'light',
     visualEffectState: "active",
     transparent: true,
     resizable: true,
+    opacity: store.get('windowOpacity' || 0.9),
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true,
@@ -21,12 +34,31 @@ function creatWindow() {
     }
   })
 
+
   win.loadURL("http://localhost:3000/")
 
   win.webContents.openDevTools()
 }
 
+
+const touchBar = new TouchBar({
+  items: [
+    new TouchBarSpacer({ size: 'large' }),
+    new TouchBarLabel({
+      label: "touchBar will comming soon",
+      textColor: '#fff',
+      backgroundColor: '#000'
+    }),
+  ]
+})
+
+// 透明度改变
+ipcMain.on('opacity-changed', (e, arg) => { win && win.setOpacity(arg) })
+
 app.whenReady().then(() => {
+  tray = new Tray(path.join(__dirname, '..', 'build', 'icons', 'tary.png'))
+  tray.setContextMenu(trayContextMenu)
   app.setAsDefaultProtocolClient('lver', process.execPath, [`${__dirname}`])
   creatWindow()
+  win.setTouchBar(touchBar)
 })
