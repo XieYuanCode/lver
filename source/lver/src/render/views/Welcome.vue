@@ -4,8 +4,8 @@
       <lver-layout-header>
         <lver-steps :current="currentStep">
           <lver-step>{{ $t("view.welcome.steper.welcome_step_label_text") }}</lver-step>
-          <lver-step>{{ $t("view.welcome.steper.login_step_label_text") }}</lver-step>
           <lver-step>{{ $t("view.welcome.steper.setting_step_label_text") }}</lver-step>
+          <lver-step>{{ $t("view.welcome.steper.login_step_label_text") }}</lver-step>
           <lver-step>{{ $t("view.welcome.steper.finish_step_label_text") }}</lver-step>
         </lver-steps>
       </lver-layout-header>
@@ -30,14 +30,53 @@
             </div>
           </div>
         </div>
-        <div class="login-content" v-if="currentStep === 2">login</div>
-        <div class="setting-content" v-if="currentStep === 3">
-          {{ $t('view.setting.theme.header_text') }}
-          <lver-radio-group type="button" size="mini" @change="themeChanged" v-model="theme">
-            <lver-radio value="Dark">{{ $t('view.setting.theme.theme.dark') }}</lver-radio>
-            <lver-radio value="Light">{{ $t('view.setting.theme.theme.light') }}</lver-radio>
-            <lver-radio value="System">{{ $t('view.setting.theme.theme.system') }}</lver-radio>
-          </lver-radio-group>
+        <div class="setting-content" v-if="currentStep === 2">
+          <div>
+            {{ $t('view.setting.theme.header_text') }}
+            <lver-radio-group type="button" size="mini" @change="themeChanged" v-model="theme">
+              <lver-radio value="Dark">{{ $t('view.setting.theme.theme.dark') }}</lver-radio>
+              <lver-radio value="Light">{{ $t('view.setting.theme.theme.light') }}</lver-radio>
+              <lver-radio value="System">{{ $t('view.setting.theme.theme.system') }}</lver-radio>
+            </lver-radio-group>
+          </div>
+          <div>
+            {{ $t('view.setting.theme.header_text') }}
+            <lver-radio-group type="button" size="mini" @change="themeChanged" v-model="theme">
+              <lver-radio value="Dark">{{ $t('view.setting.theme.theme.dark') }}</lver-radio>
+              <lver-radio value="Light">{{ $t('view.setting.theme.theme.light') }}</lver-radio>
+              <lver-radio value="System">{{ $t('view.setting.theme.theme.system') }}</lver-radio>
+            </lver-radio-group>
+          </div>
+          <div>
+            {{ $t('view.setting.theme.header_text') }}
+            <lver-radio-group type="button" size="mini" @change="themeChanged" v-model="theme">
+              <lver-radio value="Dark">{{ $t('view.setting.theme.theme.dark') }}</lver-radio>
+              <lver-radio value="Light">{{ $t('view.setting.theme.theme.light') }}</lver-radio>
+              <lver-radio value="System">{{ $t('view.setting.theme.theme.system') }}</lver-radio>
+            </lver-radio-group>
+          </div>
+          <div>
+            {{ $t('view.setting.theme.header_text') }}
+            <lver-radio-group type="button" size="mini" @change="themeChanged" v-model="theme">
+              <lver-radio value="Dark">{{ $t('view.setting.theme.theme.dark') }}</lver-radio>
+              <lver-radio value="Light">{{ $t('view.setting.theme.theme.light') }}</lver-radio>
+              <lver-radio value="System">{{ $t('view.setting.theme.theme.system') }}</lver-radio>
+            </lver-radio-group>
+          </div>
+          <div>
+            {{ $t('view.setting.theme.header_text') }}
+            <lver-radio-group type="button" size="mini" @change="themeChanged" v-model="theme">
+              <lver-radio value="Dark">{{ $t('view.setting.theme.theme.dark') }}</lver-radio>
+              <lver-radio value="Light">{{ $t('view.setting.theme.theme.light') }}</lver-radio>
+              <lver-radio value="System">{{ $t('view.setting.theme.theme.system') }}</lver-radio>
+            </lver-radio-group>
+          </div>
+        </div>
+        <div class="login-content" v-if="currentStep === 3">
+          <div>
+            <lver-button size="mini">{{ $t('view.setting.account.login.github') }}</lver-button>
+            <lver-button size="mini">{{ $t('view.setting.account.login.gitee') }}</lver-button>
+          </div>
         </div>
         <div class="finish-content" v-if="currentStep === 4">
           <lver-result status="success" :title="$t('view.welcome.finish_page.title')">
@@ -137,6 +176,15 @@ const gotoHomePage = () => {
   align-items: center;
 }
 
+.setting-content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .welcome-content-hearde {
   display: flex;
   justify-content: center;
@@ -146,5 +194,12 @@ const gotoHomePage = () => {
 .lver-logo {
   width: 200px;
   height: 200px;
+}
+
+.login-content {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 </style>
