@@ -162,6 +162,29 @@ const ch = {
         log_description_closed_text: "日志描述已经关闭，你可以稍后在设置中重新打开",
         search_input_placeholder: "搜索日志, 支持使用类似：level: ERROR的筛选模式",
       },
+    },
+    welcome: {
+      steper: {
+        welcome_step_label_text: "欢迎",
+        login_step_label_text: "登陆",
+        setting_step_label_text: "设置",
+        finish_step_label_text: "完成",
+      },
+      bottom_button: {
+        prev_button_text: "上一步",
+        next_button_text: "下一步",
+        finish_button_text: "开始使用",
+      },
+      welcome_page: {
+        description_1: "是一个日志管理工具",
+        description_2: "支持自定义日志解析规则",
+        description_3: "支持多种编码格式、多种展现方式，支持筛选、搜索关键字",
+        description_4: "登录之后还可以云同步、分享日志于日志规则等",
+      },
+      finish_page: {
+        title: "恭喜你",
+        subtitle: "已经完成了必要的设置，点击下面的按钮开始使用",
+      }
     }
   },
 }

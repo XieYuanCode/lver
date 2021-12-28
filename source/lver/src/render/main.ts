@@ -6,6 +6,7 @@ import '@arco-design/web-vue/dist/arco.css'
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 
 import i18n from "./locale";
+import { router } from "./route"
 
 import 'vfonts/FiraCode.css'
 import "./style/init.css"
@@ -24,5 +25,6 @@ app.use(ArcoVue, {
 app.use(ArcoVueIcon)
 app.use(store, key)
 app.use(i18n)
+app.use(router)
 
 app.mount("#app")
