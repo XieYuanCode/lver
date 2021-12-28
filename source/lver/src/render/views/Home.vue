@@ -28,7 +28,7 @@ const isSettingView = computed(() => store.state.appearance.settingViewVisible)
 
 onMounted(() => {
   // TODO: 读取用户配置
-  // electronStore.store.set('isFirstLoad', false)
+  electronStore.store.set('isFirstLoad', false)
   switchTheme(store.state.appearance.theme);
   i18n.global.locale = store.state.appearance.language as "ch" | "en" | "jp" | "kor";
 })
