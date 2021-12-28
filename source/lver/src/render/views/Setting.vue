@@ -319,7 +319,7 @@
                 <lver-radio value="System">{{ $t('view.setting.theme.theme.system') }}</lver-radio>
               </lver-radio-group>
             </lver-form-item>
-            <lver-form-item field="opacity" label="透明度">
+            <lver-form-item field="opacity" :label="$t('view.setting.theme.window_opacity_label_text')">
               <lver-slider
                 :step="0.01"
                 :min="0"
