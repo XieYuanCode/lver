@@ -31,7 +31,16 @@
           </div>
         </div>
         <div class="setting-content" v-if="currentStep === 2">
-          <div>
+        <div>
+            {{ $t('view.setting.general.open_on_login_label_text') }}
+            <lver-switch
+                size="small"
+                v-model="openOnLogin"
+                @change="openOnLoginChanged"
+                :style="{ marginLeft: '10px' }"
+              ></lver-switch>
+          </div>
+          <div style="margin-top: 20px;">
             {{ $t('view.setting.theme.header_text') }}
             <lver-radio-group type="button" size="mini" @change="themeChanged" v-model="theme">
               <lver-radio value="Dark">{{ $t('view.setting.theme.theme.dark') }}</lver-radio>
@@ -182,7 +191,9 @@ const isLogging = ref(false)
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) }
 const theme = ref(store.state.appearance.theme);
-const language = ref(store.state.appearance.theme);
+const language = ref(store.state.appearance.language);
+const openOnLogin = ref(store.state.appearance.openOnLogin)
+const openOnLoginChanged = (e: boolean) => { store.commit("switchOpenOnLogin", e) }
 
 const logout = () => {
   store.commit('logout')

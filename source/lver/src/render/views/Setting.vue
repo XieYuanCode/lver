@@ -1,5 +1,5 @@
 <template>
-  <lver-typography>
+  <lver-typography class="setting-view">
     <lver-typography-title
       type="secondary"
       class="setting-title"
@@ -27,25 +27,35 @@
               >
                 <lver-radio value="ch">
                   {{
-                    $t("view.setting.general.language.ch")
+                  $t("view.setting.general.language.ch")
                   }}
                 </lver-radio>
                 <lver-radio value="en">
                   {{
-                    $t("view.setting.general.language.en")
+                  $t("view.setting.general.language.en")
                   }}
                 </lver-radio>
                 <lver-radio value="jp">
                   {{
-                    $t("view.setting.general.language.jp")
+                  $t("view.setting.general.language.jp")
                   }}
                 </lver-radio>
                 <lver-radio value="kor">
                   {{
-                    $t("view.setting.general.language.kor")
+                  $t("view.setting.general.language.kor")
                   }}
                 </lver-radio>
               </lver-radio-group>
+            </lver-form-item>
+            <!-- 登录时打开 -->
+            <lver-form-item field="openOnLogin">
+              {{ t('view.setting.general.open_on_login_label_text') }}
+              <lver-switch
+                size="small"
+                v-model="openOnLogin"
+                @change="openOnLoginChanged"
+                :style="{ marginLeft: '10px' }"
+              ></lver-switch>
             </lver-form-item>
             <!-- 标签 -->
             <lver-form-item field="tag">
@@ -66,7 +76,7 @@
                     <img :src="tag_tip_img_url" />
                     <br />
                     {{
-                      $t('view.setting.general.tag_tip_description')
+                    $t('view.setting.general.tag_tip_description')
                     }}
                   </lver-card>
                 </template>
@@ -220,13 +230,6 @@
                 <template #suffix>%</template>
               </lver-statistic>
             </lver-card>
-            <!-- <lver-card :style="{ width: '360px' }" title="Arco Card" hoverable>
-              <template #extra>
-                <lver-link>More</lver-link>
-              </template>
-              Card content
-              <br />Card content
-            </lver-card>-->
           </div>
         </div>
         <lver-divider
@@ -319,7 +322,10 @@
                 <lver-radio value="System">{{ $t('view.setting.theme.theme.system') }}</lver-radio>
               </lver-radio-group>
             </lver-form-item>
-            <lver-form-item field="opacity" :label="$t('view.setting.theme.window_opacity_label_text')">
+            <lver-form-item
+              field="opacity"
+              :label="$t('view.setting.theme.window_opacity_label_text')"
+            >
               <lver-slider
                 :step="0.01"
                 :min="0"
@@ -415,10 +421,18 @@
           <icon-info-circle />
           {{ $t("view.setting.about.header_text") }}
         </template>
-        <lver-typography-title type="secondary" :heading="6">{{ $t("view.setting.about.author") }}</lver-typography-title>
+        <lver-typography-title
+          type="secondary"
+          :heading="6"
+          @dblclick="handleAuthorClicked"
+        >{{ $t("view.setting.about.author") }}</lver-typography-title>
         <lver-typography-title type="secondary" :heading="6">
           github:
           <lver-link @click="openExternal">https://github.com/XieYuanCode</lver-link>
+        </lver-typography-title>
+        <lver-typography-title type="secondary" :heading="6">
+          {{ $t("view.setting.about.thanks") }}
+          <lver-link @click="openZerocsssGithub">zerocsss</lver-link>
         </lver-typography-title>
         <lver-typography-title type="secondary" :heading="6">
           <lver-button
@@ -437,7 +451,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, getCurrentInstance } from "vue";
+import { ref, computed, getCurrentInstance, h } from "vue";
 import { ThemeType } from "../model/theme";
 import { useStore } from "../store";
 import { useI18n } from "vue-i18n"
@@ -473,6 +487,7 @@ const updateInterval = ref(store.state.appearance.updateInterval)
 const updateChannel = ref(store.state.appearance.updateChannel)
 const shortcutEnable = ref(store.state.appearance.isShortcutEnable)
 const windowOpacity = ref(store.state.appearance.windowOpacity)
+const openOnLogin = ref(store.state.appearance.openOnLogin)
 
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) };
@@ -486,6 +501,7 @@ const updateIntervalChanged = (e: number) => { store.commit('switchUpdateInterva
 const updateChannelChanged = (e: string) => { store.commit('switchUpdateChannel', e) }
 const shortcutEnableChanged = (e: boolean) => { store.commit("switchShortcutEnable", e) }
 const windowOpacityChanged = (e: number) => { store.commit("switchWindowOpacity", e) }
+const openOnLoginChanged = (e: boolean) => { store.commit("switchOpenOnLogin", e) }
 
 const tag_tip_img_url = computed(() => {
   if (store.state.appearance.theme === ThemeType.Dark) {
@@ -625,6 +641,40 @@ const cancelAuth = () => {
 const openChangelogWebsite = () => {
 
 }
+
+/**
+ * 打开Zerocsss的github
+ */
+const openZerocsssGithub = () => {
+  shell.openExternal('https://github.com/zerocsss')
+}
+
+/**
+ * 双击作者名字 打开赞赏码
+ */
+const handleAuthorClicked = () => {
+  internalInstance && internalInstance.appContext.config.globalProperties.$modal.open({
+    title: t("view.dialog.reward.title"),
+    content: t("view.dialog.reward.subtitle"),
+    okText: t("view.dialog.reward.ok_btn_text"),
+    cancelText: t("view.dialog.reward.cancel_btn_text"),
+    closable: true,
+    onOk: () => {
+      internalInstance && internalInstance.appContext.config.globalProperties.$modal.open({
+        title: t("view.dialog.reward.title_in"),
+        okText: t("view.dialog.reward.ok_btn_1_text"),
+        content: () => h('img', {
+          src: 'src/render/assets/wechat_reward.jpg',
+          style: {
+            width: '100%',
+            height: '100%',
+          },
+        }),
+        onOk: feedback
+      })
+    }
+  })
+}
 </script>
 
 <style scoped>
@@ -644,5 +694,9 @@ const openChangelogWebsite = () => {
 
 .shortcut-table {
   width: 99%;
+}
+
+.setting-view {
+  user-select: none;
 }
 </style>

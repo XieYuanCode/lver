@@ -15,7 +15,7 @@ const data = {
     /**
      * 打开一个新的编辑器
      */
-    openNewEditor(state: IEditorVieModel, targetEditor: IEditor) {
+    openNewEditor(state: IEditorVieModel, targetEditor: any) {
       const isOpend = Boolean(state.editorList.find(editor => editor.key === targetEditor.key))
 
       if (isOpend) {

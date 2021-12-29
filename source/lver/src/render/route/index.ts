@@ -5,8 +5,6 @@ import { electronStore } from "../utils/electronStore"
 
 const isFirstLoad = electronStore.store.get('isFirstLoad', true)
 
-console.log('isFirstLoad', isFirstLoad);
-
 const routes = [
   {
     path: '/', component: isFirstLoad ? Welcome : Home

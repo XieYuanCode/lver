@@ -71,6 +71,11 @@ export interface IAppearanceState {
    * 窗口透明度
    */
   windowOpacity: number
+
+  /**
+   * 登录时打开
+   */
+  openOnLogin: boolean
 }
 
 const appearance = {
@@ -91,7 +96,8 @@ const appearance = {
       updateInterval: electronStore.store.get("updateInterval", 7),
       lastCheckUpdateTime: electronStore.store.get("lastCheckUpdateTime", ""),
       isShortcutEnable: electronStore.store.get("isShortcutEnable", true),
-      windowOpacity: electronStore.store.get("windowOpacity", 0.9)
+      windowOpacity: electronStore.store.get("windowOpacity", 0.9),
+      openOnLogin: electronStore.store.get("openOnLogin", false)
     }
   },
   mutations: {
@@ -219,6 +225,15 @@ const appearance = {
       state.windowOpacity = windowOpacity
       require('electron').ipcRenderer.send('opacity-changed', windowOpacity)
       electronStore.store.set('windowOpacity', windowOpacity)
+    },
+
+    /**
+     * 登录时打开
+     */
+    switchOpenOnLogin(state: IAppearanceState, openOnLogin: boolean) {
+      state.openOnLogin = openOnLogin
+      require('electron').ipcRenderer.send('openOnLogin-changed', openOnLogin)
+      electronStore.store.set('openOnLogin', openOnLogin)
     }
   }
 }

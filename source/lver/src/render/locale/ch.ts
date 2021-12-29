@@ -82,6 +82,7 @@ const ch = {
         header_text: "通用",
         language_label_text: "语言",
         tag_label_text: "标签",
+        open_on_login_label_text: "登陆时打开",
         encoding_label_text: "日志解析编码",
         end_of_line_sequence_label_text: "换行符",
         log_description_label_text: "日志描述",
@@ -121,11 +122,12 @@ const ch = {
       },
       about: {
         header_text: "关于",
-        author: "作者: 谢渊",
+        author: "作者: Creaster",
         version: version,
         feedback_btn_text: "反馈",
         changelog_btn_text: "更新日志",
-        developer: "开发者"
+        developer: "开发者",
+        thanks: "特别鸣谢",
       }
     },
     dialog: {
@@ -140,6 +142,14 @@ const ch = {
       },
       import_log_file: {
         title: "导入本地日志文件"
+      },
+      reward: {
+        title: '支持作者',
+        title_in: '感谢您的支持',
+        subtitle: '这个彩蛋都让你个小机灵鬼发现了，送你一个赞赏我的机会！',
+        ok_btn_text: '欣然同意',
+        ok_btn_1_text: '付完钱了，本大爷要提需求',
+        cancel_btn_text: '不赞赏',
       }
     },
     editor: {

@@ -54,6 +54,19 @@ const touchBar = new TouchBar({
 
 // 透明度改变
 ipcMain.on('opacity-changed', (e, arg) => { win && win.setOpacity(arg) })
+ipcMain.on('openOnLogin-changed', (e, arg) => {
+  app.setLoginItemSettings({
+    openAtLogin: arg
+  })
+})
+app.setAboutPanelOptions({
+  applicationName: 'lver',
+  applicationVersion: "1.0.0",
+  version: "1.0.0",
+  authors: "Creaster",
+  website: '81.70.22.185',
+  iconPath: path.join(__dirname, '..', 'build', 'icons', 'icon.png'),
+})
 
 app.whenReady().then(() => {
   tray = new Tray(path.join(__dirname, '..', 'build', 'icons', 'tary.png'))
