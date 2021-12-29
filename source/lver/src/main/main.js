@@ -1,4 +1,4 @@
-const { app, BrowserWindow, TouchBar, Tray, Menu, ipcMain } = require("electron")
+const { app, BrowserWindow, TouchBar, Tray, Menu, ipcMain, dialog } = require("electron")
 const Store = require("electron-store")
 const path = require('path')
 
@@ -54,11 +54,23 @@ const touchBar = new TouchBar({
 
 // 透明度改变
 ipcMain.on('opacity-changed', (e, arg) => { win && win.setOpacity(arg) })
+// 登录启动改变
 ipcMain.on('openOnLogin-changed', (e, arg) => {
   app.setLoginItemSettings({
     openAtLogin: arg
   })
 })
+// 打开目录选择
+ipcMain.on('open-log-folder-dialog', (e, arg) => {
+  const folder = dialog.showOpenDialogSync({
+    title: arg.title,
+    properties: ['openDirectory']
+  })
+
+  console.log('folder', folder);
+  e.returnValue = folder
+})
+
 app.setAboutPanelOptions({
   applicationName: 'lver',
   applicationVersion: "1.0.0",

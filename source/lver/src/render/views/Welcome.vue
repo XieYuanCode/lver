@@ -31,14 +31,22 @@
           </div>
         </div>
         <div class="setting-content" v-if="currentStep === 2">
-        <div>
+          <div>
             {{ $t('view.setting.general.open_on_login_label_text') }}
             <lver-switch
-                size="small"
-                v-model="openOnLogin"
-                @change="openOnLoginChanged"
-                :style="{ marginLeft: '10px' }"
-              ></lver-switch>
+              size="small"
+              v-model="openOnLogin"
+              @change="openOnLoginChanged"
+              :style="{ marginLeft: '10px' }"
+            ></lver-switch>
+          </div>
+          <div style="margin-top: 20px;">
+            <lver-button
+              type="primary"
+              size="mini"
+              :style="{ marginLeft: '10px' }"
+              @click="openLogFolderDialog"
+            >{{ store.state.appearance.defaultLogFolder || t('view.setting.general.default_log_folder_label_text') }}</lver-button>
           </div>
           <div style="margin-top: 20px;">
             {{ $t('view.setting.theme.header_text') }}
@@ -146,6 +154,7 @@
         <lver-button
           type="primary"
           size="mini"
+          :disabled="isNextButtonDisabled"
           @click="nextStep"
           :style="{ marginLeft: '20px' }"
           v-if="currentStep < 4"
@@ -176,12 +185,22 @@ import { useRouter } from 'vue-router';
 import { LoginType } from '../store/user';
 
 
-const { shell } = require('electron');
+const { shell, ipcRenderer } = require('electron');
 
 const store = useStore()
 const { t } = useI18n()
 const router = useRouter()
 const internalInstance = getCurrentInstance()
+
+const isNextButtonDisabled = computed(() => {
+  if (currentStep.value === 2) {
+    if (store.state.appearance.defaultLogFolder) {
+      return false
+    } else {
+      return true
+    }
+  }
+})
 
 const currentStep = ref(1)
 const prevStep = () => currentStep.value--
@@ -271,6 +290,13 @@ const loginWithGitee = async () => {
 
 const gotoHomePage = () => {
   router.push('/home')
+}
+
+const openLogFolderDialog = () => {
+  const folder = ipcRenderer.sendSync('open-log-folder-dialog', {
+    title: t("view.setting.general.default_log_folder_label_text"),
+  })
+  store.commit('switchDefaultLogFolder', folder[0])
 }
 
 </script>

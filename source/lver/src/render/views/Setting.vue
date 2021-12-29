@@ -47,6 +47,15 @@
                 </lver-radio>
               </lver-radio-group>
             </lver-form-item>
+            <!-- 默认储存位置 -->
+            <lver-form-item field="defaultLogFolder">
+              {{ t('view.setting.general.default_log_folder_label_text') }}
+              <lver-button
+                type="primary"
+                size="mini"
+                :style="{ marginLeft: '10px' }"
+                @click="openLogFolderDialog">{{store.state.appearance.defaultLogFolder}}</lver-button>
+            </lver-form-item>
             <!-- 登录时打开 -->
             <lver-form-item field="openOnLogin">
               {{ t('view.setting.general.open_on_login_label_text') }}
@@ -674,6 +683,13 @@ const handleAuthorClicked = () => {
       })
     }
   })
+}
+
+const openLogFolderDialog = () => {
+  const folder = ipcRenderer.sendSync('open-log-folder-dialog', {
+    title: t("view.setting.general.default_log_folder_label_text"),
+  })
+  store.commit('switchDefaultLogFolder', folder[0])
 }
 </script>
 

@@ -76,6 +76,11 @@ export interface IAppearanceState {
    * 登录时打开
    */
   openOnLogin: boolean
+
+  /**
+   * 默认日志储存位置
+   */
+  defaultLogFolder: string
 }
 
 const appearance = {
@@ -97,7 +102,8 @@ const appearance = {
       lastCheckUpdateTime: electronStore.store.get("lastCheckUpdateTime", ""),
       isShortcutEnable: electronStore.store.get("isShortcutEnable", true),
       windowOpacity: electronStore.store.get("windowOpacity", 0.9),
-      openOnLogin: electronStore.store.get("openOnLogin", false)
+      openOnLogin: electronStore.store.get("openOnLogin", false),
+      defaultLogFolder: electronStore.store.get("defaultLogFolder", null)
     }
   },
   mutations: {
@@ -234,6 +240,14 @@ const appearance = {
       state.openOnLogin = openOnLogin
       require('electron').ipcRenderer.send('openOnLogin-changed', openOnLogin)
       electronStore.store.set('openOnLogin', openOnLogin)
+    },
+
+    /**
+     * 切换默认日志文件夹
+     */
+    switchDefaultLogFolder(state: IAppearanceState, defaultLogFolder: string) {
+      state.defaultLogFolder = defaultLogFolder
+      electronStore.store.set('defaultLogFolder', defaultLogFolder)
     }
   }
 }

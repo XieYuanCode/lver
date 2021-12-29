@@ -82,6 +82,7 @@ const ch = {
         header_text: "通用",
         language_label_text: "语言",
         tag_label_text: "标签",
+        default_log_folder_label_text: "默认储藏位置",
         open_on_login_label_text: "登陆时打开",
         encoding_label_text: "日志解析编码",
         end_of_line_sequence_label_text: "换行符",
