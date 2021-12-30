@@ -42,7 +42,7 @@
           </div>
           <div style="margin-top: 20px;">
             <lver-button
-              type="primary"
+              type="text"
               size="mini"
               :style="{ marginLeft: '10px' }"
               @click="openLogFolderDialog"

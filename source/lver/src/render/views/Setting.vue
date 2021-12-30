@@ -27,22 +27,22 @@
               >
                 <lver-radio value="ch">
                   {{
-                  $t("view.setting.general.language.ch")
+                    $t("view.setting.general.language.ch")
                   }}
                 </lver-radio>
                 <lver-radio value="en">
                   {{
-                  $t("view.setting.general.language.en")
+                    $t("view.setting.general.language.en")
                   }}
                 </lver-radio>
                 <lver-radio value="jp">
                   {{
-                  $t("view.setting.general.language.jp")
+                    $t("view.setting.general.language.jp")
                   }}
                 </lver-radio>
                 <lver-radio value="kor">
                   {{
-                  $t("view.setting.general.language.kor")
+                    $t("view.setting.general.language.kor")
                   }}
                 </lver-radio>
               </lver-radio-group>
@@ -51,10 +51,11 @@
             <lver-form-item field="defaultLogFolder">
               {{ t('view.setting.general.default_log_folder_label_text') }}
               <lver-button
-                type="primary"
+                type="text"
                 size="mini"
                 :style="{ marginLeft: '10px' }"
-                @click="openLogFolderDialog">{{store.state.appearance.defaultLogFolder}}</lver-button>
+                @click="openLogFolderDialog"
+              >{{ store.state.appearance.defaultLogFolder }}</lver-button>
             </lver-form-item>
             <!-- 登录时打开 -->
             <lver-form-item field="openOnLogin">
@@ -85,7 +86,7 @@
                     <img :src="tag_tip_img_url" />
                     <br />
                     {{
-                    $t('view.setting.general.tag_tip_description')
+                      $t('view.setting.general.tag_tip_description')
                     }}
                   </lver-card>
                 </template>
@@ -93,7 +94,9 @@
             </lver-form-item>
           </lver-space>
         </lver-form>
-        <lver-divider orientation="center">{{ $t("view.setting.general.header_text") }}</lver-divider>
+        <lver-divider
+          orientation="center"
+        >{{ $t("view.setting.general.header_text") }} | {{ languageText }}</lver-divider>
       </lver-tab-pane>
       <!-- 账户 -->
       <lver-tab-pane key="account">
@@ -347,7 +350,9 @@
             </lver-form-item>
           </lver-space>
         </lver-form>
-        <lver-divider orientation="center">{{ $t("view.setting.theme.header_text") }}</lver-divider>
+        <lver-divider
+          orientation="center"
+        >{{ $t("view.setting.theme.header_text") }} | {{ themeText }}</lver-divider>
       </lver-tab-pane>
       <!-- 快捷键 -->
       <lver-tab-pane key="shortcut">
@@ -371,7 +376,7 @@
         <shortcut></shortcut>
         <lver-divider
           orientation="center"
-        >{{ $t("view.setting.shortcut.header_text") }} | {{ platform }}</lver-divider>
+        >{{ $t("view.setting.shortcut.header_text") }} | {{ platform }} | {{ isShortcutEnableText }}</lver-divider>
       </lver-tab-pane>
       <!-- 更新 -->
       <lver-tab-pane key="update">
@@ -469,20 +474,11 @@ import { isLinux, isMac, isWin } from "../utils/system";
 import Shortcut from "../components/Shortcut.vue";
 
 const { shell, ipcRenderer } = require('electron');
+const store = useStore();
 
 const { t } = useI18n()
 const internalInstance = getCurrentInstance()
 
-const platform = isMac() ? "macOS" : isWin() ? "Windows" : isLinux() ? "Linux" : "Unknown"
-
-const shortcutTableData = ref([
-  {
-    action: 'close current tab',
-    key: 'Ctrl + W'
-  }
-])
-
-const store = useStore();
 const language = ref(store.state.appearance.language);
 const theme = ref(store.state.appearance.theme);
 const tag = ref(store.state.appearance.tag)
@@ -497,6 +493,11 @@ const updateChannel = ref(store.state.appearance.updateChannel)
 const shortcutEnable = ref(store.state.appearance.isShortcutEnable)
 const windowOpacity = ref(store.state.appearance.windowOpacity)
 const openOnLogin = ref(store.state.appearance.openOnLogin)
+
+const platform = isMac() ? "macOS" : isWin() ? "Windows" : isLinux() ? "Linux" : "Unknown"
+const isShortcutEnableText = computed(() => shortcutEnable.value ? t("view.setting.shortcut.enable_text") : t("view.setting.shortcut.disable_text"))
+const themeText = computed(() => theme.value === ThemeType.Dark ? t("view.setting.theme.theme.dark") : theme.value === ThemeType.System ? t("view.setting.theme.theme.system") : t("view.setting.theme.theme.light"))
+const languageText = computed(() => language.value === 'ch' ? t("view.setting.general.language.ch") : language.value === 'en' ? t("view.setting.general.language.en") : language.value === 'jp' ? t("view.setting.general.language.jp") : t("view.setting.general.language.kor"))
 
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) };

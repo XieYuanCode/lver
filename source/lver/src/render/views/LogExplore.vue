@@ -43,6 +43,9 @@
               @click="deleteLog(nodeData)"
             >{{ $t("view.explore.log_explore.context_menu.delete") }}</lver-doption>
             <lver-doption
+              @click="deleteLocalLog(nodeData)"
+            >{{ $t("view.explore.log_explore.context_menu.delete_local") }}</lver-doption>
+            <lver-doption
               @click="shareLog(nodeData)"
               :disabled="!store.state.user.logined"
             >{{ $t("view.explore.log_explore.context_menu.share") }}</lver-doption>
@@ -115,6 +118,11 @@ const openInEditor = (nodeData: ILog) => {
 }
 
 const deleteLog = (nodeData: ILog) => {
+  store.commit('removeLogFile', nodeData.key)
+}
+
+const deleteLocalLog = (nodeData: ILog) => {
+  require('electron').ipcRenderer.send('delete-file', nodeData.file)
   store.commit('removeLogFile', nodeData.key)
 }
 

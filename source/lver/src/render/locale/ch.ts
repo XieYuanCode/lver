@@ -20,6 +20,7 @@ const ch = {
           open_local: isMac() ? "在访达中打开" : "在资源管理器中打开",
           rename: "重命名",
           delete: "删除",
+          delete_local: "删除本地日志",
           share: "分享",
           rename_empty: "无法重命名为空或者一个或多个空格"
         },
@@ -106,10 +107,16 @@ const ch = {
         }
       },
       shortcut: {
+        key_label_text: "快捷键",
+        action_label_text: "行为",
         header_text: "快捷键",
         tabel_action_text: "行为",
         table_key_text: "快捷键",
-        shorrcut_enable_label_text: "启用快捷键"
+        shorrcut_enable_label_text: "启用快捷键",
+        enable_text: "启用",
+        disable_text: "禁用",
+        spin_tip: "启用快捷键以编辑详情",
+        none_key_tip: "暂未设置",
       },
       update: {
         header_text: "更新",
@@ -195,6 +202,26 @@ const ch = {
       finish_page: {
         title: "恭喜你",
         subtitle: "已经完成了必要的设置，点击下面的按钮开始使用",
+      }
+    },
+    shortcut: {
+      action: {
+        import_local_log: '导入本地日志文件',
+        import_shared_log: '导入分享日志文件',
+        settings: '首选项',
+        setting_general: '首选项-常规',
+        setting_shortcut: '首选项-快捷键',
+        setting_account: '首选项-账户',
+        setting_about: '首选项-关于',
+        setting_log: '首选项-日志',
+        setting_theme: '首选项-主题',
+        setting_update: '首选项-更新',
+        search_log_file: '搜索日志',
+        search_log_rule: '搜索日志规则',
+        search_log_field: '搜索日志条目',
+        switch_opend_tab: '切换打开的标签页(1-9)',
+        share_log: '分享日志',
+        share_log_rule: '分享日志规则',
       }
     }
   },

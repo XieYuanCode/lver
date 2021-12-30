@@ -1,4 +1,4 @@
-export enum Key {
+export enum FunctionalKey {
   Command = "Command",
   Control = "Control",
   CommandOrControl = "CommandOrControl",
@@ -8,6 +8,8 @@ export enum Key {
   Shift = "Shift",
   Super = "Super",
   Meta = "Meta",
+}
+export enum Key {
   Zero = 0,
   One = 1,
   Two = 2,
@@ -103,12 +105,12 @@ export enum Key {
   NumPadMinus = "numsub",
   NumPadMultiply = "nummult",
   NumPadDivide = "numdiv",
-  Comma = ","
+  Comma = ",",
 }
 
 export enum ShortcutAction {
-  ImportLocalLog = "importLocalLog",
-  ImportCloudLog = "importCloudLog",
+  ImportLocalLog = "import_local_log",
+  ImportSharedLog = "import_shared_log",
   Settings = "settings",
   Setting_General = "setting_general",
   Setting_Shortcut = "setting_shortcut",
@@ -117,10 +119,10 @@ export enum ShortcutAction {
   Setting_Log = "setting_log",
   Setting_Theme = "setting_theme",
   Setting_Update = "setting_update",
-  SearchLogFile = "searchLogFile",
-  SearchLogRule = "searchLogRule",
-  SearchLogField = "searchLogField",
-  SwitchOpendTab = "SwitchOpendTab",
-  ShareLog = "shareLog",
-  ShareLogRule = "shareLogRule",
+  SearchLogFile = "search_log_file",
+  SearchLogRule = "search_log_rule",
+  SearchLogField = "search_log_field",
+  SwitchOpendTab = "switch_opend_tab",
+  ShareLog = "share_log",
+  ShareLogRule = "share_log_rule",
 }

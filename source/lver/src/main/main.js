@@ -1,6 +1,7 @@
 const { app, BrowserWindow, TouchBar, Tray, Menu, ipcMain, dialog } = require("electron")
 const Store = require("electron-store")
 const path = require('path')
+const fs = require('fs')
 
 const { TouchBarLabel, TouchBarButton, TouchBarSpacer } = TouchBar
 const store = new Store();
@@ -69,6 +70,9 @@ ipcMain.on('open-log-folder-dialog', (e, arg) => {
 
   console.log('folder', folder);
   e.returnValue = folder
+})
+ipcMain.on('delete-file', (e, arg) => {
+  fs.rmSync(arg)
 })
 
 app.setAboutPanelOptions({
