@@ -17,7 +17,7 @@
             <h3>{{ $t('view.setting.shortcut.key_label_text') }}</h3>
           </td>
           <td>
-            <lver-button type="text" size="mini">重置</lver-button>
+            <lver-button type="text" size="mini" @click="resetShortcut">{{ $t('view.setting.shortcut.reset_btn_text') }}</lver-button>
           </td>
         </tr>
         <tr
@@ -35,6 +35,7 @@
               class="edit-shortcut-input"
               @keydown="handleShortcutKeydown($event, shortcut)"
               @blur="handleShortcutBlur($event, shortcut)"
+              :placeholder="$t('view.setting.shortcut.edit_input_placeholder')"
             />
             <shortcut-key
               :show-key="shortcut.action !== Action.SwitchOpendTab"
@@ -77,6 +78,10 @@ const handleShortcutKeydown = (e: KeyboardEvent, arg: IShortcut) => {
   if (e.key === Key.Escape) {
     store.commit("finishEditShortcut", arg)
   }
+}
+
+const resetShortcut = () => {
+  store.commit("resetShortcut")
 }
 </script>
 

@@ -1,0 +1,5 @@
+[2021-11-21T14:45:28.514] [INFO] App - [initLogger]logSettingFilePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist/configs/log4js.config.json
+[2021-11-21T14:45:28.516] [INFO] Startup - [startup]
+[2021-11-21T14:45:28.516] [INFO] Startup - [initEnvironmentPath]
+[2021-11-21T14:45:28.516] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.appHome:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/Resources/app/dist
+[2021-11-21T14:45:28.516] [INFO] Startup - [initEnvironmentPath]WorkingDirectory.exePath:/Users/xieyuan/code/aep/source/build/mac-arm64/aep.app/Contents/MacOS

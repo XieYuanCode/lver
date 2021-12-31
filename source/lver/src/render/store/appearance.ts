@@ -213,7 +213,7 @@ const appearance = {
      */
     switchLastCheckUpdateTime(state: IAppearanceState, lastCheckUpdateTime: Date) {
       state.lastCheckUpdateTime = lastCheckUpdateTime
-      electronStore.store.set('lastCheckUpdateTime', lastCheckUpdateTime)
+      electronStore.store.set('lastCheckUpdateTime', lastCheckUpdateTime.toLocaleString())
     },
 
     /**

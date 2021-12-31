@@ -1,4 +1,4 @@
-const { app, BrowserWindow, TouchBar, Tray, Menu, ipcMain, dialog } = require("electron")
+const { app, BrowserWindow, TouchBar, Tray, Menu, ipcMain, dialog, globalShortcut } = require("electron")
 const Store = require("electron-store")
 const path = require('path')
 const fs = require('fs')
@@ -11,6 +11,98 @@ var tray = null
 let win = null
 
 const trayContextMenu = Menu.buildFromTemplate([])
+
+const defaultShortcuts = [
+  {
+    action: 'switch_opend_tab',
+    isEditing: false,
+    key: {
+      functionalKeys: ['CommandOrControl'],
+      key: ["1-9"]
+    },
+  },
+  {
+    action: 'settings',
+    key: {
+      functionalKeys: ['CommandOrControl'],
+      key: [',']
+    },
+    isEditing: false,
+  },
+  {
+    action: 'import_local_log',
+    key: {
+      functionalKeys: ['CommandOrControl', 'Shift'],
+      key: ['I']
+    },
+    isEditing: false,
+  },
+  {
+    action: 'import_shared_log',
+    key: {
+      functionalKeys: ['CommandOrControl', 'Shift'],
+      key: ['S']
+    },
+    isEditing: false,
+  },
+  {
+    action: 'setting_general',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'setting_shortcut',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'setting_account',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'setting_about',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'setting_log',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'setting_theme',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'setting_update',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'search_log_file',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'search_log_rule',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'search_log_field',
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: 'share_log',
+    isEditing: false,
+    key: null,
+  }
+]
+
+const shortcutList = store.get('shortcutList', defaultShortcuts)
 
 function creatWindow() {
   win = new BrowserWindow({
@@ -85,6 +177,24 @@ app.setAboutPanelOptions({
 })
 
 app.whenReady().then(() => {
+  shortcutList.forEach(shortcut => {
+    if (shortcut.key !== null) {
+      if (shortcut.action === 'switch_opend_tab') {
+        console.log(shortcut);
+        for (let index = 1; index < 10; index++) {
+          const accelerator = shortcut.key.functionalKeys.join('+') + '+' + index
+          globalShortcut.register(accelerator, () => {
+            win && win.webContents.send('switch_opend_tab', index)
+          })
+        }
+      } else {
+        const accelerator = shortcut.key.functionalKeys.join('+') + '+' + shortcut.key.key.join('+')
+        globalShortcut.register(accelerator, () => {
+          win && win.webContents.send(shortcut.action)
+        })
+      }
+    }
+  })
   tray = new Tray(path.join(__dirname, '..', 'build', 'icons', 'tary.png'))
   tray.setContextMenu(trayContextMenu)
   app.setAsDefaultProtocolClient('lver', process.execPath, [`${__dirname}`])

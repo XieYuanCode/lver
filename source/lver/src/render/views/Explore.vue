@@ -1,5 +1,6 @@
 <template>
   <div class="explore-main">
+    <input id="file-input" type="file" name="name" v-show="false" multiple @input="uploadLogFile" />
     <div class="explore-main-hearder">
       <lver-radio-group type="button" size="mini" v-model="currentExploreSelected">
         <lver-radio value="log">
@@ -39,18 +40,11 @@
             {{
               $t("view.explore.log_explore.addbutton.import_log")
             }}
-            <input
-              id="file-input"
-              type="file"
-              name="name"
-              v-show="false"
-              multiple
-              @input="uploadLogFile"
-            />
           </lver-doption>
           <lver-doption
             v-if="currentExploreSelected === 'log'"
             :disabled="store.state.appearance.logSkeleton"
+            @click="importSharedLog"
           >
             <icon-cloud-download />
             {{
@@ -76,6 +70,7 @@ import { useStore } from '../store';
 import { IconSettings } from '@arco-design/web-vue/es/icon';
 import { Log } from '../model/iLog';
 import { uuid } from '../utils/uuid';
+import { ShortcutAction } from '../model/shortcut';
 
 const store = useStore()
 
@@ -89,8 +84,13 @@ const switchSettingViewVisible = () => { store.commit("switchSettingViewVisible"
 let selectFileInput: HTMLInputElement
 
 const openFileSelectDialog = () => {
+  console.log(123);
   selectFileInput = document.getElementById("file-input") as HTMLInputElement
   selectFileInput?.click()
+}
+
+const importSharedLog = () => {
+  console.log('importSharedLog');
 }
 
 const uploadLogFile = () => {
@@ -106,6 +106,11 @@ const uploadLogFile = () => {
     store.commit("appendNewLogFile", log)
   }
 }
+
+onMounted(() => {
+  require('electron').ipcRenderer.on(ShortcutAction.ImportLocalLog, () => openFileSelectDialog())
+  require('electron').ipcRenderer.on(ShortcutAction.ImportSharedLog, () => importSharedLog())
+})
 </script>
 
 <style scoped>

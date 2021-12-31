@@ -9,7 +9,12 @@
       @delete="closeEditor"
       class="editor-tab"
     >
-      <lver-tab-pane v-for="(editor, index) in editors" :key="editor.key" :title="editor.title" style="height: 100%">
+      <lver-tab-pane
+        v-for="(editor, index) in editors"
+        :key="editor.key"
+        :title="editor.title"
+        style="height: 100%"
+      >
         <description :log="editor" v-if="isDescriptionShow"></description>
         <log-list-table :editor="editor"></log-list-table>
       </lver-tab-pane>
@@ -23,11 +28,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useStore } from '../store';
 import Description from '../components/Description.vue';
 import LogListTable from '../components/LogListTable.vue';
-import ILog from '../model/iLog';
 
 const store = useStore()
 
@@ -43,6 +47,10 @@ const activeEditorKey = computed({
 })
 
 const closeEditor = (key: string) => store.commit("closeEditor", key)
+
+onMounted(() => {
+  require('electron').ipcRenderer.on('switch_opend_tab', (e, arg) => store.commit("activeEditorByIndex", arg))
+})
 
 </script>
 

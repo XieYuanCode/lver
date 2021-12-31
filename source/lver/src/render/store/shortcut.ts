@@ -1,4 +1,5 @@
 import { FunctionalKey, Key, ShortcutAction } from "../model/shortcut"
+import { electronStore } from "../utils/electronStore"
 
 export type KeyPair = {
   functionalKeys?: FunctionalKey[]
@@ -15,106 +16,111 @@ export interface IShortcutState {
   shortcutList: IShortcut[]
 }
 
+const defaultShortcutList = [
+  {
+    action: ShortcutAction.ImportLocalLog,
+    key: {
+      functionalKeys: [FunctionalKey.CommandOrControl, FunctionalKey.Shift],
+      key: [Key.I]
+    },
+    isEditing: false,
+  },
+  {
+    action: ShortcutAction.ImportSharedLog,
+    key: {
+      functionalKeys: [FunctionalKey.CommandOrControl, FunctionalKey.Shift],
+      key: [Key.S]
+    },
+    isEditing: false,
+  },
+  {
+    action: ShortcutAction.Settings,
+    key: {
+      functionalKeys: [FunctionalKey.CommandOrControl],
+      key: [Key.Comma]
+    },
+    isEditing: false,
+  },
+  {
+    action: ShortcutAction.SwitchOpendTab,
+    isEditing: false,
+    key: {
+      functionalKeys: [FunctionalKey.CommandOrControl],
+      key: ["1-9"]
+    },
+  },
+  {
+    action: ShortcutAction.Setting_General,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.Setting_Shortcut,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.Setting_Account,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.Setting_About,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.Setting_Log,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.Setting_Theme,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.Setting_Update,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.SearchLogFile,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.SearchLogRule,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.SearchLogField,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.ShareLog,
+    isEditing: false,
+    key: null,
+  },
+  {
+    action: ShortcutAction.ShareLogRule,
+    isEditing: false,
+    key: null,
+  },
+]
+
 const data = {
   state() {
     return {
-      shortcutList: [
-        {
-          action: ShortcutAction.ImportLocalLog,
-          key: {
-            functionalKeys: [FunctionalKey.CommandOrControl, FunctionalKey.Shift],
-            key: [Key.O]
-          },
-          isEditing: false,
-        },
-        {
-          action: ShortcutAction.ImportSharedLog,
-          key: {
-            functionalKeys: [FunctionalKey.CommandOrControl, FunctionalKey.Shift],
-            key: [Key.S]
-          },
-          isEditing: false,
-        },
-        {
-          action: ShortcutAction.Settings,
-          key: {
-            functionalKeys: [FunctionalKey.CommandOrControl],
-            key: [Key.Comma]
-          },
-          isEditing: false,
-        },
-        {
-          action: ShortcutAction.SwitchOpendTab,
-          isEditing: false,
-          key: {
-            functionalKeys: [FunctionalKey.CommandOrControl],
-            key: ["1-9"]
-          },
-        },
-        {
-          action: ShortcutAction.Setting_General,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.Setting_Shortcut,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.Setting_Account,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.Setting_About,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.Setting_Log,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.Setting_Theme,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.Setting_Update,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.SearchLogFile,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.SearchLogRule,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.SearchLogField,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.ShareLog,
-          isEditing: false,
-          key: null,
-        },
-        {
-          action: ShortcutAction.ShareLogRule,
-          isEditing: false,
-          key: null,
-        },
-      ]
+      shortcutList: electronStore.store.get('shortcutList', defaultShortcutList)
     }
   },
   mutations: {
+    resetShortcut(state: IShortcutState) {
+      state.shortcutList = defaultShortcutList as IShortcut[]
+    },
     changeShortcut(state: IShortcutState, { action, keyPair }: { action: ShortcutAction; keyPair: KeyPair }) {
       const index = state.shortcutList.findIndex(
         (shortcut) => shortcut.action === action

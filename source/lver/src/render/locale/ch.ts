@@ -109,6 +109,7 @@ const ch = {
       shortcut: {
         key_label_text: "快捷键",
         action_label_text: "行为",
+        reset_btn_text: "重置",
         header_text: "快捷键",
         tabel_action_text: "行为",
         table_key_text: "快捷键",
@@ -117,9 +118,11 @@ const ch = {
         disable_text: "禁用",
         spin_tip: "启用快捷键以编辑详情",
         none_key_tip: "暂未设置",
+        edit_input_placeholder: "ESC取消设置",
       },
       update: {
         header_text: "更新",
+        update_btn_text: "检查更新",
         channel_label_text: "更新渠道",
         stable_channel_text: "稳定版",
         beta_channel_text: "测试版",

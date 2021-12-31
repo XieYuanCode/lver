@@ -35,7 +35,13 @@ const data = {
     },
 
     activeEditor(state: IEditorVieModel, key: string) {
+      console.log('activeEditor', key);
       state.activeEditorKey = key
+    },
+
+    activeEditorByIndex(state: IEditorVieModel, index: number) {
+      console.log('activeEditorByIndex', index);
+      state.editorList[index - 1] && (state.activeEditorKey = state.editorList[index - 1].key)
     }
   }
 }

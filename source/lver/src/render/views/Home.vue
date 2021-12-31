@@ -21,12 +21,15 @@ import Editor from "./Editor.vue"
 import { switchTheme } from "../utils/theme";
 import i18n from "../locale";
 import { electronStore } from "../utils/electronStore";
+import { ShortcutAction } from "../model/shortcut";
 
 const store = useStore();
 
 const isSettingView = computed(() => store.state.appearance.settingViewVisible)
 
 onMounted(() => {
+
+  require('electron').ipcRenderer.on(ShortcutAction.Settings, () => store.commit('switchSettingViewVisible', !store.state.appearance.settingViewVisible))
   // TODO: 读取用户配置
   electronStore.store.set('isFirstLoad', false)
   switchTheme(store.state.appearance.theme);

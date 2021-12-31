@@ -371,6 +371,9 @@
                 @change="shortcutEnableChanged"
               ></lver-switch>
             </lver-form-item>
+            <lver-form-item field="reset_shortcut">
+              {{ t('view.setting.shortcut.reset_btn_text') }}
+            </lver-form-item>
           </lver-space>
         </lver-form>
         <shortcut></shortcut>
@@ -386,6 +389,16 @@
         </template>
         <lver-form :model="{}" layout="vertical">
           <lver-space direction="vertical" size="mini">
+            <lver-form-item field="update">
+              {{ $t('view.setting.update.update_btn_text') }}
+              <lver-button
+                style="margin-left: 10px;"
+                type="text"
+                size="small"
+                @click="checkUpdate"
+                :loading="isCheckingUpdate"
+              >{{ $t('view.setting.update.update_btn_text') }}</lver-button>
+            </lver-form-item>
             <lver-form-item field="channel" :label="$t('view.setting.update.channel_label_text')">
               <lver-radio-group
                 type="button"
@@ -427,7 +440,7 @@
         </lver-form>
         <lver-divider
           orientation="center"
-        >{{ $t("view.setting.update.header_text") }} | {{ $t("view.setting.update.last_check_time_label_text") }}: {{ store.state.appearance.lastCheckUpdateTime }}</lver-divider>
+        >{{ $t("view.setting.update.header_text") }} | {{ $t("view.setting.update.last_check_time_label_text") }}: {{ lastCheckUpdateTime }}</lver-divider>
       </lver-tab-pane>
       <!-- 关于 -->
       <lver-tab-pane keyd="about">
@@ -498,6 +511,7 @@ const platform = isMac() ? "macOS" : isWin() ? "Windows" : isLinux() ? "Linux" :
 const isShortcutEnableText = computed(() => shortcutEnable.value ? t("view.setting.shortcut.enable_text") : t("view.setting.shortcut.disable_text"))
 const themeText = computed(() => theme.value === ThemeType.Dark ? t("view.setting.theme.theme.dark") : theme.value === ThemeType.System ? t("view.setting.theme.theme.system") : t("view.setting.theme.theme.light"))
 const languageText = computed(() => language.value === 'ch' ? t("view.setting.general.language.ch") : language.value === 'en' ? t("view.setting.general.language.en") : language.value === 'jp' ? t("view.setting.general.language.jp") : t("view.setting.general.language.kor"))
+const lastCheckUpdateTime = computed(() => store.state.appearance.lastCheckUpdateTime.toLocaleString())
 
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) };
@@ -529,7 +543,9 @@ const tag_tip_img_url = computed(() => {
 
 const isLogging = ref(false)
 const isSyncing = ref(false)
+const isCheckingUpdate = ref(false)
 const formatter = (value: string) => value
+
 
 /**
  * 打开外链
@@ -685,12 +701,23 @@ const handleAuthorClicked = () => {
     }
   })
 }
-
+// 打开目录选择
 const openLogFolderDialog = () => {
   const folder = ipcRenderer.sendSync('open-log-folder-dialog', {
     title: t("view.setting.general.default_log_folder_label_text"),
   })
   store.commit('switchDefaultLogFolder', folder[0])
+}
+
+// 检查更新
+const checkUpdate = () => {
+  isCheckingUpdate.value = true
+  store.commit('switchLastCheckUpdateTime', new Date())
+}
+
+// 重置快捷键
+const resetShortcut = () => {
+  store.commit('resetShortcut')
 }
 </script>
 
