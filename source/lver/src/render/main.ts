@@ -8,7 +8,6 @@ import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 import i18n from "./locale";
 import { router } from "./route"
 
-import 'vfonts/FiraCode.css'
 import "./style/init.css"
 
 import { store, key } from "./store"

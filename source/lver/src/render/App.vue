@@ -19,4 +19,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+* {
+  font-family: 'MiSansNormal' !important;
+}
 </style>

@@ -1,6 +1,16 @@
-* {
+/* * {
   font-family: "v-mono";
+} */
+@font-face {
+  font-family: "MiSansRegular";
+  src: url('src/render/assets/font/MiSans-Regular.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: "MiSansNormal";
+  src: url('src/render/assets/font/MiSans-Normal.ttf') format('truetype');
+}
+
 #app {
   margin: 0;
   padding: 0;
