@@ -16,7 +16,7 @@ const ch = {
         },
         context_menu: {
           open: "打开",
-          editDeitil: "编辑详情",
+          editDetail: "编辑详情",
           open_local: isMac() ? "在访达中打开" : "在资源管理器中打开",
           rename: "重命名",
           delete: "删除",
@@ -149,7 +149,7 @@ const ch = {
       new_log_rule: {
         title: "新建日志规则",
         create_rule_placrhole_text_press: "按下",
-        create_rule_placrhole_text_left: "将剪贴板第一条文本复制到这里",
+        create_rule_placrhole_text_left: "将剪贴板第一条文本粘贴到这里",
       },
       import_log_file: {
         title: "导入本地日志文件"
@@ -187,7 +187,7 @@ const ch = {
     welcome: {
       steper: {
         welcome_step_label_text: "欢迎",
-        login_step_label_text: "登陆",
+        login_step_label_text: "账户",
         setting_step_label_text: "设置",
         finish_step_label_text: "完成",
       },
@@ -200,7 +200,7 @@ const ch = {
         description_1: "是一个日志管理工具",
         description_2: "支持自定义日志解析规则",
         description_3: "支持多种编码格式、多种展现方式，支持筛选、搜索关键字",
-        description_4: "登录之后还可以云同步、分享日志于日志规则等",
+        description_4: "登录之后还可以云同步、分享日志、日志规则等",
       },
       finish_page: {
         title: "恭喜你",

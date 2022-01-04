@@ -26,7 +26,13 @@
           v-if="!props.isEditing"
         >{{ props.log.name }}</td>
         <td align="center" :style="{ padding: '6px', width: '33%' }" v-if="props.isEditing">
-          <lver-input :style="{ width: '80%' }" size="mini" v-model="editedLogData.name" />
+          <lver-input
+            id="nameInput"
+            :style="{ width: '80%' }"
+            size="mini"
+            v-model="editedLogData.name"
+            @keydown="saveAndStop"
+          />
         </td>
         <td align="center" :style="{ padding: '10px', width: '33%' }">{{ props.log.uuid }}</td>
         <td align="center" :style="{ padding: '10px', width: '33%' }">{{ props.log.filename }}</td>
@@ -57,7 +63,9 @@
           <lver-date-picker
             :style="{ width: '80%' }"
             size="mini"
+            placeholder=" "
             v-model="editedLogData.createDate"
+            @keydown="saveAndStop"
           />
         </td>
         <td
@@ -89,7 +97,12 @@
           v-if="!props.isEditing"
         >{{ props.log.description }}</td>
         <td align="center" :style="{ padding: '6px', width: '33%' }" v-if="props.isEditing">
-          <lver-input :style="{ width: '80%' }" size="mini" v-model="editedLogData.description" />
+          <lver-input
+            :style="{ width: '80%' }"
+            size="mini"
+            v-model="editedLogData.description"
+            @keydown="saveAndStop"
+          />
         </td>
         <td align="center" :style="{ padding: '10px', width: '33%' }">{{ props.log.file }}</td>
         <td
@@ -103,7 +116,7 @@
 
 <script setup lang="ts">
 import ILog from '../model/iLog';
-import { computed, reactive } from 'vue';
+import { computed, nextTick, reactive, watch } from 'vue';
 import { useI18n } from "vue-i18n";
 import { useStore } from '../store';
 const { t } = useI18n()
@@ -114,6 +127,20 @@ type PropsType = {
   log: ILog
 }
 const props = defineProps<PropsType>()
+const saveEmit = defineEmits(['saveEmit']);
+
+watch(props, (newValue, oldValue) => {
+  console.log(newValue);
+  if (newValue.isEditing === true) {
+    nextTick(() => {
+      (document.getElementById('nameInput')?.children[0] as HTMLInputElement)?.focus()
+    })
+  }
+})
+
+const saveAndStop = (e: KeyboardEvent) => {
+  e.key === "Enter" && saveEmit('saveEmit')
+}
 
 const editedLogData = reactive({
   name: props.log.name,
@@ -131,6 +158,10 @@ const save = () => {
 defineExpose({
   save
 })
+
+function ref<T>(arg0: null) {
+  throw new Error('Function not implemented.');
+}
 </script>
 
 <style scoped>

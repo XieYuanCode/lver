@@ -25,7 +25,7 @@
       </lver-button-group>
     </div>
 
-    <description-panel :isEditing="isDescriptionEditing" ref="descriptionPanel" :log="props.log"></description-panel>
+    <description-panel :isEditing="isDescriptionEditing" ref="descriptionPanel" :log="props.log" @saveEmit="saveLogDescription"></description-panel>
   </div>
 </template>
 
@@ -33,7 +33,6 @@
 import { computed, ref, getCurrentInstance, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "../store";
-import dayjs from "dayjs";
 import DescriptionPanel from "./DescriptionPanel.vue";
 
 import ILog from "../model/iLog";
@@ -64,8 +63,8 @@ const closeLogDescription = () => {
 };
 
 const saveLogDescription = () => {
-  descriptionPanel.value.save()
-  isDescriptionEditing.value = false
+  descriptionPanel.value && descriptionPanel.value.save()
+  descriptionPanel.value && (isDescriptionEditing.value = false)
 }
 </script>
 

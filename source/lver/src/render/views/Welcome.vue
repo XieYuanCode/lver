@@ -41,10 +41,10 @@
             ></lver-switch>
           </div>
           <div style="margin-top: 20px;">
+            <span style="color: red" v-if="!store.state.appearance.defaultLogFolder">*</span>
             <lver-button
               type="text"
               size="mini"
-              :style="{ marginLeft: '10px' }"
               @click="openLogFolderDialog"
             >{{ store.state.appearance.defaultLogFolder || t('view.setting.general.default_log_folder_label_text') }}</lver-button>
           </div>

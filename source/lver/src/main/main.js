@@ -160,7 +160,6 @@ ipcMain.on('open-log-folder-dialog', (e, arg) => {
     properties: ['openDirectory']
   })
 
-  console.log('folder', folder);
   e.returnValue = folder
 })
 ipcMain.on('delete-file', (e, arg) => {
@@ -180,7 +179,6 @@ app.whenReady().then(() => {
   shortcutList.forEach(shortcut => {
     if (shortcut.key !== null) {
       if (shortcut.action === 'switch_opend_tab') {
-        console.log(shortcut);
         for (let index = 1; index < 10; index++) {
           const accelerator = shortcut.key.functionalKeys.join('+') + '+' + index
           globalShortcut.register(accelerator, () => {

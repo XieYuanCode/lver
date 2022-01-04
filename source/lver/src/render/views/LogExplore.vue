@@ -37,7 +37,7 @@
               <template #icon>
                 <icon-edit />
               </template>
-              {{ $t("view.explore.log_explore.context_menu.editDeitil") }}
+              {{ $t("view.explore.log_explore.context_menu.editDetail") }}
             </lver-doption>
             <lver-doption @click="openInLocal(nodeData)">
               <template #icon>
