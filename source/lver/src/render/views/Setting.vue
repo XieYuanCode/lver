@@ -35,12 +35,12 @@
                     $t("view.setting.general.language.en")
                   }}
                 </lver-radio>
-                <lver-radio value="jp">
+                <lver-radio value="jp" disabled>
                   {{
                     $t("view.setting.general.language.jp")
                   }}
                 </lver-radio>
-                <lver-radio value="kor">
+                <lver-radio value="kor" disabled>
                   {{
                     $t("view.setting.general.language.kor")
                   }}
