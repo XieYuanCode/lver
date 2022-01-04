@@ -84,7 +84,6 @@ const switchSettingViewVisible = () => { store.commit("switchSettingViewVisible"
 let selectFileInput: HTMLInputElement
 
 const openFileSelectDialog = () => {
-  console.log(123);
   selectFileInput = document.getElementById("file-input") as HTMLInputElement
   selectFileInput?.click()
 }
@@ -108,6 +107,7 @@ const uploadLogFile = () => {
 }
 
 onMounted(() => {
+  // 快捷键监听
   require('electron').ipcRenderer.on(ShortcutAction.ImportLocalLog, () => openFileSelectDialog())
   require('electron').ipcRenderer.on(ShortcutAction.ImportSharedLog, () => importSharedLog())
 })

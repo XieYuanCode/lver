@@ -27,28 +27,48 @@
         <lver-dropdown>
           <IconMore style="position: absolute; right: 5px; top: 5px;" />
           <template #content>
-            <lver-doption
-              @click="openInEditor(nodeData)"
-            >{{ $t("view.explore.log_explore.context_menu.open") }}</lver-doption>
-            <lver-doption
-              @click="openInEditor(nodeData)"
-            >{{ $t("view.explore.log_explore.context_menu.editDeitil") }}</lver-doption>
-            <lver-doption
-              @click="openInLocal(nodeData)"
-            >{{ $t("view.explore.log_explore.context_menu.open_local") }}</lver-doption>
-            <lver-doption
-              @click="rename(nodeData)"
-            >{{ $t("view.explore.log_explore.context_menu.rename") }}</lver-doption>
-            <lver-doption
-              @click="deleteLog(nodeData)"
-            >{{ $t("view.explore.log_explore.context_menu.delete") }}</lver-doption>
-            <lver-doption
-              @click="deleteLocalLog(nodeData)"
-            >{{ $t("view.explore.log_explore.context_menu.delete_local") }}</lver-doption>
-            <lver-doption
-              @click="shareLog(nodeData)"
-              :disabled="!store.state.user.logined"
-            >{{ $t("view.explore.log_explore.context_menu.share") }}</lver-doption>
+            <lver-doption @click="openInEditor(nodeData)">
+              <template #icon>
+                <icon-eye />
+              </template>
+              {{ $t("view.explore.log_explore.context_menu.open") }}
+            </lver-doption>
+            <lver-doption @click="openInEditor(nodeData)">
+              <template #icon>
+                <icon-edit />
+              </template>
+              {{ $t("view.explore.log_explore.context_menu.editDeitil") }}
+            </lver-doption>
+            <lver-doption @click="openInLocal(nodeData)">
+              <template #icon>
+                <icon-folder />
+              </template>
+              {{ $t("view.explore.log_explore.context_menu.open_local") }}
+            </lver-doption>
+            <lver-doption @click="rename(nodeData)">
+              <template #icon>
+                <icon-tool />
+              </template>
+              {{ $t("view.explore.log_explore.context_menu.rename") }}
+            </lver-doption>
+            <lver-doption @click="deleteLog(nodeData)">
+              <template #icon>
+                <icon-delete />
+              </template>
+              {{ $t("view.explore.log_explore.context_menu.delete") }}
+            </lver-doption>
+            <lver-doption @click="deleteLocalLog(nodeData)">
+              <template #icon>
+                <icon-delete />
+              </template>
+              {{ $t("view.explore.log_explore.context_menu.delete_local") }}
+            </lver-doption>
+            <lver-doption @click="shareLog(nodeData)" :disabled="!store.state.user.logined">
+              <template #icon>
+                <icon-share-alt />
+              </template>
+              {{ $t("view.explore.log_explore.context_menu.share") }}
+            </lver-doption>
           </template>
         </lver-dropdown>
         <lver-tag
@@ -206,5 +226,10 @@ onMounted(() => {
 }
 .search-input {
   margin-bottom: 10px;
+}
+
+.arco-dropdown-option{
+  height: 25px;
+  line-height: 25px;
 }
 </style>
