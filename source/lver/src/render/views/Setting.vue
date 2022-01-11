@@ -340,9 +340,9 @@
             >
               <lver-slider
                 :step="0.01"
-                :min="0"
-                :max="1"
-                :format-tooltip="formatter"
+                min="0"
+                max="1"
+                :format-tooltip="(value: string) => value"
                 :style="{ width: '200px' }"
                 v-model="windowOpacity"
                 @change="windowOpacityChanged"
@@ -544,7 +544,6 @@ const tag_tip_img_url = computed(() => {
 const isLogging = ref(false)
 const isSyncing = ref(false)
 const isCheckingUpdate = ref(false)
-const formatter = (value: string) => value
 
 
 /**

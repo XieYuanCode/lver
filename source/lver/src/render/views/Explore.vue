@@ -51,7 +51,7 @@
               $t("view.explore.log_explore.addbutton.import_shared_log")
             }}
           </lver-doption>
-          <lver-doption v-else :disabled="store.state.appearance.logRuleSkeleton">
+          <lver-doption v-else :disabled="store.state.appearance.logRuleSkeleton" @click="openNewRuleDialog">
             {{
               $t("view.explore.log_rule_explore.addbutton.new_log_rule")
             }}
@@ -104,6 +104,9 @@ const uploadLogFile = () => {
 
     store.commit("appendNewLogFile", log)
   }
+}
+
+const openNewRuleDialog = () => {
 }
 
 onMounted(() => {

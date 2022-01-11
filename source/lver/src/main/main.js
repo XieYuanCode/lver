@@ -1,4 +1,4 @@
-const { app, BrowserWindow, TouchBar, Tray, Menu, ipcMain, dialog, globalShortcut } = require("electron")
+const { app, BrowserWindow, TouchBar, Tray, Menu, ipcMain, dialog, globalShortcut, MenuItem } = require("electron")
 const Store = require("electron-store")
 const path = require('path')
 const fs = require('fs')
@@ -11,6 +11,10 @@ var tray = null
 let win = null
 
 const trayContextMenu = Menu.buildFromTemplate([])
+const logContentMent = new Menu()
+logContentMent.append(new MenuItem({
+  label: '清空日志',
+}))
 
 const defaultShortcuts = [
   {
@@ -164,6 +168,14 @@ ipcMain.on('open-log-folder-dialog', (e, arg) => {
 })
 ipcMain.on('delete-file', (e, arg) => {
   fs.rmSync(arg)
+})
+
+ipcMain.on('show-log-context-menu', (e, arg) => {
+  logContentMent.popup({
+    window: win,
+    x: arg.x,
+    y: arg.y
+  })
 })
 
 app.setAboutPanelOptions({

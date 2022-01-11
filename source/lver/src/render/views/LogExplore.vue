@@ -21,6 +21,7 @@
       :default-expanded-keys="[]"
       size="mini"
       @select="handleLogSelected"
+      @contextmenu="handleLogContextMenu"
       v-model:selected-keys="selectedLog"
     >
       <template #extra="nodeData">
@@ -155,6 +156,11 @@ const shareLog = (nodeData: ILog) => {
   console.log("shareLog");
 }
 
+const handleLogContextMenu = (e: PointerEvent) => {
+  e.preventDefault()
+  require('electron').ipcRenderer.send('show-log-context-menu', e.clientX, e.clientY)
+}
+
 const rename = (nodeData: ILog) => {
   // 找到所有的treeNode
   const treeNodes = document.getElementsByClassName("arco-tree-node")
@@ -228,7 +234,7 @@ onMounted(() => {
   margin-bottom: 10px;
 }
 
-.arco-dropdown-option{
+.arco-dropdown-option {
   height: 25px;
   line-height: 25px;
 }
