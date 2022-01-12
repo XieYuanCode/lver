@@ -47,6 +47,26 @@
                 </lver-radio>
               </lver-radio-group>
             </lver-form-item>
+            <!-- 下拉菜单类型 -->
+            <lver-form-item field="dropdownType" :label="t('view.setting.general.dropdown_type_label_text')">
+              <lver-radio-group
+                type="button"
+                size="mini"
+                @change="dropdownTypeChanged"
+                v-model="dropdownType"
+              >
+                <lver-radio value="inside">
+                  {{
+                    $t("view.setting.general.dropdown_type.inside")
+                  }}
+                </lver-radio>
+                <lver-radio value="system">
+                  {{
+                    $t("view.setting.general.dropdown_type.system")
+                  }}
+                </lver-radio>
+              </lver-radio-group>
+            </lver-form-item>
             <!-- 默认储存位置 -->
             <lver-form-item field="defaultLogFolder">
               {{ t('view.setting.general.default_log_folder_label_text') }}
@@ -92,6 +112,7 @@
                 </template>
               </lver-trigger>
             </lver-form-item>
+            
           </lver-space>
         </lver-form>
         <lver-divider
@@ -371,9 +392,7 @@
                 @change="shortcutEnableChanged"
               ></lver-switch>
             </lver-form-item>
-            <lver-form-item field="reset_shortcut">
-              {{ t('view.setting.shortcut.reset_btn_text') }}
-            </lver-form-item>
+            <lver-form-item field="reset_shortcut">{{ t('view.setting.shortcut.reset_btn_text') }}</lver-form-item>
           </lver-space>
         </lver-form>
         <shortcut></shortcut>
@@ -506,6 +525,7 @@ const updateChannel = ref(store.state.appearance.updateChannel)
 const shortcutEnable = ref(store.state.appearance.isShortcutEnable)
 const windowOpacity = ref(store.state.appearance.windowOpacity)
 const openOnLogin = ref(store.state.appearance.openOnLogin)
+const dropdownType = ref(store.state.appearance.dropdownType)
 
 const platform = isMac() ? "macOS" : isWin() ? "Windows" : isLinux() ? "Linux" : "Unknown"
 const isShortcutEnableText = computed(() => shortcutEnable.value ? t("view.setting.shortcut.enable_text") : t("view.setting.shortcut.disable_text"))
@@ -526,6 +546,7 @@ const updateChannelChanged = (e: string) => { store.commit('switchUpdateChannel'
 const shortcutEnableChanged = (e: boolean) => { store.commit("switchShortcutEnable", e) }
 const windowOpacityChanged = (e: number) => { store.commit("switchWindowOpacity", e) }
 const openOnLoginChanged = (e: boolean) => { store.commit("switchOpenOnLogin", e) }
+const dropdownTypeChanged = (e: string) => { store.commit("switchDropdownType", e) }
 
 const tag_tip_img_url = computed(() => {
   if (store.state.appearance.theme === ThemeType.Dark) {

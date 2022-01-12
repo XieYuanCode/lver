@@ -24,7 +24,7 @@
       @contextmenu="handleLogContextMenu"
       v-model:selected-keys="selectedLog"
     >
-      <template #extra="nodeData">
+      <template #extra="nodeData" v-if="store.state.appearance.dropdownType === 'inside'">
         <lver-dropdown>
           <IconMore style="position: absolute; right: 5px; top: 5px;" />
           <template #content>
@@ -99,16 +99,12 @@
 <script setup lang="ts">
 import { computed, reactive, h, ref, onMounted, render, createApp, getCurrentInstance, defineComponent } from 'vue';
 import { useStore } from "../store";
-import { IconMore } from '@arco-design/web-vue/es/icon';
 import ILog from '../model/iLog';
 import { useI18n } from 'vue-i18n';
-import DescriptionPanel from '../components/DescriptionPanel.vue';
 
 const { t } = useI18n()
 const store = useStore();
 const currentInstance = getCurrentInstance()
-
-const DescriptionPanelComponent = defineComponent(DescriptionPanel)
 
 const skeleton = computed(() => store.state.appearance.logSkeleton);
 
@@ -156,9 +152,50 @@ const shareLog = (nodeData: ILog) => {
   console.log("shareLog");
 }
 
-const handleLogContextMenu = (e: PointerEvent) => {
-  e.preventDefault()
-  require('electron').ipcRenderer.send('show-log-context-menu', e.clientX, e.clientY)
+const handleLogContextMenu = (e: PointerEvent, arg: any) => {
+  if (store.state.appearance.dropdownType === 'inside') return
+
+  e.preventDefault();
+  const contentMenuTemplate: any = [
+    {
+      id: 'log_content_menu_open',
+      label: t("view.explore.log_explore.context_menu.open")
+    },
+    {
+      id: 'log_content_menu_edit',
+      label: t("view.explore.log_explore.context_menu.editDetail")
+    },
+    { type: 'separator' },
+    {
+      id: 'log_content_menu_open_local',
+      label: t("view.explore.log_explore.context_menu.open_local")
+    },
+    { type: 'separator' },
+    {
+      id: 'log_content_menu_rename',
+      label: t("view.explore.log_explore.context_menu.rename")
+    },
+    { type: 'separator' },
+    {
+      id: 'log_content_menu_delete',
+      label: t("view.explore.log_explore.context_menu.delete")
+    },
+    {
+      id: 'log_content_menu_delete_local',
+      label: t("view.explore.log_explore.context_menu.delete_local")
+    },
+    { type: 'separator' },
+    {
+      id: 'log_content_menu_share',
+      label: t("view.explore.log_explore.context_menu.share"),
+      enabled: store.state.user.logined
+    }
+  ]
+  require('electron').ipcRenderer.send('show-context-menu', {
+    contentMenuTemplate,
+    x: e.clientX,
+    y: e.clientY
+  })
 }
 
 const rename = (nodeData: ILog) => {

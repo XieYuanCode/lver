@@ -11,10 +11,6 @@ var tray = null
 let win = null
 
 const trayContextMenu = Menu.buildFromTemplate([])
-const logContentMent = new Menu()
-logContentMent.append(new MenuItem({
-  label: '清空日志',
-}))
 
 const defaultShortcuts = [
   {
@@ -170,8 +166,10 @@ ipcMain.on('delete-file', (e, arg) => {
   fs.rmSync(arg)
 })
 
-ipcMain.on('show-log-context-menu', (e, arg) => {
-  logContentMent.popup({
+ipcMain.on('show-context-menu', (e, arg) => {
+  const logContentMenu = Menu.buildFromTemplate(arg.contentMenuTemplate)
+  
+  logContentMenu.popup({
     window: win,
     x: arg.x,
     y: arg.y

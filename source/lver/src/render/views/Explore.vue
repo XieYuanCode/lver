@@ -26,7 +26,7 @@
           <icon-settings />
         </template>
       </lver-button>
-      <lver-dropdown>
+      <lver-dropdown v-if="store.state.appearance.dropdownType === 'inside'">
         <lver-button type="primary" shape="circle">
           <icon-plus />
         </lver-button>
@@ -51,13 +51,20 @@
               $t("view.explore.log_explore.addbutton.import_shared_log")
             }}
           </lver-doption>
-          <lver-doption v-else :disabled="store.state.appearance.logRuleSkeleton" @click="openNewRuleDialog">
+          <lver-doption
+            v-else
+            :disabled="store.state.appearance.logRuleSkeleton"
+            @click="openNewRuleDialog"
+          >
             {{
               $t("view.explore.log_rule_explore.addbutton.new_log_rule")
             }}
           </lver-doption>
         </template>
       </lver-dropdown>
+      <lver-button type="primary" shape="circle" @click="showLogExploreAddButton" v-else>
+        <icon-plus />
+      </lver-button>
     </div>
   </div>
 </template>
@@ -71,7 +78,9 @@ import { IconSettings } from '@arco-design/web-vue/es/icon';
 import { Log } from '../model/iLog';
 import { uuid } from '../utils/uuid';
 import { ShortcutAction } from '../model/shortcut';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n()
 const store = useStore()
 
 const currentExploreSelected = ref("log")
@@ -82,6 +91,37 @@ const switchSettingViewVisible = () => { store.commit("switchSettingViewVisible"
 
 // const internalInstance = getCurrentInstance()
 let selectFileInput: HTMLInputElement
+
+const showLogExploreAddButton = (e: PointerEvent) => {
+  if (store.state.appearance.dropdownType === 'inside') return
+
+  let contentMenuTemplate;
+  if (currentExploreSelected.value === "log") {
+    contentMenuTemplate = [
+      {
+        id: 'log_explore_content_menu_import_log',
+        label: t("view.explore.log_explore.addbutton.import_log")
+      },
+      {
+        id: 'log_explore_content_menu_import_shared_log',
+        label: t("view.explore.log_explore.addbutton.import_shared_log")
+      }
+    ]
+  } else {
+    contentMenuTemplate = [
+      {
+        id: 'log_explore_content_menu_new_log_rule',
+        label: t("view.explore.log_rule_explore.addbutton.new_log_rule")
+      }
+    ]
+  }
+
+  require('electron').ipcRenderer.send('show-context-menu', {
+    contentMenuTemplate,
+    x: e.clientX,
+    y: e.clientY
+  })
+}
 
 const openFileSelectDialog = () => {
   selectFileInput = document.getElementById("file-input") as HTMLInputElement

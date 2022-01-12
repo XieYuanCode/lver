@@ -83,6 +83,11 @@ const ch = {
         header_text: "通用",
         language_label_text: "语言",
         tag_label_text: "标签",
+        dropdown_type_label_text: "下拉菜单",
+        dropdown_type: {
+          inside: "内置",
+          system: "系统",
+        },
         default_log_folder_label_text: "默认储藏位置",
         open_on_login_label_text: "登陆时打开",
         encoding_label_text: "日志解析编码",

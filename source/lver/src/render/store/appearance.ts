@@ -81,6 +81,11 @@ export interface IAppearanceState {
    * 默认日志储存位置
    */
   defaultLogFolder: string
+
+  /**
+   * 下拉菜单类型
+   */
+  dropdownType: string
 }
 
 const appearance = {
@@ -103,7 +108,8 @@ const appearance = {
       isShortcutEnable: electronStore.store.get("isShortcutEnable", true),
       windowOpacity: electronStore.store.get("windowOpacity", 0.9),
       openOnLogin: electronStore.store.get("openOnLogin", false),
-      defaultLogFolder: electronStore.store.get("defaultLogFolder", null)
+      defaultLogFolder: electronStore.store.get("defaultLogFolder", null),
+      dropdownType: electronStore.store.get("dropdownType", "system"),
     }
   },
   mutations: {
@@ -248,6 +254,11 @@ const appearance = {
     switchDefaultLogFolder(state: IAppearanceState, defaultLogFolder: string) {
       state.defaultLogFolder = defaultLogFolder
       electronStore.store.set('defaultLogFolder', defaultLogFolder)
+    },
+
+    switchDropdownType(state: IAppearanceState, dropdownType: string) {
+      state.dropdownType = dropdownType
+      electronStore.store.set('dropdownType', dropdownType)
     }
   }
 }
