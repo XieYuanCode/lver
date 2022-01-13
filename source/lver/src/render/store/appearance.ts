@@ -2,7 +2,7 @@ import i18n from "../locale";
 import { LineSequence } from "../model/LineSequence";
 import { ThemeType } from "../model/theme";
 import { UpdateChannel } from "../model/updateChannel";
-import { isWin } from "../utils/system";
+import { isMac, isWin } from "../utils/system";
 import { switchTheme } from "../utils/theme";
 import { electronStore } from "../utils/electronStore";
 export interface IAppearanceState {
@@ -109,7 +109,7 @@ const appearance = {
       windowOpacity: electronStore.store.get("windowOpacity", 0.9),
       openOnLogin: electronStore.store.get("openOnLogin", false),
       defaultLogFolder: electronStore.store.get("defaultLogFolder", null),
-      dropdownType: electronStore.store.get("dropdownType", "system"),
+      dropdownType: electronStore.store.get("dropdownType", isMac() ? "system" : "inside"),
     }
   },
   mutations: {
