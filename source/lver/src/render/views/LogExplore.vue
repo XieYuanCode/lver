@@ -204,8 +204,6 @@ const handleLogContextMenu = (e: PointerEvent, arg: any) => {
   })
 }
 
-}
-
 const rename = (nodeData: ILog) => {
   // 找到所有的treeNode
   const treeNodes = document.getElementsByClassName("arco-tree-node")
