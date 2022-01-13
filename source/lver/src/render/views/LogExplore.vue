@@ -19,6 +19,7 @@
       :style="{ display: 'block' }"
       v-if="store.state.appearance.dropdownType === 'inside'"
       v-model="isInsideLogContentMenuShow"
+      :popup-container="dropdownMountedELement"
     >
       <lver-tree
         blockNode
@@ -30,12 +31,8 @@
         @select="handleLogSelected"
         v-model:selected-keys="selectedLog"
       >
-        <template #extra="nodeData">
-          <lver-typography-text
-            code
-            v-if="store.state.appearance.size"
-            style="position: absolute; right: 5px"
-          >{{ nodeData.sizeText }}</lver-typography-text>
+        <template #extra="nodeData" v-if="store.state.appearance.size">
+          <lver-typography-text code style="position: absolute; right: 5px">{{ nodeData.sizeText }}</lver-typography-text>
         </template>
       </lver-tree>
       <template #content>
@@ -51,7 +48,7 @@
           </template>
           {{ $t("view.explore.log_explore.context_menu.editDetail") }}
         </lver-doption>
-        <lver-divider orientation="center"/>
+        <lver-divider orientation="center" />
         <lver-doption @click="openInLocal(nodeData)">
           <template #icon>
             <icon-folder />
@@ -124,6 +121,7 @@ const searchKey = ref("")
 
 const logList = computed(() => store.getters.renderLogList)
 const isInsideLogContentMenuShow = ref(true)
+const dropdownMountedELement = ref(null)
 
 const selectedLog = computed({
   get() {
@@ -141,7 +139,7 @@ const handleLogSelected = (selected: boolean, selectedNode: { node: ILog }) => {
 }
 
 const openInEditor = (nodeData: ILog) => {
-  console.log(document.activeElement);
+  console.log(dropdownMountedELement.value);
   store.commit('switchSettingViewVisible', false)
   store.commit('openNewEditor', nodeData)
   store.commit('activeEditor', nodeData.key)

@@ -23,7 +23,6 @@ const data = {
       } else {
         state.editorList.push(targetEditor)
       }
-
     },
     /**
      * 关闭一个现有编辑器
