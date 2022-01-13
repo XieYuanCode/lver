@@ -13,85 +13,97 @@
       v-if="!skeleton"
       :placeholder="$t('view.explore.log_explore.searcher_placeholder')"
     />
+    <lver-dropdown
+      trigger="contextMenu"
+      alignPoint
+      :style="{ display: 'block' }"
+      v-if="store.state.appearance.dropdownType === 'inside'"
+      v-model="isInsideLogContentMenuShow"
+    >
+      <lver-tree
+        blockNode
+        selectable
+        :data="logList"
+        v-if="!skeleton && logList"
+        :default-expanded-keys="[]"
+        size="mini"
+        @select="handleLogSelected"
+        v-model:selected-keys="selectedLog"
+      >
+        <template #extra="nodeData">
+          <lver-typography-text
+            code
+            v-if="store.state.appearance.size"
+            style="position: absolute; right: 5px"
+          >{{ nodeData.sizeText }}</lver-typography-text>
+        </template>
+      </lver-tree>
+      <template #content>
+        <lver-doption @click="openInEditor(nodeData)">
+          <template #icon>
+            <icon-eye />
+          </template>
+          {{ $t("view.explore.log_explore.context_menu.open") }}
+        </lver-doption>
+        <lver-doption @click="openInEditor(nodeData)">
+          <template #icon>
+            <icon-edit />
+          </template>
+          {{ $t("view.explore.log_explore.context_menu.editDetail") }}
+        </lver-doption>
+        <lver-divider orientation="center"/>
+        <lver-doption @click="openInLocal(nodeData)">
+          <template #icon>
+            <icon-folder />
+          </template>
+          {{ $t("view.explore.log_explore.context_menu.open_local") }}
+        </lver-doption>
+        <lver-doption @click="rename(nodeData)">
+          <template #icon>
+            <icon-tool />
+          </template>
+          {{ $t("view.explore.log_explore.context_menu.rename") }}
+        </lver-doption>
+        <lver-doption @click="deleteLog(nodeData)">
+          <template #icon>
+            <icon-delete />
+          </template>
+          {{ $t("view.explore.log_explore.context_menu.delete") }}
+        </lver-doption>
+        <lver-doption @click="deleteLocalLog(nodeData)">
+          <template #icon>
+            <icon-delete />
+          </template>
+          {{ $t("view.explore.log_explore.context_menu.delete_local") }}
+        </lver-doption>
+        <lver-doption @click="shareLog(nodeData)" :disabled="!store.state.user.logined">
+          <template #icon>
+            <icon-share-alt />
+          </template>
+          {{ $t("view.explore.log_explore.context_menu.share") }}
+        </lver-doption>
+      </template>
+    </lver-dropdown>
     <lver-tree
+      v-if="store.state.appearance.dropdownType === 'system'"
       blockNode
       selectable
       :data="logList"
-      v-if="!skeleton && logList"
       :default-expanded-keys="[]"
       size="mini"
       @select="handleLogSelected"
       @contextmenu="handleLogContextMenu"
       v-model:selected-keys="selectedLog"
     >
-      <template #extra="nodeData" v-if="store.state.appearance.dropdownType === 'inside'">
-        <lver-dropdown>
-          <IconMore style="position: absolute; right: 5px; top: 5px;" />
-          <template #content>
-            <lver-doption @click="openInEditor(nodeData)">
-              <template #icon>
-                <icon-eye />
-              </template>
-              {{ $t("view.explore.log_explore.context_menu.open") }}
-            </lver-doption>
-            <lver-doption @click="openInEditor(nodeData)">
-              <template #icon>
-                <icon-edit />
-              </template>
-              {{ $t("view.explore.log_explore.context_menu.editDetail") }}
-            </lver-doption>
-            <lver-doption @click="openInLocal(nodeData)">
-              <template #icon>
-                <icon-folder />
-              </template>
-              {{ $t("view.explore.log_explore.context_menu.open_local") }}
-            </lver-doption>
-            <lver-doption @click="rename(nodeData)">
-              <template #icon>
-                <icon-tool />
-              </template>
-              {{ $t("view.explore.log_explore.context_menu.rename") }}
-            </lver-doption>
-            <lver-doption @click="deleteLog(nodeData)">
-              <template #icon>
-                <icon-delete />
-              </template>
-              {{ $t("view.explore.log_explore.context_menu.delete") }}
-            </lver-doption>
-            <lver-doption @click="deleteLocalLog(nodeData)">
-              <template #icon>
-                <icon-delete />
-              </template>
-              {{ $t("view.explore.log_explore.context_menu.delete_local") }}
-            </lver-doption>
-            <lver-doption @click="shareLog(nodeData)" :disabled="!store.state.user.logined">
-              <template #icon>
-                <icon-share-alt />
-              </template>
-              {{ $t("view.explore.log_explore.context_menu.share") }}
-            </lver-doption>
-          </template>
-        </lver-dropdown>
-        <lver-tag
-          size="mini"
-          style="position: absolute; right: 30px; top: 0px;"
-          color="arcoblue"
-          v-if="isTagVisiable && nodeData.type === 'local'"
-        >{{ $t("view.explore.log_explore.tag.local") }}</lver-tag>
-        <lver-tag
-          size="mini"
-          style="position: absolute; right: 30px; top: 0px;"
-          color="green"
-          v-if="isTagVisiable && nodeData.type === 'share'"
-        >{{ $t("view.explore.log_explore.tag.share") }}</lver-tag>
-        <lver-tag
-          size="mini"
-          style="position: absolute; right: 30px; top: 0px;"
-          color="magenta"
-          v-if="isTagVisiable && nodeData.type === 'online'"
-        >{{ $t("view.explore.log_explore.tag.online") }}</lver-tag>
+      <template #extra="nodeData">
+        <lver-typography-text
+          code
+          v-if="store.state.appearance.size"
+          style="position: absolute; right: 5px"
+        >{{ nodeData.sizeText }}</lver-typography-text>
       </template>
     </lver-tree>
+
     <lver-empty v-if="!skeleton && !logList" />
   </div>
 </template>
@@ -111,7 +123,7 @@ const skeleton = computed(() => store.state.appearance.logSkeleton);
 const searchKey = ref("")
 
 const logList = computed(() => store.getters.renderLogList)
-const isTagVisiable = computed(() => store.state.appearance.tag)
+const isInsideLogContentMenuShow = ref(true)
 
 const selectedLog = computed({
   get() {
@@ -129,6 +141,7 @@ const handleLogSelected = (selected: boolean, selectedNode: { node: ILog }) => {
 }
 
 const openInEditor = (nodeData: ILog) => {
+  console.log(document.activeElement);
   store.commit('switchSettingViewVisible', false)
   store.commit('openNewEditor', nodeData)
   store.commit('activeEditor', nodeData.key)
@@ -153,49 +166,54 @@ const shareLog = (nodeData: ILog) => {
 }
 
 const handleLogContextMenu = (e: PointerEvent, arg: any) => {
-  if (store.state.appearance.dropdownType === 'inside') return
+  console.log(store.state.appearance.dropdownType);
+  if (store.state.appearance.dropdownType === 'inside') {
+    isInsideLogContentMenuShow.value = true
+  } else {
 
-  e.preventDefault();
-  const contentMenuTemplate: any = [
-    {
-      id: 'log_content_menu_open',
-      label: t("view.explore.log_explore.context_menu.open")
-    },
-    {
-      id: 'log_content_menu_edit',
-      label: t("view.explore.log_explore.context_menu.editDetail")
-    },
-    { type: 'separator' },
-    {
-      id: 'log_content_menu_open_local',
-      label: t("view.explore.log_explore.context_menu.open_local")
-    },
-    { type: 'separator' },
-    {
-      id: 'log_content_menu_rename',
-      label: t("view.explore.log_explore.context_menu.rename")
-    },
-    { type: 'separator' },
-    {
-      id: 'log_content_menu_delete',
-      label: t("view.explore.log_explore.context_menu.delete")
-    },
-    {
-      id: 'log_content_menu_delete_local',
-      label: t("view.explore.log_explore.context_menu.delete_local")
-    },
-    { type: 'separator' },
-    {
-      id: 'log_content_menu_share',
-      label: t("view.explore.log_explore.context_menu.share"),
-      enabled: store.state.user.logined
-    }
-  ]
-  require('electron').ipcRenderer.send('show-context-menu', {
-    contentMenuTemplate,
-    x: e.clientX,
-    y: e.clientY
-  })
+    e.preventDefault();
+    const contentMenuTemplate: any = [
+      {
+        id: 'log_content_menu_open',
+        label: t("view.explore.log_explore.context_menu.open")
+      },
+      {
+        id: 'log_content_menu_edit',
+        label: t("view.explore.log_explore.context_menu.editDetail")
+      },
+      { type: 'separator' },
+      {
+        id: 'log_content_menu_open_local',
+        label: t("view.explore.log_explore.context_menu.open_local")
+      },
+      { type: 'separator' },
+      {
+        id: 'log_content_menu_rename',
+        label: t("view.explore.log_explore.context_menu.rename")
+      },
+      { type: 'separator' },
+      {
+        id: 'log_content_menu_delete',
+        label: t("view.explore.log_explore.context_menu.delete")
+      },
+      {
+        id: 'log_content_menu_delete_local',
+        label: t("view.explore.log_explore.context_menu.delete_local")
+      },
+      { type: 'separator' },
+      {
+        id: 'log_content_menu_share',
+        label: t("view.explore.log_explore.context_menu.share"),
+        enabled: store.state.user.logined
+      }
+    ]
+    require('electron').ipcRenderer.send('show-context-menu', {
+      contentMenuTemplate,
+      x: e.clientX,
+      y: e.clientY
+    })
+  }
+
 }
 
 const rename = (nodeData: ILog) => {

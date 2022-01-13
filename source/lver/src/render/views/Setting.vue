@@ -5,7 +5,7 @@
       class="setting-title"
     >{{ $t("view.setting.header_text") }}</lver-typography-title>
     <!-- <lver-divider /> -->
-    <lver-tabs>
+    <lver-tabs :animation="true">
       <!-- 通用 -->
       <lver-tab-pane key="general">
         <template #title>
@@ -14,6 +14,16 @@
         </template>
         <lver-form :model="{}" layout="vertical">
           <lver-space direction="vertical" size="mini">
+            <!-- 默认储存位置 -->
+            <lver-form-item field="defaultLogFolder">
+              {{ t('view.setting.general.default_log_folder_label_text') }}
+              <lver-button
+                type="text"
+                size="mini"
+                :style="{ marginLeft: '10px' }"
+                @click="openLogFolderDialog"
+              >{{ store.state.appearance.defaultLogFolder }}</lver-button>
+            </lver-form-item>
             <!-- 语言 -->
             <lver-form-item
               field="language"
@@ -47,8 +57,34 @@
                 </lver-radio>
               </lver-radio-group>
             </lver-form-item>
+            <!-- 登录时打开 -->
+            <lver-form-item
+              field="openOnLogin"
+              :label="t('view.setting.general.open_on_login_label_text')"
+            >
+              <lver-radio-group
+                type="button"
+                size="mini"
+                @change="openOnLoginChanged"
+                v-model="openOnLogin"
+              >
+                <lver-radio :value="true">
+                  {{
+                    $t("view.setting.common.yes_text")
+                  }}
+                </lver-radio>
+                <lver-radio :value="false">
+                  {{
+                    $t("view.setting.common.no_text")
+                  }}
+                </lver-radio>
+              </lver-radio-group>
+            </lver-form-item>
             <!-- 下拉菜单类型 -->
-            <lver-form-item field="dropdownType" :label="t('view.setting.general.dropdown_type_label_text')">
+            <lver-form-item
+              field="dropdownType"
+              :label="t('view.setting.general.dropdown_type_label_text')"
+            >
               <lver-radio-group
                 type="button"
                 size="mini"
@@ -67,52 +103,21 @@
                 </lver-radio>
               </lver-radio-group>
             </lver-form-item>
-            <!-- 默认储存位置 -->
-            <lver-form-item field="defaultLogFolder">
-              {{ t('view.setting.general.default_log_folder_label_text') }}
-              <lver-button
-                type="text"
-                size="mini"
-                :style="{ marginLeft: '10px' }"
-                @click="openLogFolderDialog"
-              >{{ store.state.appearance.defaultLogFolder }}</lver-button>
+            <!-- 大小 -->
+            <lver-form-item field="size" :label="t('view.setting.general.size_label_text')">
+              <lver-radio-group type="button" size="mini" @change="sizeChanged" v-model="size">
+                <lver-radio :value="true">
+                  {{
+                    $t("view.setting.common.show_text")
+                  }}
+                </lver-radio>
+                <lver-radio :value="false">
+                  {{
+                    $t("view.setting.common.hide_text")
+                  }}
+                </lver-radio>
+              </lver-radio-group>
             </lver-form-item>
-            <!-- 登录时打开 -->
-            <lver-form-item field="openOnLogin">
-              {{ t('view.setting.general.open_on_login_label_text') }}
-              <lver-switch
-                size="small"
-                v-model="openOnLogin"
-                @change="openOnLoginChanged"
-                :style="{ marginLeft: '10px' }"
-              ></lver-switch>
-            </lver-form-item>
-            <!-- 标签 -->
-            <lver-form-item field="tag">
-              {{ t('view.setting.general.tag_label_text') }}
-              <lver-switch
-                size="small"
-                v-model="tag"
-                @change="tagChanged"
-                :style="{ marginLeft: '10px' }"
-              ></lver-switch>
-              <lver-trigger class="tip" position="right" auto-fit-position>
-                <icon-question-circle-fill style="margin-left: 10px;" />
-                <template #content>
-                  <lver-card
-                    :style="{ width: '360px' }"
-                    :title="$t('view.setting.general.tag_label_text')"
-                  >
-                    <img :src="tag_tip_img_url" />
-                    <br />
-                    {{
-                      $t('view.setting.general.tag_tip_description')
-                    }}
-                  </lver-card>
-                </template>
-              </lver-trigger>
-            </lver-form-item>
-            
           </lver-space>
         </lver-form>
         <lver-divider
@@ -317,24 +322,47 @@
               </lver-radio-group>
             </lver-form-item>
             <!-- 日志描述 -->
-            <lver-form-item field="log_description">
-              {{ t('view.setting.general.log_description_label_text') }}
-              <lver-switch
-                size="small"
-                v-model="logDescription"
+            <lver-form-item
+              field="log_description"
+              :label="t('view.setting.general.log_description_label_text')"
+            >
+              <lver-radio-group
+                type="button"
+                size="mini"
                 @change="logDescriptionChanged"
-                :style="{ marginLeft: '10px' }"
-              ></lver-switch>
+                v-model="logDescription"
+              >
+                <lver-radio :value="true">
+                  {{
+                    t('view.setting.common.show_text')
+                  }}
+                </lver-radio>
+                <lver-radio :value="false">
+                  {{
+                    t('view.setting.common.hide_text')
+                  }}
+                </lver-radio>
+              </lver-radio-group>
             </lver-form-item>
             <!-- 分页 -->
-            <lver-form-item field="pagination">
-              {{ t('view.setting.log.pagination_title') }}
-              <lver-switch
-                size="small"
-                v-model="pagination"
+            <lver-form-item field="pagination" :label="t('view.setting.log.pagination_title')">
+              <lver-radio-group
+                type="button"
+                size="mini"
                 @change="paginationChanged"
-                :style="{ marginLeft: '10px' }"
-              ></lver-switch>
+                v-model="pagination"
+              >
+                <lver-radio :value="true">
+                  {{
+                    t('view.setting.common.open_text')
+                  }}
+                </lver-radio>
+                <lver-radio :value="false">
+                  {{
+                    t('view.setting.common.close_text')
+                  }}
+                </lver-radio>
+              </lver-radio-group>
             </lver-form-item>
           </lver-space>
         </lver-form>
@@ -383,14 +411,27 @@
         </template>
         <lver-form :model="{}" layout="vertical">
           <lver-space direction="vertical" size="mini">
-            <lver-form-item field="shorrcut_enable">
-              {{ t('view.setting.shortcut.shorrcut_enable_label_text') }}
-              <lver-switch
-                size="small"
-                :style="{ marginLeft: '10px' }"
+            <lver-form-item
+              field="shorrcut_enable"
+              :label="t('view.setting.shortcut.shorrcut_enable_label_text')"
+            >
+              <lver-radio-group
+                type="button"
+                size="mini"
                 v-model="shortcutEnable"
                 @change="shortcutEnableChanged"
-              ></lver-switch>
+              >
+                <lver-radio :value="true">
+                  {{
+                    t('view.setting.common.enable_text')
+                  }}
+                </lver-radio>
+                <lver-radio :value="false">
+                  {{
+                    t('view.setting.common.disable_text')
+                  }}
+                </lver-radio>
+              </lver-radio-group>
             </lver-form-item>
             <lver-form-item field="reset_shortcut">{{ t('view.setting.shortcut.reset_btn_text') }}</lver-form-item>
           </lver-space>
@@ -409,9 +450,9 @@
         <lver-form :model="{}" layout="vertical">
           <lver-space direction="vertical" size="mini">
             <lver-form-item field="update">
-              {{ $t('view.setting.update.update_btn_text') }}
+              <!-- {{ $t('view.setting.update.update_btn_text') }} -->
               <lver-button
-                style="margin-left: 10px;"
+                style="margin-left: -10px;"
                 type="text"
                 size="small"
                 @click="checkUpdate"
@@ -429,14 +470,19 @@
                 <lver-radio value="Beta" disabled>{{ $t('view.setting.update.beta_channel_text') }}</lver-radio>
               </lver-radio-group>
             </lver-form-item>
-            <lver-form-item field="autoCheck">
-              {{ t('view.setting.update.auto_check_label_text') }}
-              <lver-switch
-                size="small"
+            <lver-form-item
+              field="autoCheck"
+              :label="t('view.setting.update.auto_check_label_text')"
+            >
+              <lver-radio-group
+                type="button"
+                size="mini"
                 v-model="isAutoCheckUpdate"
                 @change="autoCheckUpdateChanged"
-                :style="{ marginLeft: '10px' }"
-              ></lver-switch>
+              >
+                <lver-radio :value="true">{{ $t('view.setting.common.auto_text') }}</lver-radio>
+                <lver-radio :value="false">{{ $t('view.setting.common.manual_text') }}</lver-radio>
+              </lver-radio-group>
             </lver-form-item>
             <lver-form-item
               field="updateInterval"
@@ -513,7 +559,7 @@ const internalInstance = getCurrentInstance()
 
 const language = ref(store.state.appearance.language);
 const theme = ref(store.state.appearance.theme);
-const tag = ref(store.state.appearance.tag)
+const size = ref(store.state.appearance.size)
 const encoding = ref(store.state.appearance.encoding)
 const endOfLineSequence = ref(store.state.appearance.endOfLineSequence)
 const isLogined = computed(() => store.state.user.logined)
@@ -535,7 +581,7 @@ const lastCheckUpdateTime = computed(() => store.state.appearance.lastCheckUpdat
 
 const themeChanged = (e: string) => { store.commit("switchTheme", e) }
 const languageChanged = (e: string) => { store.commit("switchLanguage", e) };
-const tagChanged = (e: boolean) => { store.commit("switchTagVisible", e) };
+const sizeChanged = (e: boolean) => { store.commit("switchSizeVisible", e) };
 const encodingChanged = (e: string) => { store.commit("switchEncoding", e) };
 const endOfLineSequenceChanged = (e: string) => { store.commit("switchEndOfLineSequence", e) }
 const logDescriptionChanged = (e: boolean) => { store.commit('switchlogDescription', e) }
@@ -547,20 +593,6 @@ const shortcutEnableChanged = (e: boolean) => { store.commit("switchShortcutEnab
 const windowOpacityChanged = (e: number) => { store.commit("switchWindowOpacity", e) }
 const openOnLoginChanged = (e: boolean) => { store.commit("switchOpenOnLogin", e) }
 const dropdownTypeChanged = (e: string) => { store.commit("switchDropdownType", e) }
-
-const tag_tip_img_url = computed(() => {
-  if (store.state.appearance.theme === ThemeType.Dark) {
-    return "src/render/assets/setting_tag_tip_dark.png"
-  } else if (store.state.appearance.theme === ThemeType.Light) {
-    return "src/render/assets/setting_tag_tip_light.png"
-  } else if (store.state.appearance.theme === ThemeType.System) {
-    if (window.matchMedia('(prefers-color-scheme: Dark)').matches) {
-      return "src/render/assets/setting_tag_tip_dark.png"
-    } else {
-      return "src/render/assets/setting_tag_tip_light.png"
-    }
-  }
-})
 
 const isLogging = ref(false)
 const isSyncing = ref(false)

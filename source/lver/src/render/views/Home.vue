@@ -2,9 +2,11 @@
   <lver-layout class="layout">
     <lver-layout style="height: 100%">
       <lver-layout-sider style="width:280px; height: 100%;">
+        <div class="move-window-content"></div>
         <explore></explore>
       </lver-layout-sider>
       <lver-layout-content class="lver-layout-content">
+        <div class="move-window-content"></div>
         <editor v-if="!isSettingView"></editor>
         <setting v-if="isSettingView"></setting>
       </lver-layout-content>
@@ -59,5 +61,13 @@ body {
   padding-left: 20px;
   padding-top: 20px;
   background: var(--color-menu-light-bg);
+}
+
+.move-window-content {
+  height: 30px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  -webkit-app-region: drag;
 }
 </style>

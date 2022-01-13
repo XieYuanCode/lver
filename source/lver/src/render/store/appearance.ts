@@ -27,9 +27,9 @@ export interface IAppearanceState {
    */
   settingViewVisible: boolean,
   /**
-   * tag是否显示
+   * size是否显示
    */
-  tag: boolean,
+  size: boolean,
   /**
    * 日志解析编码
    */
@@ -97,7 +97,7 @@ const appearance = {
       language: electronStore.store.get("language", 'ch'),
       settingViewVisible: false,
       logDescription: electronStore.store.get("logDescription", true),
-      tag: electronStore.store.get("tag", false),
+      size: electronStore.store.get("size", false),
       encoding: electronStore.store.get("encoding", "utf8"),
       endOfLineSequence: electronStore.store.get("endOfLineSequence", isWin() ? LineSequence.CRLF : LineSequence.LF),
       pagination: electronStore.store.get("pagination", true),
@@ -153,9 +153,9 @@ const appearance = {
     /**
      * 切换tag是否显示
      */
-    switchTagVisible(state: IAppearanceState, visible: boolean) {
-      state.tag = visible
-      electronStore.store.set('tag', visible)
+    switchSizeVisible(state: IAppearanceState, visible: boolean) {
+      state.size = visible
+      electronStore.store.set('size', visible)
     },
 
     /**

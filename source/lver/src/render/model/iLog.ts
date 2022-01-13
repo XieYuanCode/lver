@@ -8,6 +8,10 @@ export default interface ILog {
    * 日志名称
    */
   name: string
+  /**
+   * 大小
+   */
+  size: number
 
   /**
    * 描述
@@ -71,6 +75,7 @@ export class Log implements ILog {
   description?: string;
   uuid: string;
   file: string;
+  size: number;
   hash: string;
   recordDate: Date;
   analyseSuccessful: boolean = false;
@@ -78,14 +83,17 @@ export class Log implements ILog {
   createDate?: Date
   ruleName?: string;
 
-  constructor(filename: string, uuid: string, file: string) {
+  constructor(filename: string, uuid: string, file: string, size = 0) {
     this.filename = filename
     this.uuid = uuid
     this.name = filename
     this.file = file
     this.hash = "todo"
     this.recordDate = new Date()
+    this.size = size
   }
+  [key: string]: any;
+
 
   public analyse(rule: ILogRule) { }
 

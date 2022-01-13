@@ -24,11 +24,6 @@ const ch = {
           share: "分享",
           rename_empty: "无法重命名为空或者一个或多个空格"
         },
-        tag: {
-          local: "本地",
-          share: "分享",
-          online: "在线"
-        }
       },
       log_rule_explore: {
         title: "日志规则",
@@ -44,6 +39,18 @@ const ch = {
       }
     },
     setting: {
+      common: {
+        yes_text: "是",
+        no_text: "否",
+        show_text: "显示",
+        hide_text: "隐藏",
+        open_text: "打开",
+        close_text: "关闭",
+        enable_text: "启用",
+        disable_text: "禁用", 
+        auto_text: "自动",
+        manual_text: "手动",
+      },
       header_text: "设置",
       log: {
         header_text: "日志",
@@ -82,7 +89,7 @@ const ch = {
       general: {
         header_text: "通用",
         language_label_text: "语言",
-        tag_label_text: "标签",
+        size_label_text: "日志大小",
         dropdown_type_label_text: "下拉菜单",
         dropdown_type: {
           inside: "内置",
@@ -118,7 +125,7 @@ const ch = {
         header_text: "快捷键",
         tabel_action_text: "行为",
         table_key_text: "快捷键",
-        shorrcut_enable_label_text: "启用快捷键",
+        shorrcut_enable_label_text: "快捷键",
         enable_text: "启用",
         disable_text: "禁用",
         spin_tip: "启用快捷键以编辑详情",
@@ -131,7 +138,7 @@ const ch = {
         channel_label_text: "更新渠道",
         stable_channel_text: "稳定版",
         beta_channel_text: "测试版",
-        auto_check_label_text: "自动检查更新",
+        auto_check_label_text: "检查更新方式",
         update_interval_label_text: "更新间隔",
         day_text: "天",
         last_check_time_label_text: "上次检查时间",

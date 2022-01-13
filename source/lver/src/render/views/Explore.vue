@@ -136,10 +136,12 @@ const uploadLogFile = () => {
   if (!selectFileInput?.files?.length) return
   if (selectFileInput?.files?.length <= 0) return
 
+  console.log(selectFileInput.files);
+
   for (let index = 0; index < selectFileInput.files.length; index++) {
     const file = selectFileInput.files.item(index)
 
-    const log = new Log(file?.name || "", uuid(), (file as any)?.path as string)
+    const log = new Log(file?.name || "", uuid(), (file as any)?.path as string, file?.size)
     log.lastModifiedData = (file as any)?.lastModifiedDate
 
     store.commit("appendNewLogFile", log)
