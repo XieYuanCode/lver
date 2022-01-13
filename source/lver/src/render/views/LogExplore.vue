@@ -18,8 +18,6 @@
       alignPoint
       :style="{ display: 'block' }"
       v-if="store.state.appearance.dropdownType === 'inside'"
-      v-model="isInsideLogContentMenuShow"
-      :popup-container="dropdownMountedELement"
     >
       <lver-tree
         blockNode
@@ -120,8 +118,6 @@ const skeleton = computed(() => store.state.appearance.logSkeleton);
 const searchKey = ref("")
 
 const logList = computed(() => store.getters.renderLogList)
-const isInsideLogContentMenuShow = ref(true)
-const dropdownMountedELement = ref(null)
 
 const selectedLog = computed({
   get() {
@@ -139,7 +135,6 @@ const handleLogSelected = (selected: boolean, selectedNode: { node: ILog }) => {
 }
 
 const openInEditor = (nodeData: ILog) => {
-  console.log(dropdownMountedELement.value);
   store.commit('switchSettingViewVisible', false)
   store.commit('openNewEditor', nodeData)
   store.commit('activeEditor', nodeData.key)
@@ -164,53 +159,50 @@ const shareLog = (nodeData: ILog) => {
 }
 
 const handleLogContextMenu = (e: PointerEvent, arg: any) => {
-  console.log(store.state.appearance.dropdownType);
-  if (store.state.appearance.dropdownType === 'inside') {
-    isInsideLogContentMenuShow.value = true
-  } else {
+  if (store.state.appearance.dropdownType === 'inside') return
 
-    e.preventDefault();
-    const contentMenuTemplate: any = [
-      {
-        id: 'log_content_menu_open',
-        label: t("view.explore.log_explore.context_menu.open")
-      },
-      {
-        id: 'log_content_menu_edit',
-        label: t("view.explore.log_explore.context_menu.editDetail")
-      },
-      { type: 'separator' },
-      {
-        id: 'log_content_menu_open_local',
-        label: t("view.explore.log_explore.context_menu.open_local")
-      },
-      { type: 'separator' },
-      {
-        id: 'log_content_menu_rename',
-        label: t("view.explore.log_explore.context_menu.rename")
-      },
-      { type: 'separator' },
-      {
-        id: 'log_content_menu_delete',
-        label: t("view.explore.log_explore.context_menu.delete")
-      },
-      {
-        id: 'log_content_menu_delete_local',
-        label: t("view.explore.log_explore.context_menu.delete_local")
-      },
-      { type: 'separator' },
-      {
-        id: 'log_content_menu_share',
-        label: t("view.explore.log_explore.context_menu.share"),
-        enabled: store.state.user.logined
-      }
-    ]
-    require('electron').ipcRenderer.send('show-context-menu', {
-      contentMenuTemplate,
-      x: e.clientX,
-      y: e.clientY
-    })
-  }
+  e.preventDefault();
+  const contentMenuTemplate: any = [
+    {
+      id: 'log_content_menu_open',
+      label: t("view.explore.log_explore.context_menu.open")
+    },
+    {
+      id: 'log_content_menu_edit',
+      label: t("view.explore.log_explore.context_menu.editDetail")
+    },
+    { type: 'separator' },
+    {
+      id: 'log_content_menu_open_local',
+      label: t("view.explore.log_explore.context_menu.open_local")
+    },
+    { type: 'separator' },
+    {
+      id: 'log_content_menu_rename',
+      label: t("view.explore.log_explore.context_menu.rename")
+    },
+    { type: 'separator' },
+    {
+      id: 'log_content_menu_delete',
+      label: t("view.explore.log_explore.context_menu.delete")
+    },
+    {
+      id: 'log_content_menu_delete_local',
+      label: t("view.explore.log_explore.context_menu.delete_local")
+    },
+    { type: 'separator' },
+    {
+      id: 'log_content_menu_share',
+      label: t("view.explore.log_explore.context_menu.share"),
+      enabled: store.state.user.logined
+    }
+  ]
+  require('electron').ipcRenderer.send('show-context-menu', {
+    contentMenuTemplate,
+    x: e.clientX,
+    y: e.clientY
+  })
+}
 
 }
 
