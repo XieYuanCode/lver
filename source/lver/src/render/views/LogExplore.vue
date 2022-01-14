@@ -173,8 +173,6 @@ const handleLogContextMenu = (e: any, arg: any) => {
 
   const clickedLogUuid = e?.path?.find((item: any) => item?.className?.split(" ")?.includes('arco-tree-node'))?.attributes?.uuid?.nodeValue
 
-  const clickedLog = store.state.logView.logList.find(log => log.uuid === clickedLogUuid)
-
   const contentMenuTemplate: any = [
     {
       id: `log_content_menu_open:${clickedLogUuid}`,
