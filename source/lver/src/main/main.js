@@ -46,6 +46,14 @@ const defaultShortcuts = [
     isEditing: false,
   },
   {
+    action: 'search_log_file',
+    isEditing: false,
+    key: {
+      functionalKeys: ['CommandOrControl'],
+      key: ['P']
+    }
+  },
+  {
     action: 'setting_general',
     isEditing: false,
     key: null,
@@ -77,11 +85,6 @@ const defaultShortcuts = [
   },
   {
     action: 'setting_update',
-    isEditing: false,
-    key: null,
-  },
-  {
-    action: 'search_log_file',
     isEditing: false,
     key: null,
   },
@@ -162,13 +165,20 @@ ipcMain.on('open-log-folder-dialog', (e, arg) => {
 
   e.returnValue = folder
 })
+// 删除文件
 ipcMain.on('delete-file', (e, arg) => {
   fs.rmSync(arg)
 })
 
+// 右键菜单
 ipcMain.on('show-context-menu', (e, arg) => {
   const logContentMenu = Menu.buildFromTemplate(arg.contentMenuTemplate)
-  
+  logContentMenu.items.forEach(item => {
+    item.click = () => {
+      win && win.webContents.send('context-menu-click', item.id)
+    }
+  })
+
   logContentMenu.popup({
     window: win,
     x: arg.x,

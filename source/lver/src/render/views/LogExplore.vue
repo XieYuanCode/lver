@@ -7,10 +7,12 @@
       </lver-space>
     </lver-skeleton>
     <lver-input-search
+      id="log-search-input"
       size="mini"
       v-model="searchKey"
       class="search-input"
       v-if="!skeleton"
+      @keydown="handleLogSearchKeyDown"
       :placeholder="$t('view.explore.log_explore.searcher_placeholder')"
     />
     <lver-dropdown
@@ -87,7 +89,7 @@
       :default-expanded-keys="[]"
       size="mini"
       @select="handleLogSelected"
-      @contextmenu="handleLogContextMenu"
+      @contextmenu.capture="handleLogContextMenu"
       v-model:selected-keys="selectedLog"
     >
       <template #extra="nodeData">
@@ -134,6 +136,13 @@ const handleLogSelected = (selected: boolean, selectedNode: { node: ILog }) => {
   store.commit('activeEditor', selectedNode.node.key)
 }
 
+const handleLogSearchKeyDown = (e: KeyboardEvent) => {
+  if (e.key === "Escape") {
+    searchKey.value = ""
+    document.getElementById("log-search-input")?.children[0]?.blur()
+  }
+}
+
 const openInEditor = (nodeData: ILog) => {
   store.commit('switchSettingViewVisible', false)
   store.commit('openNewEditor', nodeData)
@@ -158,41 +167,45 @@ const shareLog = (nodeData: ILog) => {
   console.log("shareLog");
 }
 
-const handleLogContextMenu = (e: PointerEvent, arg: any) => {
+const handleLogContextMenu = (e: any, arg: any) => {
   if (store.state.appearance.dropdownType === 'inside') return
-
   e.preventDefault();
+
+  const clickedLogUuid = e?.path?.find((item: any) => item?.className?.split(" ")?.includes('arco-tree-node'))?.attributes?.uuid?.nodeValue
+
+  const clickedLog = store.state.logView.logList.find(log => log.uuid === clickedLogUuid)
+
   const contentMenuTemplate: any = [
     {
-      id: 'log_content_menu_open',
+      id: `log_content_menu_open:${clickedLogUuid}`,
       label: t("view.explore.log_explore.context_menu.open")
     },
     {
-      id: 'log_content_menu_edit',
+      id: `log_content_menu_edit:${clickedLogUuid}`,
       label: t("view.explore.log_explore.context_menu.editDetail")
     },
     { type: 'separator' },
     {
-      id: 'log_content_menu_open_local',
+      id: `log_content_menu_open_local:${clickedLogUuid}`,
       label: t("view.explore.log_explore.context_menu.open_local")
     },
     { type: 'separator' },
     {
-      id: 'log_content_menu_rename',
+      id: `log_content_menu_rename:${clickedLogUuid}`,
       label: t("view.explore.log_explore.context_menu.rename")
     },
     { type: 'separator' },
     {
-      id: 'log_content_menu_delete',
+      id: `log_content_menu_delete:${clickedLogUuid}`,
       label: t("view.explore.log_explore.context_menu.delete")
     },
     {
-      id: 'log_content_menu_delete_local',
+      id: `log_content_menu_delete_local:${clickedLogUuid}`,
       label: t("view.explore.log_explore.context_menu.delete_local")
     },
     { type: 'separator' },
     {
-      id: 'log_content_menu_share',
+      id: `log_content_menu_share:${clickedLogUuid}`,
       label: t("view.explore.log_explore.context_menu.share"),
       enabled: store.state.user.logined
     }
@@ -262,6 +275,36 @@ const editDetail = (nodeData: ILog) => {
 
 onMounted(() => {
   store.commit("switchLogSkeleton", false)
+
+
+  const { ipcRenderer } = require('electron')
+
+  ipcRenderer.on('search_log_file', (e, arg) => {
+    document.getElementById("log-search-input")?.children[0]?.focus()
+  })
+
+  ipcRenderer.on('context-menu-click', (e, arg) => {
+    const [command, uuid] = arg.split(":")
+    const clickedLog = store.state.logView.logList.find(log => log.uuid === uuid)
+
+    if (!clickedLog) return
+
+    if (command === "log_content_menu_open") {
+      openInEditor(clickedLog)
+    } else if (command === "log_content_menu_edit") {
+      openInEditor(clickedLog)
+    } else if (command === "log_content_menu_open_local") {
+      openInLocal(clickedLog)
+    } else if (command === "log_content_menu_rename") {
+      rename(clickedLog)
+    } else if (command === "log_content_menu_delete") {
+      deleteLog(clickedLog)
+    } else if (command === "log_content_menu_delete_local") {
+      deleteLocalLog(clickedLog)
+    } else if (command === "log_content_menu_share") {
+      shareLog(clickedLog)
+    }
+  })
 })
 </script>
 

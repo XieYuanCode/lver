@@ -50,6 +50,14 @@ const defaultShortcutList = [
     },
   },
   {
+    action: ShortcutAction.SearchLogFile,
+    isEditing: false,
+    key: {
+      functionalKeys: [FunctionalKey.CommandOrControl],
+      key: [Key.P]
+    },
+  },
+  {
     action: ShortcutAction.Setting_General,
     isEditing: false,
     key: null,
@@ -81,11 +89,6 @@ const defaultShortcutList = [
   },
   {
     action: ShortcutAction.Setting_Update,
-    isEditing: false,
-    key: null,
-  },
-  {
-    action: ShortcutAction.SearchLogFile,
     isEditing: false,
     key: null,
   },

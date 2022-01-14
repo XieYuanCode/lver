@@ -152,9 +152,21 @@ const openNewRuleDialog = () => {
 }
 
 onMounted(() => {
+  const { ipcRenderer } = require('electron')
   // 快捷键监听
-  require('electron').ipcRenderer.on(ShortcutAction.ImportLocalLog, () => openFileSelectDialog())
-  require('electron').ipcRenderer.on(ShortcutAction.ImportSharedLog, () => importSharedLog())
+  ipcRenderer.on(ShortcutAction.ImportLocalLog, () => openFileSelectDialog())
+  ipcRenderer.on(ShortcutAction.ImportSharedLog, () => importSharedLog())
+
+
+  ipcRenderer.on('context-menu-click', (e, arg) => {
+    if(arg === "log_explore_content_menu_import_log") {
+      openFileSelectDialog()
+    } else if(arg === "log_explore_content_menu_import_shared_log") {
+      importSharedLog()
+    } else if(arg === "log_explore_content_menu_new_log_rule") {
+      openNewRuleDialog()
+    }
+  })
 })
 </script>
 
