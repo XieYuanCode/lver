@@ -94,7 +94,7 @@ const appearance = {
       theme: electronStore.store.get("theme", ThemeType.System),
       logSkeleton: true,
       logRuleSkeleton: true,
-      language: electronStore.store.get("language", 'ch'),
+      language: electronStore.store.get("language", 'en'),
       settingViewVisible: false,
       logDescription: electronStore.store.get("logDescription", true),
       size: electronStore.store.get("size", false),

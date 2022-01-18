@@ -5,12 +5,22 @@ const fs = require('fs')
 
 const { TouchBarLabel, TouchBarButton, TouchBarSpacer } = TouchBar
 const store = new Store();
+const { createAppMenu } = require('./menu')
 Store.initRenderer()
+const isMac = process.platform === 'darwin'
+
+app.setAboutPanelOptions({
+  applicationName: 'lver',
+  applicationVersion: "1.0.0",
+  version: "1.0.0",
+  authors: "Creaster",
+  website: '81.70.22.185',
+  iconPath: path.join(__dirname, '..', 'build', 'icons', 'icon.png'),
+})
+
 
 var tray = null
 let win = null
-
-const trayContextMenu = Menu.buildFromTemplate([])
 
 const defaultShortcuts = [
   {
@@ -44,6 +54,30 @@ const defaultShortcuts = [
       key: ['S']
     },
     isEditing: false,
+  },
+  {
+    action: 'close_current_tab',
+    isEditing: false,
+    key: {
+      functionalKeys: ['CommandOrControl'],
+      key: ['W']
+    }
+  },
+  {
+    action: 'close_all_tabs',
+    isEditing: false,
+    key: {
+      functionalKeys: ['CommandOrControl', 'Shift'],
+      key: ['W']
+    }
+  },
+  {
+    action: 'close_other_tabs',
+    isEditing: false,
+    key: {
+      functionalKeys: ['CommandOrControl', isMac ? 'Option' : 'Alt'],
+      key: ['T']
+    }
   },
   {
     action: 'search_log_file',
@@ -104,8 +138,9 @@ const defaultShortcuts = [
     key: null,
   }
 ]
-
 const shortcutList = store.get('shortcutList', defaultShortcuts)
+
+const trayContextMenu = Menu.buildFromTemplate([])
 
 function creatWindow() {
   win = new BrowserWindow({
@@ -186,36 +221,31 @@ ipcMain.on('show-context-menu', (e, arg) => {
   })
 })
 
-app.setAboutPanelOptions({
-  applicationName: 'lver',
-  applicationVersion: "1.0.0",
-  version: "1.0.0",
-  authors: "Creaster",
-  website: '81.70.22.185',
-  iconPath: path.join(__dirname, '..', 'build', 'icons', 'icon.png'),
-})
+
+
 
 app.whenReady().then(() => {
-  shortcutList.forEach(shortcut => {
-    if (shortcut.key !== null) {
-      if (shortcut.action === 'switch_opend_tab') {
-        for (let index = 1; index < 10; index++) {
-          const accelerator = shortcut.key.functionalKeys.join('+') + '+' + index
-          globalShortcut.register(accelerator, () => {
-            win && win.webContents.send('switch_opend_tab', index)
-          })
-        }
-      } else {
-        const accelerator = shortcut.key.functionalKeys.join('+') + '+' + shortcut.key.key.join('+')
-        globalShortcut.register(accelerator, () => {
-          win && win.webContents.send(shortcut.action)
-        })
-      }
-    }
-  })
+  // shortcutList.forEach(shortcut => {
+  //   if (shortcut.key !== null) {
+  //     if (shortcut.action === 'switch_opend_tab') {
+  //       for (let index = 1; index < 10; index++) {
+  //         const accelerator = shortcut.key.functionalKeys.join('+') + '+' + index
+  //         globalShortcut.register(accelerator, () => {
+  //           win && win.webContents.send('switch_opend_tab', index)
+  //         })
+  //       }
+  //     } else {
+  //       const accelerator = shortcut.key.functionalKeys.join('+') + '+' + shortcut.key.key.join('+')
+  //       globalShortcut.register(accelerator, () => {
+  //         win && win.webContents.send(shortcut.action)
+  //       })
+  //     }
+  //   }
+  // })
   tray = new Tray(path.join(__dirname, '..', 'build', 'icons', 'tary.png'))
   tray.setContextMenu(trayContextMenu)
   app.setAsDefaultProtocolClient('lver', process.execPath, [`${__dirname}`])
   creatWindow()
   win.setTouchBar(touchBar)
+  Menu.setApplicationMenu(createAppMenu(store.get("language", "en"), win, shortcutList))
 })

@@ -23,11 +23,6 @@ const en = {
           delete_local: "delete local log",
           share: "share",
           rename_empty: "can not rename to empty or multiple spaces"
-        },
-        tag: {
-          local: "local",
-          share: "share",
-          online: "online"
         }
       },
       log_rule_explore: {
@@ -44,6 +39,18 @@ const en = {
       }
     },
     setting: {
+      common: {
+        yes_text: "yes",
+        no_text: "no",
+        show_text: "show",
+        hide_text: "hide",
+        open_text: "open",
+        close_text: "close",
+        enable_text: "enable",
+        disable_text: "disable",
+        auto_text: "auto",
+        manual_text: "manual",
+      },
       header_text: "Setting",
       log: {
         header_text: "log",
@@ -94,7 +101,11 @@ const en = {
           en: "English",
           jp: "日本語",
           kor: "한국어",
-        }
+        },
+        dropdown_type: {
+          inside: "inside",
+          system: "system",
+        },
       },
       theme: {
         header_text: "Theme",
@@ -225,6 +236,9 @@ const en = {
         switch_opend_tab: 'switch opened tab(1-9)',
         share_log: 'share log',
         share_log_rule: 'share log rule',
+        close_current_tab: 'close current tab',
+        close_all_tabs: 'close all tabs',
+        close_other_tabs: 'close other tabs',
       }
     }
   },

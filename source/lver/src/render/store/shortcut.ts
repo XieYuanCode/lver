@@ -1,5 +1,6 @@
 import { FunctionalKey, Key, ShortcutAction } from "../model/shortcut"
 import { electronStore } from "../utils/electronStore"
+import { isMac } from "../utils/system"
 
 export type KeyPair = {
   functionalKeys?: FunctionalKey[]
@@ -30,6 +31,30 @@ const defaultShortcutList = [
     key: {
       functionalKeys: [FunctionalKey.CommandOrControl, FunctionalKey.Shift],
       key: [Key.S]
+    },
+    isEditing: false,
+  },
+  {
+    action: ShortcutAction.CloseCurrentTab,
+    key: {
+      functionalKeys: [FunctionalKey.CommandOrControl],
+      key: [Key.W]
+    },
+    isEditing: false,
+  },
+  {
+    action: ShortcutAction.CloseAllTabs,
+    key: {
+      functionalKeys: [FunctionalKey.CommandOrControl, FunctionalKey.Shift],
+      key: [Key.W]
+    },
+    isEditing: false,
+  },
+  {
+    action: ShortcutAction.CloseOtherTabs,
+    key: {
+      functionalKeys: [FunctionalKey.CommandOrControl, isMac() ? FunctionalKey.Option : FunctionalKey.Alt],
+      key: [Key.T]
     },
     isEditing: false,
   },

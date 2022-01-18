@@ -47,7 +47,7 @@ const ch = {
         open_text: "打开",
         close_text: "关闭",
         enable_text: "启用",
-        disable_text: "禁用", 
+        disable_text: "禁用",
         auto_text: "自动",
         manual_text: "手动",
       },
@@ -237,6 +237,9 @@ const ch = {
         switch_opend_tab: '切换打开的标签页(1-9)',
         share_log: '分享日志',
         share_log_rule: '分享日志规则',
+        close_current_tab: "关闭当前标签页",
+        close_all_tabs: "关闭所有标签页",
+        close_other_tabs: "关闭其他标签页",
       }
     }
   },
