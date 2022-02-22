@@ -16,6 +16,7 @@
       :placeholder="$t('view.explore.log_explore.searcher_placeholder')"
     />
     <lver-dropdown
+      size="mini"
       trigger="contextMenu"
       alignPoint
       :style="{ display: 'block' }"

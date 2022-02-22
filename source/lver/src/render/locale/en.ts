@@ -78,7 +78,7 @@ const en = {
         login: {
           wechat: "wechat",
           qq: "QQ",
-          github: "github",
+          github: "github(because of network reasons, not recommended to use)",
           gitee: 'gitee'
         },
         login_success_tip: "login success",

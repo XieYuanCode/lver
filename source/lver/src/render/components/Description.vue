@@ -8,16 +8,30 @@
       </lver-typography-title>
       <lver-button-group>
         <lver-button type="text" @click="closeLogDescription" size="mini">
+          <template #icon>
+            <icon-close />
+          </template>
           {{
             $t("view.editor.log_editor.close_descriotion_btn_text")
           }}
         </lver-button>
-        <lver-button type="text" size="mini" @click="editLogDescription" v-if="!isDescriptionEditing">
+        <lver-button
+          type="text"
+          size="mini"
+          @click="editLogDescription"
+          v-if="!isDescriptionEditing"
+        >
+          <template #icon>
+            <icon-edit />
+          </template>
           {{
             $t("view.editor.log_editor.edit_descriotion_btn_text")
           }}
         </lver-button>
         <lver-button type="primary" size="mini" @click="saveLogDescription" v-else>
+          <template #icon>
+            <icon-save />
+          </template>
           {{
             $t("view.editor.log_editor.save_descriotion_btn_text")
           }}
@@ -25,7 +39,12 @@
       </lver-button-group>
     </div>
 
-    <description-panel :isEditing="isDescriptionEditing" ref="descriptionPanel" :log="props.log" @saveEmit="saveLogDescription"></description-panel>
+    <description-panel
+      :isEditing="isDescriptionEditing"
+      ref="descriptionPanel"
+      :log="props.log"
+      @saveEmit="saveLogDescription"
+    ></description-panel>
   </div>
 </template>
 

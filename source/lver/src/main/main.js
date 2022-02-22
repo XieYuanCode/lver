@@ -138,7 +138,6 @@ const defaultShortcuts = [
     key: null,
   }
 ]
-const shortcutList = store.get('shortcutList', defaultShortcuts)
 
 const trayContextMenu = Menu.buildFromTemplate([])
 
@@ -247,5 +246,5 @@ app.whenReady().then(() => {
   app.setAsDefaultProtocolClient('lver', process.execPath, [`${__dirname}`])
   creatWindow()
   win.setTouchBar(touchBar)
-  Menu.setApplicationMenu(createAppMenu(store.get("language", "en"), win, shortcutList))
+  Menu.setApplicationMenu(createAppMenu(store.get("language", "en"), win, store.get('shortcutList', defaultShortcuts)))
 })

@@ -277,7 +277,7 @@
       <!-- 日志 -->
       <lver-tab-pane key="log">
         <template #title>
-          <icon-brush />
+          <icon-file />
           {{ $t("view.setting.log.header_text") }}
         </template>
         <lver-form :model="{}" layout="vertical">
@@ -527,11 +527,28 @@
           <lver-link @click="openZerocsssGithub">zerocsss</lver-link>
         </lver-typography-title>
         <lver-typography-title type="secondary" :heading="6">
-          <lver-button
-            @click="openChangelogWebsite"
-            :style="{ marginRight: '20px' }"
-          >{{ $t("view.setting.about.changelog_btn_text") }}</lver-button>
-          <lver-button @click="feedback">{{ $t("view.setting.about.feedback_btn_text") }}</lver-button>
+          <lver-button-group :style="{ marginRight: '20px' }">
+            <lver-button
+              @click="openChangelogWebsite"
+              size="small"
+            >{{ $t("view.setting.about.changelog_btn_text") }}</lver-button>
+            <lver-button size="small" @click="openChangelogWebsite">
+              <template #icon>
+                <icon-share-internal />
+              </template>
+            </lver-button>
+          </lver-button-group>
+          <lver-button-group>
+            <lver-button
+              @click="feedback"
+              size="small"
+            >{{ $t("view.setting.about.feedback_btn_text") }}</lver-button>
+            <lver-button size="small" @click="feedback">
+              <template #icon>
+                <icon-email />
+              </template>
+            </lver-button>
+          </lver-button-group>
         </lver-typography-title>
         <lver-divider
           orientation="center"

@@ -26,7 +26,7 @@
           <icon-settings />
         </template>
       </lver-button>
-      <lver-dropdown v-if="store.state.appearance.dropdownType === 'inside'">
+      <lver-dropdown v-if="store.state.appearance.dropdownType === 'inside'" size="mini">
         <lver-button type="primary" shape="circle">
           <icon-plus />
         </lver-button>

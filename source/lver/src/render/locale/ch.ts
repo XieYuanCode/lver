@@ -78,7 +78,7 @@ const ch = {
         login: {
           wechat: "微信",
           qq: "QQ",
-          github: "github",
+          github: "github(由于网络原因不推荐使用)",
           gitee: '码云'
         },
         login_success_tip: "登陆成功",

@@ -196,7 +196,7 @@ const createAppMenu = (language, win, shortcutList, tagsCount) => {
   })
   //#endregion
 
-  const appMenu = new Menu({})
+  const appMenu = new Menu()
   appMenu.append(appMenuItem)
   appMenu.append(appFileMenuItem)
 
