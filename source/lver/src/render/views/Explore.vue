@@ -99,6 +99,11 @@ const showLogExploreAddButton = (e: PointerEvent) => {
   if (currentExploreSelected.value === "log") {
     contentMenuTemplate = [
       {
+        id: 'log_explore_content_menu_add_group',
+        label: t("view.explore.log_explore.addbutton.add_group")
+      },
+      { type: 'separator' },
+      {
         id: 'log_explore_content_menu_import_log',
         label: t("view.explore.log_explore.addbutton.import_log")
       },
@@ -136,8 +141,6 @@ const uploadLogFile = () => {
   if (!selectFileInput?.files?.length) return
   if (selectFileInput?.files?.length <= 0) return
 
-  console.log(selectFileInput.files);
-
   for (let index = 0; index < selectFileInput.files.length; index++) {
     const file = selectFileInput.files.item(index)
 
@@ -159,12 +162,14 @@ onMounted(() => {
 
 
   ipcRenderer.on('context-menu-click', (e, arg) => {
-    if(arg === "log_explore_content_menu_import_log") {
+    if (arg === "log_explore_content_menu_import_log") {
       openFileSelectDialog()
-    } else if(arg === "log_explore_content_menu_import_shared_log") {
+    } else if (arg === "log_explore_content_menu_import_shared_log") {
       importSharedLog()
-    } else if(arg === "log_explore_content_menu_new_log_rule") {
+    } else if (arg === "log_explore_content_menu_new_log_rule") {
       openNewRuleDialog()
+    } else if (arg === "log_explore_content_menu_add_group") {
+      console.log('add group');
     }
   })
 })

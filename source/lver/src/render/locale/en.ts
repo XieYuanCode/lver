@@ -13,6 +13,7 @@ const en = {
         addbutton: {
           import_log: "Import log file",
           import_shared_log: "import shared log",
+          add_group: "add group",
         },
         context_menu: {
           open: "open",

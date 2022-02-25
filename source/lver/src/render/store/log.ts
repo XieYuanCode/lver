@@ -14,7 +14,7 @@ const data = {
     }
   },
   getters: {
-    renderLogList: (state: ILogViewModel) => {
+    renderedLogList: (state: ILogViewModel) => {
       if (!state.logList) return null
       if (state.logList.length === 0) return null
 

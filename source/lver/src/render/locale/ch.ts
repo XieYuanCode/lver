@@ -13,6 +13,7 @@ const ch = {
         addbutton: {
           import_log: "本地日志",
           import_shared_log: "共享日志",
+          add_group: "新建组",
         },
         context_menu: {
           open: "打开",
